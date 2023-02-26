@@ -3,6 +3,7 @@ package ir.truelearn.digikala
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.LayoutDirection
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,13 +19,17 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import dagger.hilt.android.AndroidEntryPoint
 import ir.truelearn.digikala.navigation.BottomNavigationBar
 import ir.truelearn.digikala.navigation.SetupNavGraph
+import ir.truelearn.digikala.ui.components.AppConfig
 import ir.truelearn.digikala.ui.theme.DigikalaTheme
 import ir.truelearn.digikala.util.Constants.ENGLISH_LANG
 import ir.truelearn.digikala.util.Constants.PERSIAN_LANG
+import ir.truelearn.digikala.util.Constants.USER_LANGUAGE
 import ir.truelearn.digikala.util.LocaleUtils
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private lateinit var navController: NavHostController
@@ -36,10 +41,18 @@ class MainActivity : ComponentActivity() {
             DigikalaTheme {
                 navController = rememberNavController()
 
+                AppConfig()
 
-                LocaleUtils.setLocale(LocalContext.current, PERSIAN_LANG)
+                Log.e("3636", USER_LANGUAGE)
 
-                CompositionLocalProvider(LocalLayoutDirection provides androidx.compose.ui.unit.LayoutDirection.Rtl) {
+                LocaleUtils.setLocale(LocalContext.current, USER_LANGUAGE)
+
+                val direction = if (USER_LANGUAGE == ENGLISH_LANG) {
+                    androidx.compose.ui.unit.LayoutDirection.Ltr
+                } else {
+                    androidx.compose.ui.unit.LayoutDirection.Rtl
+                }
+                CompositionLocalProvider(LocalLayoutDirection provides direction) {
 
                     Scaffold(
                         bottomBar = {
