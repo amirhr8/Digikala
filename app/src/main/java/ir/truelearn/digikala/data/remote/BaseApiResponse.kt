@@ -4,7 +4,6 @@ import ir.truelearn.digikala.data.model.ResponseResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
-import java.lang.Error
 
 abstract class BaseApiResponse {
 
