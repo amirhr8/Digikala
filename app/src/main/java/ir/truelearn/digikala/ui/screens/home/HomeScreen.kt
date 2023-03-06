@@ -1,6 +1,6 @@
-package ir.truelearn.digikala.ui.screens
+package ir.truelearn.digikala.ui.screens.home
 
-import android.window.SplashScreen
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

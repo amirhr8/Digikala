@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import ir.truelearn.digikala.ui.screens.*
+import ir.truelearn.digikala.ui.screens.home.HomeScreen
 
 @Composable
 fun SetupNavGraph(navController: NavHostController) {
