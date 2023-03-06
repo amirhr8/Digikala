@@ -1,5 +1,6 @@
 package ir.truelearn.digikala.ui.screens
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.window.SplashScreen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -66,7 +67,7 @@ fun BasketLightPreview() {
 }
 
 @Composable
-@Preview
+@Preview(uiMode = UI_MODE_NIGHT_YES)
 fun BasketDarkPreview() {
     BasketDark()
 }
