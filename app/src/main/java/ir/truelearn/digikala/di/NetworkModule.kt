@@ -5,8 +5,10 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ir.truelearn.digikala.data.remote.HomeApiInterface
+import ir.truelearn.digikala.util.Constants.API_KEY
 import ir.truelearn.digikala.util.Constants.BASE_URL
 import ir.truelearn.digikala.util.Constants.TIMEOUT_IN_SECOND
+import ir.truelearn.digikala.util.Constants.USER_LANGUAGE
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -21,7 +23,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    internal fun interceptor() : HttpLoggingInterceptor {
+    internal fun interceptor(): HttpLoggingInterceptor {
         val logging = HttpLoggingInterceptor()
         logging.setLevel(HttpLoggingInterceptor.Level.BODY)
         return logging
@@ -33,6 +35,12 @@ object NetworkModule {
         .connectTimeout(TIMEOUT_IN_SECOND, TimeUnit.SECONDS)
         .readTimeout(TIMEOUT_IN_SECOND, TimeUnit.SECONDS)
         .writeTimeout(TIMEOUT_IN_SECOND, TimeUnit.SECONDS)
+        .addInterceptor { chain ->
+            val request = chain.request().newBuilder()
+                .addHeader("x-api-key", API_KEY)
+                .addHeader("lang", USER_LANGUAGE)
+            chain.proceed(request.build())
+        }
         .addInterceptor(interceptor())
         .build()
 
