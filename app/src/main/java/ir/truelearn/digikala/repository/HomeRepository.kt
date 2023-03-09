@@ -1,5 +1,6 @@
 package ir.truelearn.digikala.repository
 
+import ir.truelearn.digikala.data.model.home.AmazingItem
 import ir.truelearn.digikala.data.model.home.Slider
 import ir.truelearn.digikala.data.remote.BaseApiResponse
 import ir.truelearn.digikala.data.remote.HomeApiInterface
@@ -12,5 +13,12 @@ class HomeRepository @Inject constructor(private val api : HomeApiInterface) : B
         safeApiCall {
             api.getSlider()
         }
+
+    suspend fun getAmazingItems(): NetworkResult<List<AmazingItem>> =
+        safeApiCall {
+            api.getAmazingItems()
+        }
+
+
 
 }

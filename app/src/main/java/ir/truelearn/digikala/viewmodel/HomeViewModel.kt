@@ -3,6 +3,7 @@ package ir.truelearn.digikala.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import ir.truelearn.digikala.data.model.home.AmazingItem
 import ir.truelearn.digikala.data.model.home.Slider
 import ir.truelearn.digikala.data.remote.NetworkResult
 import ir.truelearn.digikala.repository.HomeRepository
@@ -12,14 +13,24 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val repository: HomeRepository) : ViewModel(){
+class HomeViewModel @Inject constructor(private val repository: HomeRepository) : ViewModel() {
 
     val slider = MutableStateFlow<NetworkResult<List<Slider>>>(NetworkResult.Loading())
+    val amazingItems = MutableStateFlow<NetworkResult<List<AmazingItem>>>(NetworkResult.Loading())
 
 
-    suspend fun getSlider(){
+    suspend fun getAllDataFromServer() {
         viewModelScope.launch {
-            slider.emit(repository.getSlider())
+
+            //fire and forget
+            launch {
+                slider.emit(repository.getSlider())
+            }
+
+            launch {
+                amazingItems.emit(repository.getAmazingItems())
+            }
+
         }
     }
 
