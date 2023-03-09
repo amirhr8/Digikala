@@ -1,7 +1,6 @@
 package ir.truelearn.digikala.ui.components
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
 import ir.truelearn.digikala.util.Constants.USER_LANGUAGE
 import ir.truelearn.digikala.viewmodel.DataStoreViewModel
@@ -18,4 +17,5 @@ fun AppConfig(
 
 private fun getDataStoreVariables(dataStore: DataStoreViewModel) {
     USER_LANGUAGE = dataStore.getUserLanguage()
+    dataStore.saveUserLanguage(USER_LANGUAGE)
 }

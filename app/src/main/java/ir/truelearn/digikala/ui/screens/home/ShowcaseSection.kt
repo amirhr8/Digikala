@@ -15,6 +15,14 @@ import ir.truelearn.digikala.ui.components.RoundedIconBox
 import ir.truelearn.digikala.ui.theme.LocalSpacing
 import ir.truelearn.digikala.ui.theme.amber
 import ir.truelearn.digikala.ui.theme.grayCategory
+import ir.truelearn.digikala.util.Constants.AUCTION_URL
+import ir.truelearn.digikala.util.Constants.DIGIJET_URL
+import ir.truelearn.digikala.util.Constants.DIGIPAY_URL
+import ir.truelearn.digikala.util.Constants.DIGIPLUS_URL
+import ir.truelearn.digikala.util.Constants.GIFT_CARD_URL
+import ir.truelearn.digikala.util.Constants.MORE_URL
+import ir.truelearn.digikala.util.Constants.PINDO_URL
+import ir.truelearn.digikala.util.Constants.SHOPPING_URL
 
 @Composable
 fun ShowcaseSection(navController: NavController) {
@@ -42,7 +50,7 @@ fun ShowcaseSection(navController: NavController) {
                 title = stringResource(id = R.string.digikala_jet),
                 onClick = onBoxClick(
                     navController = navController,
-                    url = "https://www.digikalajet.com/user/address"
+                    url = DIGIJET_URL
                 ),
             )
             RoundedIconBox(
@@ -50,7 +58,7 @@ fun ShowcaseSection(navController: NavController) {
                 title = stringResource(id = R.string.digi_style),
                 onClick = onBoxClick(
                     navController = navController,
-                    url = "https://www.digistyle.com/sale-landing/?utm_source=digikala&utm_medium=circle_badge&utm_campaign=style&promo_name=style&promo_position=circle_badge"
+                    url = AUCTION_URL
                 ),
             )
             RoundedIconBox(
@@ -58,7 +66,8 @@ fun ShowcaseSection(navController: NavController) {
                 title = stringResource(id = R.string.digi_pay),
                 onClick = onBoxClick(
                     navController,
-                    url ="https://www.digikala.com/my-digipay/?promo_name=my-digipay&promo_position=circle_badge"),
+                    url = DIGIPAY_URL
+                ),
             )
             RoundedIconBox(
                 image = painterResource(id = R.drawable.pindo),
@@ -66,7 +75,8 @@ fun ShowcaseSection(navController: NavController) {
                 bgColor = MaterialTheme.colors.amber,
                 onClick = onBoxClick(
                     navController,
-                    url ="https://www.pindo.ir/?utm_source=digikala&utm_medium=circle_badge&utm_campaign=pindo&promo_name=pindo&promo_position=circle_badge"),
+                    url = PINDO_URL
+                ),
             )
 
         }
@@ -83,27 +93,35 @@ fun ShowcaseSection(navController: NavController) {
             RoundedIconBox(
                 image = painterResource(id = R.drawable.shopping),
                 title = stringResource(id = R.string.digi_shopping),
-                onClick = {},
+                onClick = onBoxClick(
+                    navController,
+                    url = SHOPPING_URL
+                ),
             )
             RoundedIconBox(
                 image = painterResource(id = R.drawable.giftcard),
                 title = stringResource(id = R.string.gift_card),
                 onClick = onBoxClick(
                     navController,
-                    url ="https://www.digikala.com/landing/gift-card-landing/?promo_name=gift_landing&promo_position=circle_badge"),
+                    url = GIFT_CARD_URL
+                ),
             )
             RoundedIconBox(
                 image = painterResource(id = R.drawable.digiplus),
                 title = stringResource(id = R.string.digi_plus),
                 onClick = onBoxClick(
                     navController,
-                    url ="https://www.digikala.com/plus/landing/?promo_name=plus&promo_position=circle_badge"),
+                    url = DIGIPLUS_URL
+                ),
             )
             RoundedIconBox(
                 image = painterResource(id = R.drawable.more),
                 title = stringResource(id = R.string.more),
                 bgColor = MaterialTheme.colors.grayCategory,
-                onClick = {},
+                onClick = onBoxClick(
+                    navController,
+                    url = MORE_URL
+                ),
             )
 
         }

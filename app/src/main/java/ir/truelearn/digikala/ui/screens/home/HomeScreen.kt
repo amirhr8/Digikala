@@ -18,12 +18,15 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import ir.truelearn.digikala.util.Constants
+import ir.truelearn.digikala.util.LocaleUtils
 import ir.truelearn.digikala.viewmodel.HomeViewModel
 import kotlinx.coroutines.launch
 
@@ -37,6 +40,7 @@ fun Home(
     navController: NavHostController,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
+    LocaleUtils.setLocale(LocalContext.current, Constants.USER_LANGUAGE)
 
     LaunchedEffect(true) {
         refreshDataFromServer(viewModel)
