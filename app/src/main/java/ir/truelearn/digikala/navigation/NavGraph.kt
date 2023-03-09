@@ -2,10 +2,13 @@ package ir.truelearn.digikala.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import ir.truelearn.digikala.ui.screens.*
 import ir.truelearn.digikala.ui.screens.home.HomeScreen
+import ir.truelearn.digikala.ui.screens.home.WebPageScreen
 
 @Composable
 fun SetupNavGraph(navController: NavHostController) {
@@ -34,6 +37,21 @@ fun SetupNavGraph(navController: NavHostController) {
             ProfileScreen(navController = navController)
         }
 
+
+
+        composable(
+            route = Screen.WebView.route + "?url={url}",
+            arguments = listOf(navArgument("url") {
+                type = NavType.StringType
+                defaultValue = ""
+                nullable = true
+            })
+        ) {
+            val url = it.arguments?.getString("url")
+            url?.let {
+                WebPageScreen(navController = navController, url = url)
+            }
+        }
 
     }
 }
