@@ -1,11 +1,20 @@
 package ir.truelearn.digikala.ui.screens.home
 
 import android.util.Log
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import ir.truelearn.digikala.data.model.home.AmazingItem
 import ir.truelearn.digikala.data.remote.NetworkResult
+import ir.truelearn.digikala.ui.theme.DigikalaLightRed
 import ir.truelearn.digikala.viewmodel.HomeViewModel
+import ir.truelearn.digikala.R
 
 @Composable
 fun AmazingOfferSection(
@@ -33,6 +42,34 @@ fun AmazingOfferSection(
         is NetworkResult.Loading -> {
             loading = true
         }
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colors.DigikalaLightRed)) {
+
+        LazyRow(modifier = Modifier.background(MaterialTheme.colors.DigikalaLightRed)) {
+
+            item {
+                AmazingOfferCard(R.drawable.amazings, R.drawable.box)
+            }
+            item {
+                AmazingOfferCard(R.drawable.amazings, R.drawable.box)
+            }
+            item {
+                AmazingOfferCard(R.drawable.amazings, R.drawable.box)
+            }
+            item {
+                AmazingOfferCard(R.drawable.amazings, R.drawable.box)
+            }
+            item {
+                AmazingOfferCard(R.drawable.amazings, R.drawable.box)
+            }
+
+
+        }
+
     }
 
 }
