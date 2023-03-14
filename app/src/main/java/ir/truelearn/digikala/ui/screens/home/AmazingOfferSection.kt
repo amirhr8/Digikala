@@ -66,6 +66,9 @@ fun AmazingOfferSection(
             item {
                 AmazingOfferCard(R.drawable.amazings, R.drawable.box)
             }
+            item {
+                AmazingShowMoreItem()
+            }
 
 
         }
