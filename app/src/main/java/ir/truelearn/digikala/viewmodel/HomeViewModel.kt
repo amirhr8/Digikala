@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.truelearn.digikala.data.model.home.AmazingItem
+import ir.truelearn.digikala.data.model.home.MainCategory
 import ir.truelearn.digikala.data.model.home.Slider
 import ir.truelearn.digikala.data.remote.NetworkResult
 import ir.truelearn.digikala.repository.HomeRepository
@@ -19,6 +20,7 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
     val amazingItems = MutableStateFlow<NetworkResult<List<AmazingItem>>>(NetworkResult.Loading())
     val superMarketItems = MutableStateFlow<NetworkResult<List<AmazingItem>>>(NetworkResult.Loading())
     val banners = MutableStateFlow<NetworkResult<List<Slider>>>(NetworkResult.Loading())
+    val categories = MutableStateFlow<NetworkResult<List<MainCategory>>>(NetworkResult.Loading())
 
 
     suspend fun getAllDataFromServer() {
@@ -39,6 +41,10 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
 
             launch {
                 banners.emit(repository.getProposalBanners())
+            }
+
+            launch {
+                categories.emit(repository.getCategories())
             }
 
         }
