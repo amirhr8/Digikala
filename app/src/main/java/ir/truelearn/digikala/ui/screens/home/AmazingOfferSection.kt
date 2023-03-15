@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -47,25 +48,19 @@ fun AmazingOfferSection(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colors.DigikalaLightRed)) {
+            .background(MaterialTheme.colors.DigikalaLightRed)
+    ) {
 
         LazyRow(modifier = Modifier.background(MaterialTheme.colors.DigikalaLightRed)) {
 
             item {
                 AmazingOfferCard(R.drawable.amazings, R.drawable.box)
             }
-            item {
-                AmazingOfferCard(R.drawable.amazings, R.drawable.box)
+
+            items(amazingItemList) { item ->
+                AmazingItem(item = item)
             }
-            item {
-                AmazingOfferCard(R.drawable.amazings, R.drawable.box)
-            }
-            item {
-                AmazingOfferCard(R.drawable.amazings, R.drawable.box)
-            }
-            item {
-                AmazingOfferCard(R.drawable.amazings, R.drawable.box)
-            }
+
             item {
                 AmazingShowMoreItem()
             }
