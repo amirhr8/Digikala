@@ -34,7 +34,6 @@ fun AmazingOfferSection(
         is NetworkResult.Success -> {
             amazingItemList = amazingItemResult.data ?: emptyList()
             loading = false
-            Log.e("3636", "item : ${amazingItemList[0].name}")
         }
         is NetworkResult.Error -> {
             loading = false
