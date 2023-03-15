@@ -7,4 +7,3 @@ data class Slider(
     val category: String,
     val priority: Int,
 )
-

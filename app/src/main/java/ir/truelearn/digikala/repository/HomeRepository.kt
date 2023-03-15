@@ -24,6 +24,11 @@ class HomeRepository @Inject constructor(private val api : HomeApiInterface) : B
             api.getAmazingSuperMarketItems()
         }
 
+    suspend fun getProposalBanners(): NetworkResult<List<Slider>> =
+        safeApiCall {
+            api.getProposalBanners()
+        }
+
 
 
 }
