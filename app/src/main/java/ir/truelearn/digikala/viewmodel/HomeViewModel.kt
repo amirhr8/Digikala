@@ -6,6 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.truelearn.digikala.data.model.home.AmazingItem
 import ir.truelearn.digikala.data.model.home.MainCategory
 import ir.truelearn.digikala.data.model.home.Slider
+import ir.truelearn.digikala.data.model.home.StoreProduct
 import ir.truelearn.digikala.data.remote.NetworkResult
 import ir.truelearn.digikala.repository.HomeRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -22,6 +23,7 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
     val banners = MutableStateFlow<NetworkResult<List<Slider>>>(NetworkResult.Loading())
     val categories = MutableStateFlow<NetworkResult<List<MainCategory>>>(NetworkResult.Loading())
     val centerBannerItems = MutableStateFlow<NetworkResult<List<Slider>>>(NetworkResult.Loading())
+    val bestSellerItems = MutableStateFlow<NetworkResult<List<StoreProduct>>>(NetworkResult.Loading())
 
 
     suspend fun getAllDataFromServer() {
@@ -50,6 +52,10 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
 
             launch {
                 centerBannerItems.emit(repository.getCenterBanners())
+            }
+
+            launch {
+                bestSellerItems.emit(repository.getBestSellerItems())
             }
 
         }
