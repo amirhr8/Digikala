@@ -9,7 +9,7 @@ import ir.truelearn.digikala.data.remote.HomeApiInterface
 import ir.truelearn.digikala.data.remote.NetworkResult
 import javax.inject.Inject
 
-class HomeRepository @Inject constructor(private val api : HomeApiInterface) : BaseApiResponse(){
+class HomeRepository @Inject constructor(private val api: HomeApiInterface) : BaseApiResponse() {
 
     suspend fun getSlider(): NetworkResult<List<Slider>> =
         safeApiCall {
@@ -58,6 +58,10 @@ class HomeRepository @Inject constructor(private val api : HomeApiInterface) : B
             api.getMostFavoriteItems()
         }
 
+    suspend fun getMostDiscountedItems(): NetworkResult<List<StoreProduct>> =
+        safeApiCall {
+            api.getMostDiscountedItems()
+        }
 
 
 }
