@@ -59,7 +59,7 @@ fun AmazingItem(item: AmazingItem) {
                         .padding(start = MaterialTheme.spacing.small),
                     style = MaterialTheme.typography.extraSmall,
                     fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colors.DigikalaLightRed,
+                    color = MaterialTheme.colors.DigikalaLightRedText,
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
@@ -162,7 +162,7 @@ fun AmazingItem(item: AmazingItem) {
                                 fontWeight = FontWeight.SemiBold,
                             )
 
-                            Image(
+                            Icon(
                                 painter = painterResource(id = R.drawable.toman),
                                 contentDescription = "",
                                 modifier = Modifier

@@ -150,7 +150,7 @@ fun MostFavoriteProductsOffer(item : StoreProduct) {
                                    fontWeight = FontWeight.SemiBold,
                                )
 
-                               Image(
+                               Icon(
                                    painter = painterResource(id = R.drawable.toman),
                                    contentDescription = "",
                                    modifier = Modifier
@@ -179,6 +179,7 @@ fun MostFavoriteProductsOffer(item : StoreProduct) {
 
            Divider(
                Modifier
+                   .padding(start = MaterialTheme.spacing.semiMedium)
                    .width(1.dp)
                    .height(320.dp)
                    .alpha(0.4f),

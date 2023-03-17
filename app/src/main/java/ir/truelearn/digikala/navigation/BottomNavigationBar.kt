@@ -18,6 +18,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import ir.truelearn.digikala.R
+import ir.truelearn.digikala.ui.theme.bottomBar
 import ir.truelearn.digikala.ui.theme.selectedBottomBar
 import ir.truelearn.digikala.ui.theme.unSelectedBottomBar
 import ir.truelearn.digikala.util.Constants
@@ -26,7 +27,6 @@ import ir.truelearn.digikala.util.LocaleUtils
 @Composable
 fun BottomNavigationBar(
     navController: NavController,
-    modifier: Modifier = Modifier,
     onItemClick: (BottomNavItem) -> Unit
 ) {
     LocaleUtils.setLocale(LocalContext.current, Constants.USER_LANGUAGE)
@@ -64,8 +64,8 @@ fun BottomNavigationBar(
 
     if (showBottomBar) {
         BottomNavigation(
-            modifier = Modifier,
-            backgroundColor = Color.White,
+            modifier = Modifier.height(60.dp),
+            backgroundColor = MaterialTheme.colors.bottomBar,
             elevation = 5.dp
         ) {
             items.forEachIndexed { index, item ->

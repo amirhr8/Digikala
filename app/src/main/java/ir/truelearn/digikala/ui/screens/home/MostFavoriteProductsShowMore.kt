@@ -21,8 +21,7 @@ import ir.truelearn.digikala.ui.theme.*
 fun MostFavoriteProductsShowMore() {
     Column(
         modifier = Modifier
-            .size(180.dp, 375.dp)
-            .background(Color.White)
+            .size(180.dp, 320.dp)
             .padding(
                 end = MaterialTheme.spacing.medium,
                 start = MaterialTheme.spacing.semiSmall,
