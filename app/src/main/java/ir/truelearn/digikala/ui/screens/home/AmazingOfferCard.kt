@@ -11,12 +11,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ir.truelearn.digikala.ui.theme.spacing
 import ir.truelearn.digikala.R
+import ir.truelearn.digikala.ui.components.IconWithRotate
+import ir.truelearn.digikala.util.Constants
 
 @Composable
 fun AmazingOfferCard(topImageResId: Int, bottomImageResId: Int) {
@@ -35,7 +38,7 @@ fun AmazingOfferCard(topImageResId: Int, bottomImageResId: Int) {
         Spacer(modifier = Modifier.height(60.dp))
 
         Image(
-            painter = painterResource(id = topImageResId),
+            painter = amazingLogoChangeByLanguage(),
             contentDescription = "",
             modifier = Modifier
                 .fillMaxWidth()
@@ -66,12 +69,18 @@ fun AmazingOfferCard(topImageResId: Int, bottomImageResId: Int) {
                 fontWeight = FontWeight.SemiBold
             )
 
-            Icon(
-                imageVector = Icons.Filled.KeyboardArrowLeft,
-                contentDescription = "",
-                tint = Color.White
-            )
+            IconWithRotate(Icons.Filled.KeyboardArrowLeft)
+
         }
     }
 
+}
+
+@Composable
+private fun amazingLogoChangeByLanguage(): Painter {
+    return if (Constants.USER_LANGUAGE == Constants.ENGLISH_LANG) {
+        painterResource(id = R.drawable.amazing_en)
+    } else {
+        painterResource(id = R.drawable.amazings)
+    }
 }

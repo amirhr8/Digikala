@@ -6,6 +6,8 @@ import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import ir.truelearn.digikala.ui.theme.roundedShape
 import ir.truelearn.digikala.ui.theme.spacing
 import ir.truelearn.digikala.R
+import ir.truelearn.digikala.ui.components.IconWithRotate
 import ir.truelearn.digikala.ui.theme.DigikalaLightRed
 import ir.truelearn.digikala.ui.theme.darkText
 
@@ -40,12 +43,12 @@ fun AmazingShowMoreItem() {
             modifier = Modifier.fillMaxWidth()
         ) {
 
-            Icon(
-                painter = painterResource(id = R.drawable.show_more),
-                contentDescription = "",
-                tint = MaterialTheme.colors.DigikalaLightRed,
-                modifier = Modifier.size(40.dp, 40.dp)
+
+            IconWithRotate(
+                painterResource(id = R.drawable.show_more),
+                MaterialTheme.colors.DigikalaLightRed
             )
+
 
             Spacer(modifier = Modifier.height(20.dp))
 
