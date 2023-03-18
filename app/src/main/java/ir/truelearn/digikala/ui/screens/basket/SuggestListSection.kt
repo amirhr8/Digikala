@@ -20,6 +20,8 @@ import ir.truelearn.digikala.ui.theme.searchBarBg
 import ir.truelearn.digikala.ui.theme.spacing
 import ir.truelearn.digikala.viewmodel.BasketViewModel
 import ir.truelearn.digikala.R
+import ir.truelearn.digikala.data.model.basket.CartItem
+import ir.truelearn.digikala.data.model.basket.CartStatus
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -80,7 +82,20 @@ fun SuggestListSection(
     ) {
 
         for (item in suggestedList) {
-            MostDiscountedCard(item)
+            SuggestionItemCard(item){
+                viewModel.insertCartItem(
+                    CartItem(
+                        it._id,
+                        it.name,
+                        it.seller,
+                        it.price,
+                        it.discountPercent,
+                        it.image,
+                        1,
+                        CartStatus.CURRENT_CART
+                    )
+                )
+            }
         }
 
     }
