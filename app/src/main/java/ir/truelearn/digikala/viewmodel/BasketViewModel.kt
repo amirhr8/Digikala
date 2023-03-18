@@ -20,5 +20,11 @@ import javax.inject.Inject
 @HiltViewModel
 class BasketViewModel @Inject constructor(private val repository: BasketRepository) : ViewModel() {
 
+    val suggestedList = MutableStateFlow<NetworkResult<List<StoreProduct>>>(NetworkResult.Loading())
 
+     fun getSuggestedItems(){
+        viewModelScope.launch {
+            suggestedList.emit(repository.getSuggestedItems())
+        }
+    }
 }
