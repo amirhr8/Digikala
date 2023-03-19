@@ -14,8 +14,10 @@ import ir.truelearn.digikala.repository.BasketRepository
 import ir.truelearn.digikala.repository.CategoryRepository
 import ir.truelearn.digikala.repository.HomeRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,6 +25,9 @@ import javax.inject.Inject
 class BasketViewModel @Inject constructor(private val repository: BasketRepository) : ViewModel() {
 
     val suggestedList = MutableStateFlow<NetworkResult<List<StoreProduct>>>(NetworkResult.Loading())
+
+    val currentCartItems: Flow<List<CartItem>> = repository.currentCartItems
+
 
     fun getSuggestedItems() {
         viewModelScope.launch {

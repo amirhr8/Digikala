@@ -2,6 +2,7 @@ package ir.truelearn.digikala.repository
 
 import ir.truelearn.digikala.data.db.CartDao
 import ir.truelearn.digikala.data.model.basket.CartItem
+import ir.truelearn.digikala.data.model.basket.CartStatus
 import ir.truelearn.digikala.data.model.home.StoreProduct
 import ir.truelearn.digikala.data.remote.BaseApiResponse
 import ir.truelearn.digikala.data.remote.BasketApiInterface
@@ -13,6 +14,9 @@ class BasketRepository @Inject constructor(
     private val api: BasketApiInterface,
     private val dao: CartDao
 ) : BaseApiResponse() {
+
+    val currentCartItems = dao.getAllItems(CartStatus.CURRENT_CART)
+
 
     suspend fun getSuggestedItems(): NetworkResult<List<StoreProduct>> =
         safeApiCall {
