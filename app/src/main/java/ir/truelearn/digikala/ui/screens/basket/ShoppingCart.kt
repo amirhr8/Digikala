@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ir.truelearn.digikala.data.model.basket.CartItem
+import ir.truelearn.digikala.data.model.basket.CartStatus
 import ir.truelearn.digikala.viewmodel.BasketViewModel
 import kotlinx.coroutines.flow.collectLatest
 
@@ -46,7 +47,7 @@ fun ShoppingCart(
         } else {
 
             items(currentCartItems.value) { item ->
-                CartItemCard(item)
+                CartItemCard(item , CartStatus.CURRENT_CART)
             }
 
         }
