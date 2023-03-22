@@ -1,33 +1,49 @@
 package ir.truelearn.digikala.ui.screens.basket
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.MoreVert
 import ir.truelearn.digikala.R
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import ir.truelearn.digikala.data.model.basket.CartItem
 import ir.truelearn.digikala.ui.theme.*
 import ir.truelearn.digikala.util.DigitHelper.digitByLocateAndSeparator
 import ir.truelearn.digikala.util.DigitHelper.digitBySeparator
+import ir.truelearn.digikala.viewmodel.BasketViewModel
 
 @Composable
 fun CartItemCard(
-    item: CartItem
+    item: CartItem,
+    viewModel: BasketViewModel = hiltViewModel()
 ) {
+
+    val count = remember {
+        mutableStateOf(item.count)
+    }
+
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -55,7 +71,7 @@ fun CartItemCard(
                         color = MaterialTheme.colors.darkText
                     )
                     Text(
-                        text = "${digitByLocateAndSeparator("1")}  کالا",
+                        text = "${digitByLocateAndSeparator(count.value.toString())}  کالا",
                         style = MaterialTheme.typography.h6,
                         color = Color.Gray
                     )
@@ -198,9 +214,128 @@ fun CartItemCard(
                         }
                     }
 
-                    
 
                 }
+            }
+
+            Spacer(modifier = Modifier.height(MaterialTheme.spacing.semiLarge))
+
+            Row(
+                modifier = Modifier
+                    .align(Alignment.Start),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                Surface(
+                    modifier = Modifier
+                        .clip(MaterialTheme.roundedShape.semiSmall)
+                        .border(
+                            1.dp,
+                            Color.LightGray.copy(0.6f),
+                            MaterialTheme.roundedShape.semiSmall
+                        )
+
+                ) {
+
+                    Row(
+                        modifier = Modifier
+                            .padding(
+                                horizontal = MaterialTheme.spacing.small,
+                                vertical = MaterialTheme.spacing.extraSmall
+                            ),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+
+                        Icon(
+                            painterResource(id = R.drawable.ic_increase_24),
+                            contentDescription = "increase icon",
+                            tint = MaterialTheme.colors.digikalaRed,
+                            modifier = Modifier.clickable {
+                                count.value++
+                                viewModel.changeCartItemCount(item.itemId , count.value)
+                            }
+                        )
+
+                        Text(
+                            text = digitByLocateAndSeparator(count.value.toString()),
+                            style = MaterialTheme.typography.body2,
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colors.digikalaRed,
+                            modifier = Modifier
+                                .padding(horizontal = MaterialTheme.spacing.medium)
+                        )
+
+
+                        if (count.value == 1) {
+                            Icon(
+                                painterResource(id = R.drawable.digi_trash),
+                                contentDescription = "increase icon",
+                                tint = MaterialTheme.colors.digikalaRed,
+                                modifier = Modifier.clickable {
+                                    viewModel.removeCartItem(item)
+                                }
+                            )
+                        } else {
+                            Icon(
+                                painterResource(id = R.drawable.ic_decrease_24),
+                                contentDescription = "increase icon",
+                                tint = MaterialTheme.colors.digikalaRed,
+                                modifier = Modifier.clickable {
+                                    count.value--
+                                    viewModel.changeCartItemCount(item.itemId , count.value)
+                                }
+                            )
+                        }
+
+
+                    }
+
+
+                }
+
+
+                Spacer(
+                    modifier = Modifier
+                        .padding(MaterialTheme.spacing.semiMedium)
+                )
+
+                Row {
+                    Text(
+                        text = digitByLocateAndSeparator(item.price.toString()),
+                        style = MaterialTheme.typography.h3,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colors.darkText,
+                    )
+
+                    Icon(
+                        painter = painterResource(id = R.drawable.toman),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(24.dp)
+                            .padding(MaterialTheme.spacing.extraSmall)
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(MaterialTheme.spacing.semiLarge))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.End
+            ) {
+                Text(
+                    text = stringResource(R.string.save_to_next_list),
+                    fontWeight = FontWeight.Light,
+                    style = MaterialTheme.typography.h6,
+                    color = MaterialTheme.colors.DarkCyan
+                )
+
+                Icon(
+                    imageVector = Icons.Filled.KeyboardArrowLeft,
+                    contentDescription = "",
+                    tint = MaterialTheme.colors.DarkCyan
+                )
             }
 
         }

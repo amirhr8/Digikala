@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Digikala/app/src/main/res/drawable-v24/ic_increase_24.xml" value="0.169" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Digikala/app/src/main/res/drawable/circle.xml" value="0.1" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Digikala/app/src/main/res/drawable/digi_red_english.xml" value="0.1065" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Digikala/app/src/main/res/drawable/ic_decrease_24.xml" value="0.169" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/Digikala/app/src/main/res/drawable/ic_increase_24.xml" value="0.169" />
       </map>
     </option>
   </component>

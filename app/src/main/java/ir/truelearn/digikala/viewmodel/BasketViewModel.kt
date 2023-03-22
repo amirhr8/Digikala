@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.truelearn.digikala.data.model.basket.CartItem
+import ir.truelearn.digikala.data.model.basket.CartStatus
 import ir.truelearn.digikala.data.model.category.SubCategory
 import ir.truelearn.digikala.data.model.home.AmazingItem
 import ir.truelearn.digikala.data.model.home.MainCategory
@@ -36,9 +37,30 @@ class BasketViewModel @Inject constructor(private val repository: BasketReposito
     }
 
 
-    fun insertCartItem(cart: CartItem) {
+    fun insertCartItem(item: CartItem) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.insertCartItem(cart)
+            repository.insertCartItem(item)
         }
     }
+
+
+    fun removeCartItem(item: CartItem) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.removeFromCart(item)
+        }
+    }
+
+    fun changeCartItemCount(id: String, newCount: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.changeCartItemCount(id, newCount)
+        }
+    }
+
+    fun changeCartItemStatus(id: String, newStatus: CartStatus) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.changeCartItemStatus(id, newStatus)
+        }
+    }
+
+
 }
