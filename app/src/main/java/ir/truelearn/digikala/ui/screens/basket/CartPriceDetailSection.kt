@@ -27,11 +27,16 @@ import ir.truelearn.digikala.util.DigitHelper.digitByLocateAndSeparator
 
 @Composable
 fun CartPriceDetailSection(
-    item : CartDetails
+    item: CartDetails
 ) {
 
     Column(
-        modifier = Modifier.padding(MaterialTheme.spacing.medium)
+        modifier = Modifier.padding(
+            start = MaterialTheme.spacing.medium,
+            end = MaterialTheme.spacing.medium,
+            top = MaterialTheme.spacing.medium,
+            bottom = 120.dp
+        )
     ) {
 
         Row(
@@ -45,7 +50,11 @@ fun CartPriceDetailSection(
             )
 
             Text(
-                text = "${DigitHelper.digitByLocateAndSeparator(item.totalCount.toString())} ${stringResource(R.string.goods)}",
+                text = "${DigitHelper.digitByLocateAndSeparator(item.totalCount.toString())} ${
+                    stringResource(
+                        R.string.goods
+                    )
+                }",
                 style = MaterialTheme.typography.h6,
                 color = Color.Gray
             )
@@ -53,9 +62,19 @@ fun CartPriceDetailSection(
 
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.semiLarge))
 
-        PriceRow(stringResource(id = R.string.goods_price), digitByLocateAndSeparator(item.totalPrice.toString()))
-        PriceRow(stringResource(id = R.string.goods_discount), digitByLocateAndSeparator(item.totalDiscount.toString()), 4)
-        PriceRow(stringResource(id = R.string.goods_total_price), digitByLocateAndSeparator(item.payablePrice.toString()))
+        PriceRow(
+            stringResource(id = R.string.goods_price),
+            digitByLocateAndSeparator(item.totalPrice.toString())
+        )
+        PriceRow(
+            stringResource(id = R.string.goods_discount),
+            digitByLocateAndSeparator(item.totalDiscount.toString()),
+            4
+        )
+        PriceRow(
+            stringResource(id = R.string.goods_total_price),
+            digitByLocateAndSeparator(item.payablePrice.toString())
+        )
 
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
 
@@ -139,7 +158,9 @@ private fun DigiClubScore(
         text = stringResource(R.string.digiclub_description),
         style = MaterialTheme.typography.h6,
         color = Color.Gray,
-        modifier = Modifier.fillMaxWidth().padding(horizontal = MaterialTheme.spacing.biggerSmall)
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = MaterialTheme.spacing.biggerSmall)
     )
 
 
