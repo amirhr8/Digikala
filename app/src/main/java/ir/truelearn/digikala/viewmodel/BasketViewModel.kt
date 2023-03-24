@@ -1,5 +1,6 @@
 package ir.truelearn.digikala.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,21 +15,44 @@ import ir.truelearn.digikala.data.remote.NetworkResult
 import ir.truelearn.digikala.repository.BasketRepository
 import ir.truelearn.digikala.repository.CategoryRepository
 import ir.truelearn.digikala.repository.HomeRepository
+import ir.truelearn.digikala.ui.screens.basket.BasketScreenState
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 @HiltViewModel
 class BasketViewModel @Inject constructor(private val repository: BasketRepository) : ViewModel() {
 
+
     val suggestedList = MutableStateFlow<NetworkResult<List<StoreProduct>>>(NetworkResult.Loading())
 
-    val currentCartItems: Flow<List<CartItem>> = repository.currentCartItems
-    val nextCartItems: Flow<List<CartItem>> = repository.nextCartItems
+
+    private val _currentCartItems: MutableStateFlow<BasketScreenState<List<CartItem>>> =
+        MutableStateFlow(BasketScreenState.Loading)
+    val currentCartItems: StateFlow<BasketScreenState<List<CartItem>>> = _currentCartItems
+
+    private val _nextCartItems: MutableStateFlow<BasketScreenState<List<CartItem>>> =
+        MutableStateFlow(BasketScreenState.Loading)
+    val nextCartItems: StateFlow<BasketScreenState<List<CartItem>>> = _nextCartItems
+
+
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            launch {
+                repository.currentCartItems.collectLatest { cartItems ->
+                    _currentCartItems.emit(BasketScreenState.Success(cartItems))
+                }
+            }
+
+            launch {
+                repository.nextCartItems.collectLatest { nextCartItems ->
+                    _nextCartItems.emit(BasketScreenState.Success(nextCartItems))
+                }
+            }
+        }
+    }
 
 
     fun getSuggestedItems() {
