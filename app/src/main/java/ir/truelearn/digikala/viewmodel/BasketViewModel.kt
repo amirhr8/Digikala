@@ -74,10 +74,10 @@ class BasketViewModel @Inject constructor(private val repository: BasketReposito
         var payablePrice = 0L
         items.forEach { item ->
             totalPrice += item.price * item.count
-            totalDiscount += applyDiscount(item.price, item.discountPercent)
+            payablePrice += applyDiscount(item.price, item.discountPercent) * item.count
             totalCount += item.count
         }
-        payablePrice = totalPrice - totalDiscount
+        totalDiscount = totalPrice - payablePrice
         cartDetail.value = CartDetails(totalCount, totalPrice, totalDiscount, payablePrice)
     }
 

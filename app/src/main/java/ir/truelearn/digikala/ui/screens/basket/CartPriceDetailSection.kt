@@ -66,10 +66,11 @@ fun CartPriceDetailSection(
             stringResource(id = R.string.goods_price),
             digitByLocateAndSeparator(item.totalPrice.toString())
         )
+        val discountPercent = (1 - item.payablePrice.toDouble() / item.totalPrice.toDouble()) * 100
         PriceRow(
             stringResource(id = R.string.goods_discount),
             digitByLocateAndSeparator(item.totalDiscount.toString()),
-            4
+            discountPercent.toInt()
         )
         PriceRow(
             stringResource(id = R.string.goods_total_price),
@@ -108,7 +109,7 @@ fun CartPriceDetailSection(
                 .alpha(0.6f),
             color = Color.LightGray
         )
-        DigiClubScore(7)
+        DigiClubScore(item.payablePrice)
 
     }
 
@@ -117,8 +118,11 @@ fun CartPriceDetailSection(
 
 @Composable
 private fun DigiClubScore(
-    score: Int
+    payedPrice: Long
 ) {
+
+    val score = payedPrice / 100_000
+
     Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
 
     Row(
@@ -174,8 +178,10 @@ private fun PriceRow(
 ) {
 
     var color = MaterialTheme.colors.darkText
+    var ourPrice = price
     if (discount > 0) {
         color = MaterialTheme.colors.DigikalaLightRed
+        ourPrice = "(${digitByLocateAndSeparator(discount.toString())}%) $price"
     }
 
     Row(
@@ -196,7 +202,7 @@ private fun PriceRow(
 
         Row {
             Text(
-                text = price,
+                text = ourPrice,
                 style = MaterialTheme.typography.h5,
                 fontWeight = FontWeight.SemiBold,
                 color = color,
