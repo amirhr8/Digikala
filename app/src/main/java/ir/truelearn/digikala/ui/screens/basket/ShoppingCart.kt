@@ -51,6 +51,9 @@ fun ShoppingCart(
                         CartItemCard(item, CartStatus.CURRENT_CART)
                     }
 
+                    item{
+                        CartPriceDetailSection()
+                    }
                 }
             }
             is BasketScreenState.Loading -> {

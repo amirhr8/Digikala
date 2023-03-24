@@ -73,7 +73,7 @@ fun CartItemCard(
                         color = MaterialTheme.colors.darkText
                     )
                     Text(
-                        text = "${digitByLocateAndSeparator(count.value.toString())}  کالا",
+                        text = "${digitByLocateAndSeparator(count.value.toString())} ${stringResource(R.string.goods)}",
                         style = MaterialTheme.typography.h6,
                         color = Color.Gray
                     )
