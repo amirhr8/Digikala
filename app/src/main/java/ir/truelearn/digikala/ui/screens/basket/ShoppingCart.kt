@@ -27,6 +27,7 @@ fun ShoppingCart(
     viewModel: BasketViewModel = hiltViewModel()
 ) {
 
+    val cartDetail = viewModel.cartDetail.collectAsState()
 
     val currentCartItemsState: BasketScreenState<List<CartItem>> by viewModel.currentCartItems
         .collectAsState(BasketScreenState.Loading)
@@ -52,7 +53,7 @@ fun ShoppingCart(
                     }
 
                     item{
-                        CartPriceDetailSection()
+                        CartPriceDetailSection(cartDetail.value)
                     }
                 }
             }

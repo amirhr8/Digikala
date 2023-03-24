@@ -56,7 +56,10 @@
     <string name="score">امتیاز</string>
     <string name="dot_bullet">•</string>
     <string name="shipping_cost_alert">هزینه ارسال بر اساس آدرس، زمان تحویل، وزن و حجم مرسوله شما محاسبه می‌شود</string>
-
+    <string name="goods_price">قیمت کالاها</string>
+    <string name="goods_discount">تخفیف کالاها</string>
+    <string name="goods_total_price">جمع سبد خرید</string>
+    <string name="digiclub_description">بعد از پایان مهلت مرجوعی، برای دریافت امتیاز به صفحه ماموریت‌های کلابی سر بزنید</string>
 
 
 </resources>

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import ir.truelearn.digikala.data.model.basket.CartDetails
 import ir.truelearn.digikala.data.model.basket.CartItem
 import ir.truelearn.digikala.data.model.basket.CartStatus
 import ir.truelearn.digikala.data.model.category.SubCategory
@@ -16,6 +17,7 @@ import ir.truelearn.digikala.repository.BasketRepository
 import ir.truelearn.digikala.repository.CategoryRepository
 import ir.truelearn.digikala.repository.HomeRepository
 import ir.truelearn.digikala.ui.screens.basket.BasketScreenState
+import ir.truelearn.digikala.util.DigitHelper.applyDiscount
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -27,6 +29,7 @@ class BasketViewModel @Inject constructor(private val repository: BasketReposito
 
 
     val suggestedList = MutableStateFlow<NetworkResult<List<StoreProduct>>>(NetworkResult.Loading())
+    val cartDetail = MutableStateFlow(CartDetails(0, 0, 0, 0))
 
 
     private val _currentCartItems: MutableStateFlow<BasketScreenState<List<CartItem>>> =
@@ -38,20 +41,44 @@ class BasketViewModel @Inject constructor(private val repository: BasketReposito
     val nextCartItems: StateFlow<BasketScreenState<List<CartItem>>> = _nextCartItems
 
 
+    val currentCartItemsCount = repository.currentCartItemsCount
+    val nextCartItemsCount = repository.nextCartItemsCount
+
     init {
         viewModelScope.launch(Dispatchers.IO) {
             launch {
                 repository.currentCartItems.collectLatest { cartItems ->
                     _currentCartItems.emit(BasketScreenState.Success(cartItems))
+
                 }
             }
+            launch {
+                repository.currentCartItems.collectLatest { cartItems ->
+                    calculateCartDetails(cartItems)
 
+                }
+            }
             launch {
                 repository.nextCartItems.collectLatest { nextCartItems ->
                     _nextCartItems.emit(BasketScreenState.Success(nextCartItems))
                 }
             }
         }
+    }
+
+
+    private fun calculateCartDetails(items: List<CartItem>) {
+        var totalCount = 0
+        var totalPrice = 0L
+        var totalDiscount = 0L
+        var payablePrice = 0L
+        items.forEach { item ->
+            totalPrice += item.price * item.count
+            totalDiscount += applyDiscount(item.price, item.discountPercent)
+            totalCount += item.count
+        }
+        payablePrice = totalPrice - totalDiscount
+        cartDetail.value = CartDetails(totalCount, totalPrice, totalDiscount, payablePrice)
     }
 
 

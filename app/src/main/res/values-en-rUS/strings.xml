@@ -55,4 +55,8 @@
     <string name="score">Score</string>
     <string name="digiclub_score">Digiclub score</string>
     <string name="shipping_cost_alert">The shipping cost is calculated based on the address, delivery time, weight and volume of your shipment</string>
+    <string name="goods_price">Goods price</string>
+    <string name="goods_discount">Goods discount</string>
+    <string name="goods_total_price">Goods total price</string>
+    <string name="digiclub_description">After the return period, visit the club missions page to get points</string>
 </resources>
