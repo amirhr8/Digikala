@@ -35,23 +35,9 @@ fun Basket(
     viewModel: BasketViewModel = hiltViewModel()
 ) {
 
-    val currentCartItemsCount = remember {
-        mutableStateOf(0)
-    }
-    val nextCartItemsCount = remember {
-        mutableStateOf(0)
-    }
+    val currentCartItemsCount by viewModel.currentCartItemsCount.collectAsState(0)
+    val nextCartItemsCount by viewModel.nextCartItemsCount.collectAsState(0)
 
-    LaunchedEffect(true) {
-        viewModel.currentCartItemsCount.collectLatest { count ->
-            currentCartItemsCount.value = count
-        }
-    }
-    LaunchedEffect(true) {
-        viewModel.nextCartItemsCount.collectLatest { count ->
-            nextCartItemsCount.value = count
-        }
-    }
 
     var selectedTabIndex by remember {
         mutableStateOf(0)
@@ -96,9 +82,9 @@ fun Basket(
                             )
 
                             val cartCounter = if (index == 0) {
-                                currentCartItemsCount.value
+                                currentCartItemsCount
                             } else {
-                                nextCartItemsCount.value
+                                nextCartItemsCount
                             }
                             if (cartCounter > 0) {
                                 Spacer(modifier = Modifier.width(10.dp))
