@@ -11,6 +11,8 @@ import ir.truelearn.digikala.ui.screens.basket.BasketScreen
 import ir.truelearn.digikala.ui.screens.category.CategoryScreen
 import ir.truelearn.digikala.ui.screens.home.HomeScreen
 import ir.truelearn.digikala.ui.screens.home.WebPageScreen
+import ir.truelearn.digikala.ui.screens.profile.ProfileScreen
+import ir.truelearn.digikala.ui.screens.splash.SplashScreen
 
 @Composable
 fun SetupNavGraph(navController: NavHostController) {

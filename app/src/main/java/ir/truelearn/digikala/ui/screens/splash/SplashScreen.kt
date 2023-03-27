@@ -1,4 +1,4 @@
-package ir.truelearn.digikala.ui.screens
+package ir.truelearn.digikala.ui.screens.splash
 
 import android.window.SplashScreen
 import androidx.compose.foundation.Image

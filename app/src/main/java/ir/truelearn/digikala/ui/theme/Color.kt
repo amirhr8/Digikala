@@ -15,6 +15,12 @@ val Colors.splashBg: Color
     get() = Color(0xFFed1b34)
 
 
+
+val Colors.CursorColor : Color
+    @Composable
+    get() = Color(0xFF018577)
+
+
 val Colors.selectedBottomBar: Color
     @Composable
     get() = if (isLight) Color(0xFF43474C) else Color(0xFFCFD4DA)
