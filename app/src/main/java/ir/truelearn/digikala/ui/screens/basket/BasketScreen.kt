@@ -20,6 +20,7 @@ import androidx.navigation.NavHostController
 import ir.truelearn.digikala.ui.theme.digikalaRed
 import ir.truelearn.digikala.ui.theme.spacing
 import ir.truelearn.digikala.viewmodel.BasketViewModel
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun BasketScreen(navController: NavHostController) {
@@ -34,6 +35,23 @@ fun Basket(
     viewModel: BasketViewModel = hiltViewModel()
 ) {
 
+    val currentCartItemsCount = remember {
+        mutableStateOf(0)
+    }
+    val nextCartItemsCount = remember {
+        mutableStateOf(0)
+    }
+
+    LaunchedEffect(true) {
+        viewModel.currentCartItemsCount.collectLatest { count ->
+            currentCartItemsCount.value = count
+        }
+    }
+    LaunchedEffect(true) {
+        viewModel.nextCartItemsCount.collectLatest { count ->
+            nextCartItemsCount.value = count
+        }
+    }
 
     var selectedTabIndex by remember {
         mutableStateOf(0)
@@ -76,6 +94,21 @@ fun Basket(
                                 style = MaterialTheme.typography.h6,
                                 fontWeight = FontWeight.SemiBold,
                             )
+
+                            val cartCounter = if (index == 0) {
+                                currentCartItemsCount.value
+                            } else {
+                                nextCartItemsCount.value
+                            }
+                            if (cartCounter > 0) {
+                                Spacer(modifier = Modifier.width(10.dp))
+                                SetBadgeToTab(
+                                    selectedTabIndex = selectedTabIndex,
+                                    index = index,
+                                    cartCounter = cartCounter
+                                )
+                            }
+
                         }
                     }
                 )
