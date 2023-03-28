@@ -1,6 +1,7 @@
 package ir.truelearn.digikala.data.datastore
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.ui.res.integerArrayResource
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -8,7 +9,11 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import ir.truelearn.digikala.util.AES
+import ir.truelearn.digikala.util.Constants
 import ir.truelearn.digikala.util.Constants.DATASTORE_NAME
+import ir.truelearn.digikala.util.Constants.IV
+import ir.truelearn.digikala.util.Constants.KEY
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
@@ -18,10 +23,14 @@ private val Context.datastore: DataStore<Preferences> by preferencesDataStore(na
 class DataStoreRepositoryImpl @Inject constructor(
     private val context: Context
 ) : DataStoreRepository {
+
+
     override suspend fun putString(key: String, value: String) {
+        val encrypted = AES.encryptAES(value , KEY , IV)
+        Log.e("3636" , encrypted)
         val preferencesKey = stringPreferencesKey(key)
         context.datastore.edit { preferences ->
-            preferences[preferencesKey] = value
+            preferences[preferencesKey] = encrypted
         }
     }
 
@@ -36,7 +45,7 @@ class DataStoreRepositoryImpl @Inject constructor(
         return try {
             val preferencesKey = stringPreferencesKey(key)
             val preferences = context.datastore.data.first()
-            preferences[preferencesKey]
+            preferences[preferencesKey]?.let { AES.decryptAES(it, KEY , IV) }
         } catch (e: Exception) {
             e.printStackTrace()
             null

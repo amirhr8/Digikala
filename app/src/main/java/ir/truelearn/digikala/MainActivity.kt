@@ -25,7 +25,9 @@ import ir.truelearn.digikala.navigation.SetupNavGraph
 import ir.truelearn.digikala.ui.components.AppConfig
 import ir.truelearn.digikala.ui.components.ChangeStatusBarColor
 import ir.truelearn.digikala.ui.theme.DigikalaTheme
+import ir.truelearn.digikala.util.AES
 import ir.truelearn.digikala.util.Constants.ENGLISH_LANG
+import ir.truelearn.digikala.util.Constants.KEY
 import ir.truelearn.digikala.util.Constants.PERSIAN_LANG
 import ir.truelearn.digikala.util.Constants.USER_LANGUAGE
 import ir.truelearn.digikala.util.LocaleUtils
@@ -42,7 +44,8 @@ class MainActivity : ComponentActivity() {
             DigikalaTheme {
                 navController = rememberNavController()
                 ChangeStatusBarColor(navController = navController)
-                
+
+
                 AppConfig()
 
                 Log.e("3636", USER_LANGUAGE)
