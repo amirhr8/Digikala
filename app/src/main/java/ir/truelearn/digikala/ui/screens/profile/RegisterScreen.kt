@@ -25,6 +25,8 @@ import ir.truelearn.digikala.ui.theme.spacing
 import ir.truelearn.digikala.util.InputValidation
 import ir.truelearn.digikala.util.InputValidation.isValidPassword
 import ir.truelearn.digikala.viewmodel.ProfileViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun RegisterScreen(
@@ -32,6 +34,39 @@ fun RegisterScreen(
 ) {
 
     val context = LocalContext.current
+
+
+
+    LaunchedEffect(Dispatchers.Main) {
+        profileViewModel.loginResponse.collectLatest { loginResponse ->
+            when (loginResponse) {
+                is NetworkResult.Success -> {
+
+                    loginResponse.data?.let {
+                        if (it.token.isNotEmpty()) {
+                            profileViewModel.screenState = ProfileScreenState.PROFILE_STATE
+                        }
+                    }
+                    Toast.makeText(
+                        context,
+                        loginResponse.message,
+                        Toast.LENGTH_LONG
+                    ).show()
+                    profileViewModel.loadingState = false
+                }
+                is NetworkResult.Error -> {
+                    profileViewModel.loadingState = false
+                    Log.e("3636", "loginResponse error : ${loginResponse.message}")
+                }
+                is NetworkResult.Loading -> {}
+            }
+        }
+
+    }
+
+
+
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -96,18 +131,21 @@ fun RegisterScreen(
 
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
 
+        if (profileViewModel.loadingState) {
+            LoadingButton()
+        } else {
+            MyButton(text = stringResource(id = R.string.digikala_login)) {
+                if (isValidPassword(profileViewModel.inputPasswordState)) {
 
-        MyButton(text = stringResource(id = R.string.digikala_login)) {
-            if (isValidPassword(profileViewModel.inputPasswordState)) {
+                    profileViewModel.login()
 
-                profileViewModel.login()
-
-            } else {
-                Toast.makeText(
-                    context,
-                    context.resources.getText(R.string.password_format_error),
-                    Toast.LENGTH_LONG
-                ).show()
+                } else {
+                    Toast.makeText(
+                        context,
+                        context.resources.getText(R.string.password_format_error),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             }
         }
 
@@ -115,27 +153,4 @@ fun RegisterScreen(
     }
 
 
-    var loading by remember {
-        mutableStateOf(false)
-    }
-
-    val loginResponse by profileViewModel.loginResponse.collectAsState()
-    when (loginResponse) {
-        is NetworkResult.Success -> {
-            profileViewModel.screenState = ProfileScreenState.PROFILE_STATE
-            Toast.makeText(
-                context,
-                loginResponse.message,
-                Toast.LENGTH_LONG
-            ).show()
-            loading = false
-        }
-        is NetworkResult.Error -> {
-            loading = false
-            Log.e("3636", "loginResponse error : ${loginResponse.message}")
-        }
-        is NetworkResult.Loading -> {
-            loading = true
-        }
-    }
 }
