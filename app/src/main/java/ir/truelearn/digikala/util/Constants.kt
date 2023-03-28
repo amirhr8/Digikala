@@ -12,6 +12,10 @@ object Constants {
     const val SHOPPING_CART_TABLE = "shopping_cart"
     const val DATABASE_NAME = "digikala_db"
     var USER_LANGUAGE = "USER_LANGUAGE"
+    var USER_TOKEN = "USER_TOKEN"
+    var USER_ID = "USER_ID"
+    var USER_PHONE = "USER_PHONE"
+    var USER_PASSWORD = "USER_PASSWORD"
 
 
     const val DIGIJET_URL = "https://www.digikalajet.com/user/address"

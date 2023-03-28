@@ -24,13 +24,16 @@ import ir.truelearn.digikala.ui.theme.selectedBottomBar
 import ir.truelearn.digikala.ui.theme.spacing
 import ir.truelearn.digikala.util.InputValidation
 import ir.truelearn.digikala.util.InputValidation.isValidPassword
+import ir.truelearn.digikala.viewmodel.DataStoreViewModel
 import ir.truelearn.digikala.viewmodel.ProfileViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun RegisterScreen(
-    profileViewModel: ProfileViewModel = hiltViewModel()
+    profileViewModel: ProfileViewModel = hiltViewModel(),
+    dataStore: DataStoreViewModel = hiltViewModel()
+
 ) {
 
     val context = LocalContext.current
@@ -42,8 +45,14 @@ fun RegisterScreen(
             when (loginResponse) {
                 is NetworkResult.Success -> {
 
-                    loginResponse.data?.let {
-                        if (it.token.isNotEmpty()) {
+                    loginResponse.data?.let { user ->
+                        if (user.token.isNotEmpty()) {
+
+                            dataStore.saveUserToken(user.token)
+                            dataStore.saveUserId(user.id)
+                            dataStore.saveUserPhoneNumber(user.phone)
+                            dataStore.saveUserPassword(profileViewModel.inputPasswordState)
+
                             profileViewModel.screenState = ProfileScreenState.PROFILE_STATE
                         }
                     }
