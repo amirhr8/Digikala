@@ -19,12 +19,12 @@ import ir.truelearn.digikala.ui.theme.*
 fun MyEditText(
     value: String,
     placeholder:String,
-    onValueChange: () -> Unit
+    onValueChange: (it:String) -> Unit
 ) {
 
     TextField(
         value = value,
-        onValueChange = {onValueChange()},
+        onValueChange = {onValueChange(it)},
         modifier = Modifier
             .fillMaxWidth()
             .height(92.dp)

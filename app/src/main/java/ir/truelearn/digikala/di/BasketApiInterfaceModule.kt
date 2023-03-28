@@ -16,7 +16,7 @@ object BasketApiInterfaceModule {
 
     @Singleton
     @Provides
-    fun provideHomeApiService(retrofit: Retrofit): BasketApiInterface =
+    fun provideBasketApiService(retrofit: Retrofit): BasketApiInterface =
         retrofit.create(BasketApiInterface::class.java)
 
 }

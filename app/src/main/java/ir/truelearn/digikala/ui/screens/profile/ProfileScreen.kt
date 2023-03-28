@@ -28,103 +28,32 @@ import ir.truelearn.digikala.ui.theme.*
 import ir.truelearn.digikala.util.Constants.ENGLISH_LANG
 import ir.truelearn.digikala.util.Constants.PERSIAN_LANG
 import ir.truelearn.digikala.viewmodel.DataStoreViewModel
+import ir.truelearn.digikala.viewmodel.ProfileViewModel
 
 @Composable
 fun ProfileScreen(
     navController: NavHostController,
-    dataStore: DataStoreViewModel = hiltViewModel()
+    dataStore: DataStoreViewModel = hiltViewModel(),
+    profileViewModel: ProfileViewModel = hiltViewModel()
 ) {
 
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        item {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                IconButton(onClick = { }) {
-                    Icon(
-                        painter = painterResource(
-                            id = R.drawable.digi_settings
-                        ), contentDescription = "",
-                        modifier = Modifier
-                            .padding(
-                                MaterialTheme.spacing.small
-                            )
-                            .size(MaterialTheme.spacing.semiLarge),
-                        tint = MaterialTheme.colors.selectedBottomBar
-                    )
-                }
 
-                IconButton(onClick = {}) {
-                    Icon(
-                        Icons.Filled.Close,
-                        contentDescription = "Close",
-                        modifier = Modifier
-                            .padding(MaterialTheme.spacing.small),
-                        tint = MaterialTheme.colors.selectedBottomBar
-                    )
-                }
-            }
+    when (profileViewModel.screenState) {
+        ProfileScreenState.LOGIN_STATE -> {
+            LoginScreen()
         }
-        item { Spacer(modifier = Modifier.height(MaterialTheme.spacing.large)) }
-        item {
-            Image(
-                modifier = Modifier
-                    .size(200.dp),
-                painter = painterResource(id = R.drawable.digi_smile),
-                contentDescription = "",
-            )
+        ProfileScreenState.PROFILE_STATE -> {
+            Profile()
         }
-        item { Spacer(modifier = Modifier.height(MaterialTheme.spacing.large)) }
-        item {
-            Text(
-                modifier = Modifier.padding(
-                    horizontal = MaterialTheme.spacing.semiLarge
-                ),
-                style = MaterialTheme.typography.h6,
-                text = stringResource(id = R.string.loginTxt),
-                color = MaterialTheme.colors.darkText,
-                fontWeight = FontWeight.Bold
-            )
-        }
-        item {
-            MyEditText(
-                value = "",
-                placeholder = stringResource(id = R.string.phone_and_email),
-                onValueChange = {
-
-                }
-            )
-        }
-        item {
-            MyButton(text = stringResource(id = R.string.digikala_entry)) {
-
-            }
-        }
-        item {
-            Divider(
-                color = MaterialTheme.colors.searchBarBg,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .width(1.dp)
-                    .padding(top = MaterialTheme.spacing.medium)
-            )
-        }
-        item {
-            TermsAndRulesText(
-                fullText = stringResource(id = R.string.terms_and_rules_full),
-                underlinedText = listOf(
-                    stringResource(id = R.string.terms_and_rules),
-                    stringResource(id = R.string.privacy_and_rules)
-                ),
-                textColor = MaterialTheme.colors.semiDarkText,
-                fontSize = 10.sp,
-                textAlign = TextAlign.Center
-            )
+        ProfileScreenState.REGISTER_STATE -> {
+            RegisterScreen()
         }
     }
+
+
+}
+
+@Composable
+fun Profile() {
+    Text(text = "Profile")
 }
