@@ -73,4 +73,7 @@
     <string name="digikala_login">Lets go!</string>
     <string name="password_error">The information entered is not correct</string>
     <string name="password_format_error">Password must be at least 6 digits</string>
+    <string name="digikala_score">Digikala score</string>
+    <string name="digikala_wallet_active">Activate wallet</string>
+
 </resources>

@@ -22,6 +22,7 @@ import ir.truelearn.digikala.data.remote.NetworkResult
 import ir.truelearn.digikala.ui.theme.darkText
 import ir.truelearn.digikala.ui.theme.selectedBottomBar
 import ir.truelearn.digikala.ui.theme.spacing
+import ir.truelearn.digikala.util.Constants
 import ir.truelearn.digikala.util.InputValidation
 import ir.truelearn.digikala.util.InputValidation.isValidPassword
 import ir.truelearn.digikala.viewmodel.DataStoreViewModel
@@ -51,6 +52,7 @@ fun RegisterScreen(
                             dataStore.saveUserToken(user.token)
                             dataStore.saveUserId(user.id)
                             dataStore.saveUserPhoneNumber(user.phone)
+                            Constants.USER_PHONE = user.phone
                             dataStore.saveUserPassword(profileViewModel.inputPasswordState)
 
                             profileViewModel.screenState = ProfileScreenState.PROFILE_STATE
