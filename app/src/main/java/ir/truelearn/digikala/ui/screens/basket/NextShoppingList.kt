@@ -14,17 +14,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import ir.truelearn.digikala.R
 import ir.truelearn.digikala.data.model.basket.CartItem
 import ir.truelearn.digikala.data.model.basket.CartStatus
 import ir.truelearn.digikala.ui.components.OurLoading
 import ir.truelearn.digikala.ui.theme.darkText
 import ir.truelearn.digikala.ui.theme.spacing
+import ir.truelearn.digikala.util.Constants
 import ir.truelearn.digikala.viewmodel.BasketViewModel
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun NextShoppingList(
+    navController: NavController,
     viewModel: BasketViewModel = hiltViewModel()
 ) {
 
@@ -41,6 +44,11 @@ fun NextShoppingList(
             .padding(bottom = 60.dp),
     ) {
 
+        item {
+            if (Constants.USER_TOKEN == "null") {
+                LoginOrRegisterSection(navController)
+            }
+        }
 
         when (nextCartItemsState) {
             is BasketScreenState.Success -> {

@@ -15,16 +15,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import ir.truelearn.digikala.R
 import ir.truelearn.digikala.data.model.basket.CartItem
 import ir.truelearn.digikala.data.model.basket.CartStatus
 import ir.truelearn.digikala.ui.theme.darkText
 import ir.truelearn.digikala.ui.theme.spacing
+import ir.truelearn.digikala.util.Constants
 import ir.truelearn.digikala.viewmodel.BasketViewModel
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun ShoppingCart(
+    navController: NavController,
     viewModel: BasketViewModel = hiltViewModel()
 ) {
 
@@ -32,6 +35,10 @@ fun ShoppingCart(
 
     val currentCartItemsState: BasketScreenState<List<CartItem>> by viewModel.currentCartItems
         .collectAsState(BasketScreenState.Loading)
+
+    var isCartEmpty by remember {
+        mutableStateOf(true)
+    }
 
     Box(
         modifier = Modifier
@@ -45,14 +52,20 @@ fun ShoppingCart(
                 .padding(bottom = 60.dp),
         ) {
 
+            item {
+                if (Constants.USER_TOKEN == "null") {
+                   LoginOrRegisterSection(navController)
+                }
+            }
 
             when (currentCartItemsState) {
                 is BasketScreenState.Success -> {
                     if ((currentCartItemsState as BasketScreenState.Success<List<CartItem>>).data.isEmpty()) {
+                        isCartEmpty = true
                         item { EmptyBasketShopping() }
                         item { SuggestListSection() }
                     } else {
-
+                        isCartEmpty = false
                         items((currentCartItemsState as BasketScreenState.Success<List<CartItem>>).data) { item ->
                             CartItemCard(item, CartStatus.CURRENT_CART)
                         }
@@ -89,14 +102,17 @@ fun ShoppingCart(
 
         }
 
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 60.dp)
-        ) {
-            BuyProcessContinue(cartDetail.payablePrice)
+        if(!isCartEmpty){
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 60.dp)
+            ) {
+                BuyProcessContinue(cartDetail.payablePrice)
+            }
         }
+
     }
 
 

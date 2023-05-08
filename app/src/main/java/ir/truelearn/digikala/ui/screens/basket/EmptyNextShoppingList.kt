@@ -21,11 +21,16 @@ import ir.truelearn.digikala.R
 import ir.truelearn.digikala.ui.components.OurLoading
 import ir.truelearn.digikala.ui.theme.darkText
 import ir.truelearn.digikala.ui.theme.semiDarkText
+import ir.truelearn.digikala.util.Constants
 
 @Composable
 fun EmptyNextShoppingList() {
 
     val config = LocalConfiguration.current
+    var verticalArrangement: Arrangement.Vertical = Arrangement.Center
+    if (Constants.USER_TOKEN == "null") {
+        verticalArrangement = Arrangement.Top
+    }
 
     Column(
         modifier = Modifier
@@ -33,7 +38,7 @@ fun EmptyNextShoppingList() {
             .fillMaxWidth()
             .padding(vertical = MaterialTheme.spacing.small),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = verticalArrangement
     ) {
         Image(
             painter = painterResource(id = R.drawable.empty_next_chart),

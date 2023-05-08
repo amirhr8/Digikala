@@ -53,6 +53,7 @@ fun RegisterScreen(
                             dataStore.saveUserId(user.id)
                             dataStore.saveUserPhoneNumber(user.phone)
                             Constants.USER_PHONE = user.phone
+                            Constants.USER_TOKEN = user.token
                             dataStore.saveUserPassword(profileViewModel.inputPasswordState)
 
                             profileViewModel.screenState = ProfileScreenState.PROFILE_STATE
