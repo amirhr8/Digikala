@@ -19,6 +19,7 @@ import androidx.navigation.NavController
 import ir.truelearn.digikala.R
 import ir.truelearn.digikala.data.model.basket.CartItem
 import ir.truelearn.digikala.data.model.basket.CartStatus
+import ir.truelearn.digikala.navigation.Screen
 import ir.truelearn.digikala.ui.theme.darkText
 import ir.truelearn.digikala.ui.theme.spacing
 import ir.truelearn.digikala.util.Constants
@@ -109,7 +110,13 @@ fun ShoppingCart(
                     .align(Alignment.BottomCenter)
                     .padding(bottom = 60.dp)
             ) {
-                BuyProcessContinue(cartDetail.payablePrice)
+                BuyProcessContinue(cartDetail.payablePrice){
+                    if (Constants.USER_TOKEN == "null") {
+                        navController.navigate(Screen.Profile.route)
+                    }else{
+                        navController.navigate(Screen.Checkout.route)
+                    }
+                }
             }
         }
 

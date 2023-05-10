@@ -9,6 +9,7 @@ import androidx.navigation.navArgument
 import ir.truelearn.digikala.ui.screens.*
 import ir.truelearn.digikala.ui.screens.basket.BasketScreen
 import ir.truelearn.digikala.ui.screens.category.CategoryScreen
+import ir.truelearn.digikala.ui.screens.checkout.CheckoutScreen
 import ir.truelearn.digikala.ui.screens.home.HomeScreen
 import ir.truelearn.digikala.ui.screens.home.WebPageScreen
 import ir.truelearn.digikala.ui.screens.profile.ProfileScreen
@@ -39,6 +40,10 @@ fun SetupNavGraph(navController: NavHostController) {
 
         composable(route = Screen.Profile.route) {
             ProfileScreen(navController = navController)
+        }
+
+        composable(route = Screen.Checkout.route) {
+            CheckoutScreen(navController = navController)
         }
 
 

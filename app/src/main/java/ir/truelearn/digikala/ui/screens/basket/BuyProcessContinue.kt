@@ -18,7 +18,8 @@ import ir.truelearn.digikala.util.DigitHelper
 
 @Composable
 fun BuyProcessContinue(
-    price: Long
+    price: Long,
+    onClick: () -> Unit,
 ) {
     Card(
         shape = MaterialTheme.roundedShape.extraSmall,
@@ -36,7 +37,7 @@ fun BuyProcessContinue(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Button(
-                onClick = {},
+                onClick = onClick,
                 colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.digikalaRed),
                 shape = MaterialTheme.roundedShape.small
             ) {
