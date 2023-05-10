@@ -84,6 +84,7 @@ val Colors.LightCyan: Color
     get() = Color(0xFF17BFD3)
 
 
+
 val Colors.DigikalaLightGreen: Color
     @Composable
     get() = if (isLight) Color(0xff86bf3c) else Color(0xFF3A531A)
