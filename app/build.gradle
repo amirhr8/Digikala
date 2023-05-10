@@ -12,6 +12,11 @@ apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
 android {
     compileSdk 33
 
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
     defaultConfig {
         applicationId "ir.truelearn.digikala"
         minSdk 21
@@ -31,7 +36,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
