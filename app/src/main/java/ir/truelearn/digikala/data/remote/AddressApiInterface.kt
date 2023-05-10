@@ -1,6 +1,7 @@
 package ir.truelearn.digikala.data.remote
 
 import ir.truelearn.digikala.data.model.ResponseResult
+import ir.truelearn.digikala.data.model.address.UserAddress
 import ir.truelearn.digikala.data.model.home.AmazingItem
 import ir.truelearn.digikala.data.model.home.MainCategory
 import ir.truelearn.digikala.data.model.home.Slider
@@ -11,13 +12,14 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface AddressApiInterface {
 
-   /* @POST("v1/login")
-    suspend fun login(
-        @Body login : LoginRequest
-    ) : Response<ResponseResult<LoginResponse>>
-*/
+    @GET("v1/getUserAddress")
+    suspend fun getUserAddressList(
+        @Query("token") token: String
+    ) : Response<ResponseResult<List<UserAddress>>>
+
 
 }

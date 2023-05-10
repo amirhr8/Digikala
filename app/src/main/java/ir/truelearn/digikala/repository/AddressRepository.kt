@@ -1,5 +1,6 @@
 package ir.truelearn.digikala.repository
 
+import ir.truelearn.digikala.data.model.address.UserAddress
 import ir.truelearn.digikala.data.model.home.AmazingItem
 import ir.truelearn.digikala.data.model.home.MainCategory
 import ir.truelearn.digikala.data.model.home.Slider
@@ -11,10 +12,10 @@ import javax.inject.Inject
 
 class AddressRepository @Inject constructor(private val api: AddressApiInterface) : BaseApiResponse() {
 
-   /* suspend fun login(loginRequest: LoginRequest): NetworkResult<LoginResponse> =
+    suspend fun getUserAddressList(token: String): NetworkResult<List<UserAddress>> =
         safeApiCall {
-           api.login(loginRequest)
-        }*/
+          api.getUserAddressList(token)
+        }
 
 
 }

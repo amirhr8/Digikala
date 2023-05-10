@@ -74,6 +74,9 @@ val Colors.semiDarkText: Color
     @Composable
     get() = if (isLight) Color(0xFF5C5E61) else Color(0xFFD8D8D8)
 
+val Colors.settingArrow: Color
+    @Composable
+    get() = if (isLight) Color(0xFF9E9FB1) else Color(0xFFD8D8D8)
 
 val Colors.DarkCyan: Color
     @Composable
