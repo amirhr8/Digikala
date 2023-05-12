@@ -36,8 +36,9 @@ import ir.truelearn.digikala.ui.theme.spacing
 @Composable
 fun CartAddressSection(
     navController: NavHostController,
-    viewModel: AddressViewModel = hiltViewModel()
-){
+    viewModel: AddressViewModel = hiltViewModel(),
+    onAddressReady: (List<UserAddress>) -> Unit
+) {
 
 
     var addressList by remember {
@@ -56,7 +57,8 @@ fun CartAddressSection(
     when (addressListResult) {
         is NetworkResult.Success -> {
             addressList = addressListResult.data ?: emptyList()
-            if(addressList.isNotEmpty()){
+            if (addressList.isNotEmpty()) {
+                onAddressReady(addressList)
                 address = addressList[0].address
                 addressBtnText = stringResource(id = R.string.change_address)
                 addressName = addressList[0].name
@@ -75,7 +77,7 @@ fun CartAddressSection(
 
     if (loading) {
         OurLoading(100.dp, true)
-    }else{
+    } else {
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -96,7 +98,7 @@ fun CartAddressSection(
                     .padding(vertical = MaterialTheme.spacing.medium),
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.Center,
-            ){
+            ) {
 
                 Text(
                     text = stringResource(id = R.string.send_to),
@@ -133,7 +135,7 @@ fun CartAddressSection(
                 .padding(horizontal = MaterialTheme.spacing.medium),
             horizontalArrangement = Arrangement.End,
             verticalAlignment = Alignment.CenterVertically
-        ){
+        ) {
 
             Text(
                 modifier = Modifier

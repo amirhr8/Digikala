@@ -25,7 +25,7 @@ import ir.truelearn.digikala.util.DigitHelper.digitByLocate
 
 @Composable
 fun CartItemReviewSection(
-    shippingCost: String,
+    shippingCost: Int,
     cartDetail: CartDetails,
     currentCartItems: List<CartItem>
 ) {

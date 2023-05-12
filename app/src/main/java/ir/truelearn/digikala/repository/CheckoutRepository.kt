@@ -11,10 +11,10 @@ import javax.inject.Inject
 
 class CheckoutRepository @Inject constructor(private val api: CheckoutApiInterface) : BaseApiResponse() {
 
-    /*suspend fun login(loginRequest: LoginRequest): NetworkResult<LoginResponse> =
+    suspend fun getShippingCost(address: String): NetworkResult<Int> =
         safeApiCall {
-           api.login(loginRequest)
-        }*/
+           api.getShippingCost(address)
+        }
 
 
 }
