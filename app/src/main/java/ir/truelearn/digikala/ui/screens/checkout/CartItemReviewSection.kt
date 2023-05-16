@@ -25,9 +25,9 @@ import ir.truelearn.digikala.util.DigitHelper.digitByLocate
 
 @Composable
 fun CartItemReviewSection(
-    shippingCost: Int,
     cartDetail: CartDetails,
-    currentCartItems: List<CartItem>
+    currentCartItems: List<CartItem>,
+    onDeliveryTimeClick: () -> Unit
 ) {
 
     Column(
@@ -117,19 +117,32 @@ fun CartItemReviewSection(
                     }
                 }
 
-                Text(
-                    text = stringResource(id = R.string.ready_to_send),
-                    style = MaterialTheme.typography.extraSmall,
-                    color = Color.Gray,
-                    modifier = Modifier
-                        .align(Alignment.Start)
-                        .padding(vertical = MaterialTheme.spacing.medium),
-                )
+                Row() {
+                    Text(
+                        text = stringResource(id = R.string.ready_to_send),
+                        style = MaterialTheme.typography.extraSmall,
+                        color = Color.Gray,
+                        modifier = Modifier
+                            .padding(vertical = MaterialTheme.spacing.medium),
+                    )
+
+                    Text(
+                        text = " : ${stringResource(id = R.string.pishtaz_post)} (${stringResource(id = R.string.delivery_delay)})",
+                        style = MaterialTheme.typography.extraSmall,
+                        color = Color.Gray,
+                        modifier = Modifier
+                            .padding(vertical = MaterialTheme.spacing.medium),
+                    )
+                }
+
 
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = MaterialTheme.spacing.medium),
+                        .padding(bottom = MaterialTheme.spacing.medium)
+                        .clickable {
+                            onDeliveryTimeClick()
+                        },
                     horizontalArrangement = Arrangement.Start,
                     verticalAlignment = Alignment.CenterVertically
                 ){
