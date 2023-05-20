@@ -31,6 +31,7 @@ import ir.truelearn.digikala.util.Constants.KEY
 import ir.truelearn.digikala.util.Constants.PERSIAN_LANG
 import ir.truelearn.digikala.util.Constants.USER_LANGUAGE
 import ir.truelearn.digikala.util.LocaleUtils
+import ir.truelearn.digikala.util.ZarinpalPurchase
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -40,6 +41,17 @@ class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+       /* ZarinpalPurchase.purchase(
+            this,
+            1000,
+            "test"
+        ){
+            Log.e("3636" , "Transaction ID : $it")
+        }*/
+
+
         setContent {
             DigikalaTheme {
                 navController = rememberNavController()

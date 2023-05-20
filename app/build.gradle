@@ -115,6 +115,9 @@ dependencies {
     implementation "com.google.accompanist:accompanist-pager-indicators:0.29.0-alpha"
 
 
+    //zarinpal
+    implementation 'com.zarinpal:payment-provider-ktx:0.5.3'
+
 }
 
 

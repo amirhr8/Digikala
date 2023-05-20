@@ -18,6 +18,8 @@ object Constants {
     var USER_ID = "USER_ID"
     var USER_PHONE = "USER_PHONE"
     var USER_PASSWORD = "USER_PASSWORD"
+    const val ZARINPAL_MERCHANT_ID = ""
+
 
 
     const val DIGIJET_URL = "https://www.digikalajet.com/user/address"
