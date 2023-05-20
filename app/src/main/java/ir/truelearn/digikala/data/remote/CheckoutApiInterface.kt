@@ -1,6 +1,7 @@
 package ir.truelearn.digikala.data.remote
 
 import ir.truelearn.digikala.data.model.ResponseResult
+import ir.truelearn.digikala.data.model.checkout.OrderDetail
 import ir.truelearn.digikala.data.model.home.AmazingItem
 import ir.truelearn.digikala.data.model.home.MainCategory
 import ir.truelearn.digikala.data.model.home.Slider
@@ -18,7 +19,12 @@ interface CheckoutApiInterface {
     @GET("v1/getShippingCost")
     suspend fun getShippingCost(
         @Query("address") address: String
-    ) : Response<ResponseResult<Int>>
+    ): Response<ResponseResult<Int>>
 
+
+    @POST("v1/setNewOrder")
+    suspend fun setNewOrder(
+        @Body orderRequest: OrderDetail
+    ): Response<ResponseResult<String>>
 
 }

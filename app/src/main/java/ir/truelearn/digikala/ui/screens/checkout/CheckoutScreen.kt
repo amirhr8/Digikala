@@ -16,10 +16,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import ir.truelearn.digikala.data.model.checkout.OrderDetail
 import ir.truelearn.digikala.data.remote.NetworkResult
 import ir.truelearn.digikala.ui.components.OurLoading
 import ir.truelearn.digikala.ui.screens.basket.BuyProcessContinue
 import ir.truelearn.digikala.ui.screens.basket.CartPriceDetailSection
+import ir.truelearn.digikala.util.Constants
+import ir.truelearn.digikala.util.Constants.USER_TOKEN
 import ir.truelearn.digikala.viewmodel.BasketViewModel
 import ir.truelearn.digikala.viewmodel.CheckoutViewModel
 import kotlinx.coroutines.coroutineScope
@@ -39,6 +42,19 @@ fun CheckoutScreen(
     var shippingCost by remember { mutableStateOf(0) }
     var loading by remember { mutableStateOf(false) }
 
+    var address by remember { mutableStateOf("") }
+    var addressName by remember { mutableStateOf("") }
+    var addressPhone by remember { mutableStateOf("") }
+
+
+
+    LaunchedEffect(true) {
+        if (address.isNotBlank())
+            checkoutViewModel.getShippingCost(address)
+        else
+            checkoutViewModel.getShippingCost("")
+    }
+
 
     val shippingCostResult by checkoutViewModel.shippingCost.collectAsState()
     when (shippingCostResult) {
@@ -54,6 +70,26 @@ fun CheckoutScreen(
             loading = true
         }
     }
+
+
+    var orderId by remember { mutableStateOf("") }
+
+    val orderResult by checkoutViewModel.orderResponse.collectAsState()
+    when (orderResult) {
+        is NetworkResult.Success -> {
+            orderId = orderResult.data ?: ""
+            Log.e("3636", orderId)
+            //loading = false
+        }
+        is NetworkResult.Error -> {
+            //loading = false
+            Log.e("3636", "CheckoutScreen error : ${shippingCostResult.message}")
+        }
+        is NetworkResult.Loading -> {
+            //loading = true
+        }
+    }
+
 
     val coroutineScope = rememberCoroutineScope()
     val modalSheetState = rememberModalBottomSheetState(
@@ -78,9 +114,9 @@ fun CheckoutScreen(
                 item {
                     CartAddressSection(navController) { addressList ->
                         if (addressList.isNotEmpty()) {
-                            checkoutViewModel.getShippingCost(addressList[0].address)
-                        } else {
-                            checkoutViewModel.getShippingCost("")
+                            address = addressList[0].address
+                            addressName = addressList[0].name
+                            addressPhone = addressList[0].phone
                         }
                     }
                 }
@@ -101,16 +137,26 @@ fun CheckoutScreen(
             }
 
 
-            if(loading){
+            if (loading) {
                 OurLoading(height = 65.dp, isDark = true)
-            }else{
+            } else {
                 Row(
                     Modifier
                         .fillMaxWidth()
                         .align(Alignment.BottomCenter)
                 ) {
                     BuyProcessContinue(cartDetail.payablePrice, shippingCost) {
-
+                        checkoutViewModel.addNewOrder(
+                            OrderDetail(
+                                orderAddress = address,
+                                orderProducts = currentCartItems,
+                                orderTotalDiscount = cartDetail.totalDiscount,
+                                orderTotalPrice = cartDetail.payablePrice + shippingCost,
+                                orderUserPhone = addressPhone,
+                                orderUserName = addressName,
+                                token = USER_TOKEN
+                            )
+                        )
                     }
                 }
             }
