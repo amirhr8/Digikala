@@ -61,4 +61,20 @@ object ZarinpalPurchase {
 
     }
 
+    fun fakePurchase(
+        activity: Activity,
+        amount: Long,
+        description: String,
+        onPurchaseCompleted: (String) -> Unit
+    ){
+        Thread.sleep(1000)
+        onPurchaseCompleted(generateRandomString(8))
+    }
+
+    private fun generateRandomString(length: Int):String{
+        val chars = ('a'..'z') + ('A'..'Z')+ ('0'..'9')
+        return List(length) {chars.random()}.joinToString("")
+    }
+
+
 }

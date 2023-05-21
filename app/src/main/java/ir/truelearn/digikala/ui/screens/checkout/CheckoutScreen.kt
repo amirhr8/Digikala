@@ -18,6 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ir.truelearn.digikala.data.model.checkout.OrderDetail
 import ir.truelearn.digikala.data.remote.NetworkResult
+import ir.truelearn.digikala.navigation.Screen
 import ir.truelearn.digikala.ui.components.OurLoading
 import ir.truelearn.digikala.ui.screens.basket.BuyProcessContinue
 import ir.truelearn.digikala.ui.screens.basket.CartPriceDetailSection
@@ -25,7 +26,9 @@ import ir.truelearn.digikala.util.Constants
 import ir.truelearn.digikala.util.Constants.USER_TOKEN
 import ir.truelearn.digikala.viewmodel.BasketViewModel
 import ir.truelearn.digikala.viewmodel.CheckoutViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -74,19 +77,24 @@ fun CheckoutScreen(
 
     var orderId by remember { mutableStateOf("") }
 
-    val orderResult by checkoutViewModel.orderResponse.collectAsState()
-    when (orderResult) {
-        is NetworkResult.Success -> {
-            orderId = orderResult.data ?: ""
-            Log.e("3636", orderId)
-            //loading = false
-        }
-        is NetworkResult.Error -> {
-            //loading = false
-            Log.e("3636", "CheckoutScreen error : ${shippingCostResult.message}")
-        }
-        is NetworkResult.Loading -> {
-            //loading = true
+
+    LaunchedEffect(Dispatchers.Main) {
+        checkoutViewModel.orderResponse.collectLatest { orderResult->
+            when (orderResult) {
+                is NetworkResult.Success -> {
+                    orderId = orderResult.data ?: ""
+                    navController.navigate(Screen.ConfirmPurchase.withArgs(orderId , cartDetail.payablePrice + shippingCost))
+                    Log.e("3636", orderId)
+                    //loading = false
+                }
+                is NetworkResult.Error -> {
+                    //loading = false
+                    Log.e("3636", "CheckoutScreen error : ${shippingCostResult.message}")
+                }
+                is NetworkResult.Loading -> {
+                    //loading = true
+                }
+            }
         }
     }
 

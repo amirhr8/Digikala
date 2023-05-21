@@ -10,6 +10,7 @@ import ir.truelearn.digikala.ui.screens.*
 import ir.truelearn.digikala.ui.screens.basket.BasketScreen
 import ir.truelearn.digikala.ui.screens.category.CategoryScreen
 import ir.truelearn.digikala.ui.screens.checkout.CheckoutScreen
+import ir.truelearn.digikala.ui.screens.checkout.ConfirmPurchaseScreen
 import ir.truelearn.digikala.ui.screens.home.HomeScreen
 import ir.truelearn.digikala.ui.screens.home.WebPageScreen
 import ir.truelearn.digikala.ui.screens.profile.ProfileScreen
@@ -46,7 +47,33 @@ fun SetupNavGraph(navController: NavHostController) {
             CheckoutScreen(navController = navController)
         }
 
+        composable(route = Screen.ConfirmPurchase.route + "/{orderId}/{orderPrice}",
+            arguments = listOf(
+                navArgument("orderId"){
+                    type = NavType.StringType
+                    defaultValue = " "
+                    nullable = true
+                },
+                navArgument("orderPrice"){
+                    type = NavType.StringType
+                    defaultValue = " "
+                    nullable = true
+                }
+            )
+        ) {
+            it.arguments!!.getString("orderId")?.let { orderId->
+                it.arguments!!.getString("orderPrice")?.let { orderPrice->
+                    ConfirmPurchaseScreen(
+                        navController = navController,
+                        orderId = orderId,
+                        orderPrice = orderPrice
+                    )
+                }
+            }
 
+
+
+        }
 
         composable(
             route = Screen.WebView.route + "?url={url}",

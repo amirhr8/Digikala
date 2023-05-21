@@ -3,6 +3,7 @@ package ir.truelearn.digikala.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import ir.truelearn.digikala.data.model.checkout.ConfirmPurchase
 import ir.truelearn.digikala.data.model.checkout.OrderDetail
 import ir.truelearn.digikala.data.remote.NetworkResult
 import ir.truelearn.digikala.repository.CheckoutRepository
@@ -19,6 +20,8 @@ class CheckoutViewModel @Inject constructor(private val repository: CheckoutRepo
     val shippingCost = MutableStateFlow<NetworkResult<Int>>(NetworkResult.Loading())
 
     val orderResponse = MutableStateFlow<NetworkResult<String>>(NetworkResult.Loading())
+
+    val purchaseResponse = MutableStateFlow<NetworkResult<String>>(NetworkResult.Loading())
 
 
     fun getShippingCost(address : String){
@@ -37,5 +40,13 @@ class CheckoutViewModel @Inject constructor(private val repository: CheckoutRepo
     }
 
 
+
+    fun confirmPurchase(confirmPurchase: ConfirmPurchase) {
+        viewModelScope.launch(Dispatchers.IO) {
+            launch {
+                purchaseResponse.emit(repository.confirmPurchase(confirmPurchase))
+            }
+        }
+    }
 
 }

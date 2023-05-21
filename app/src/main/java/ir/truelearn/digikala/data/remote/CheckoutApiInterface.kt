@@ -1,13 +1,8 @@
 package ir.truelearn.digikala.data.remote
 
 import ir.truelearn.digikala.data.model.ResponseResult
+import ir.truelearn.digikala.data.model.checkout.ConfirmPurchase
 import ir.truelearn.digikala.data.model.checkout.OrderDetail
-import ir.truelearn.digikala.data.model.home.AmazingItem
-import ir.truelearn.digikala.data.model.home.MainCategory
-import ir.truelearn.digikala.data.model.home.Slider
-import ir.truelearn.digikala.data.model.home.StoreProduct
-import ir.truelearn.digikala.data.model.prfile.LoginRequest
-import ir.truelearn.digikala.data.model.prfile.LoginResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -25,6 +20,12 @@ interface CheckoutApiInterface {
     @POST("v1/setNewOrder")
     suspend fun setNewOrder(
         @Body orderRequest: OrderDetail
+    ): Response<ResponseResult<String>>
+
+
+    @POST("v1/confirmPurchase")
+    suspend fun confirmPurchase(
+        @Body confirmPurchase: ConfirmPurchase
     ): Response<ResponseResult<String>>
 
 }

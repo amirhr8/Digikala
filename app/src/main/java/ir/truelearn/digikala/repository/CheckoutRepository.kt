@@ -1,5 +1,6 @@
 package ir.truelearn.digikala.repository
 
+import ir.truelearn.digikala.data.model.checkout.ConfirmPurchase
 import ir.truelearn.digikala.data.model.checkout.OrderDetail
 import ir.truelearn.digikala.data.model.home.AmazingItem
 import ir.truelearn.digikala.data.model.home.MainCategory
@@ -21,6 +22,11 @@ class CheckoutRepository @Inject constructor(private val api: CheckoutApiInterfa
     suspend fun setNewOrder(cartOrderDetail: OrderDetail): NetworkResult<String> =
         safeApiCall {
             api.setNewOrder(cartOrderDetail)
+        }
+
+    suspend fun confirmPurchase(confirmPurchase: ConfirmPurchase): NetworkResult<String> =
+        safeApiCall {
+            api.confirmPurchase(confirmPurchase)
         }
 
 }
