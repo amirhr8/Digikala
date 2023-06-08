@@ -70,9 +70,9 @@ private fun SwipeRefreshSection(viewModel: HomeViewModel, navController: NavHost
             item { SearchBarSection() }
             item { TopSliderSection() }
             item { ShowcaseSection(navController) }
-            item { AmazingOfferSection() }
+            item { AmazingOfferSection(navController) }
             item { ProposalCardSection() }
-            item { SuperMarketOfferSection() }
+            item { SuperMarketOfferSection(navController) }
             item { CategoryListSection() }
             item { CenterBannerSection(1) }
             item { BestSellerOfferSection() }

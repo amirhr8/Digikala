@@ -20,6 +20,7 @@ import ir.truelearn.digikala.viewmodel.HomeViewModel
 
 @Composable
 fun SuperMarketOfferSection(
+    navController: NavController,
     viewModel: HomeViewModel = hiltViewModel()
 ){
 
@@ -58,7 +59,7 @@ fun SuperMarketOfferSection(
             }
 
             items(superMarketItemList) { item ->
-                AmazingItem(item = item)
+                AmazingItem(item = item ,  navController = navController)
             }
 
             item {

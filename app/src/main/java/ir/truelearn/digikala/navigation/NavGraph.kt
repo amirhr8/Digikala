@@ -13,6 +13,7 @@ import ir.truelearn.digikala.ui.screens.checkout.CheckoutScreen
 import ir.truelearn.digikala.ui.screens.checkout.ConfirmPurchaseScreen
 import ir.truelearn.digikala.ui.screens.home.HomeScreen
 import ir.truelearn.digikala.ui.screens.home.WebPageScreen
+import ir.truelearn.digikala.ui.screens.product_detail.ProductDetailScreen
 import ir.truelearn.digikala.ui.screens.profile.ProfileScreen
 import ir.truelearn.digikala.ui.screens.splash.SplashScreen
 
@@ -49,20 +50,20 @@ fun SetupNavGraph(navController: NavHostController) {
 
         composable(route = Screen.ConfirmPurchase.route + "/{orderId}/{orderPrice}",
             arguments = listOf(
-                navArgument("orderId"){
+                navArgument("orderId") {
                     type = NavType.StringType
                     defaultValue = " "
                     nullable = true
                 },
-                navArgument("orderPrice"){
+                navArgument("orderPrice") {
                     type = NavType.StringType
                     defaultValue = " "
                     nullable = true
                 }
             )
         ) {
-            it.arguments!!.getString("orderId")?.let { orderId->
-                it.arguments!!.getString("orderPrice")?.let { orderPrice->
+            it.arguments!!.getString("orderId")?.let { orderId ->
+                it.arguments!!.getString("orderPrice")?.let { orderPrice ->
                     ConfirmPurchaseScreen(
                         navController = navController,
                         orderId = orderId,
@@ -72,8 +73,27 @@ fun SetupNavGraph(navController: NavHostController) {
             }
 
 
+        }
+
+
+        composable(route = Screen.ProductDetail.route + "/{productId}",
+            arguments = listOf(
+                navArgument("productId") {
+                    type = NavType.StringType
+                    defaultValue = " "
+                    nullable = true
+                }
+            )
+        ) {
+            it.arguments!!.getString("productId")?.let { productId ->
+                ProductDetailScreen(
+                    navController = navController,
+                    productId = productId
+                )
+            }
 
         }
+
 
         composable(
             route = Screen.WebView.route + "?url={url}",

@@ -11,6 +11,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import ir.truelearn.digikala.data.model.home.AmazingItem
 import ir.truelearn.digikala.data.remote.NetworkResult
 import ir.truelearn.digikala.ui.theme.DigikalaLightRed
@@ -19,6 +20,7 @@ import ir.truelearn.digikala.R
 
 @Composable
 fun AmazingOfferSection(
+    navController: NavController,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
 
@@ -57,7 +59,7 @@ fun AmazingOfferSection(
             }
 
             items(amazingItemList) { item ->
-                AmazingItem(item = item)
+                AmazingItem(item = item , navController = navController)
             }
 
             item {

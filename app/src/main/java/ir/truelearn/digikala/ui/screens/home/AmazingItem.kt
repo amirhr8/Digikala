@@ -2,6 +2,7 @@ package ir.truelearn.digikala.ui.screens.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
@@ -20,9 +21,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import ir.truelearn.digikala.R
 import ir.truelearn.digikala.data.model.home.AmazingItem
+import ir.truelearn.digikala.navigation.Screen
 import ir.truelearn.digikala.ui.theme.*
 import ir.truelearn.digikala.util.Constants
 import ir.truelearn.digikala.util.DigitHelper
@@ -31,7 +34,10 @@ import ir.truelearn.digikala.util.DigitHelper.digitByLocate
 import ir.truelearn.digikala.util.DigitHelper.digitByLocateAndSeparator
 
 @Composable
-fun AmazingItem(item: AmazingItem) {
+fun AmazingItem(
+    item: AmazingItem,
+    navController: NavController
+) {
 
     Card(
         modifier = Modifier
@@ -39,7 +45,11 @@ fun AmazingItem(item: AmazingItem) {
             .padding(
                 vertical = MaterialTheme.spacing.semiLarge,
                 horizontal = MaterialTheme.spacing.semiSmall
-            ),
+            )
+            .clickable{
+                navController.navigate(Screen.ProductDetail.withArgs(item._id))
+            }
+        ,
         shape = MaterialTheme.roundedShape.small,
     ) {
 
