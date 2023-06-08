@@ -35,6 +35,14 @@ val Colors.bottomBar: Color
     get() = if (isLight) Color(0xFFFFFFFF) else Color(0xFF303235)
 
 
+val Colors.Gold : Color
+    @Composable
+    get() = Color(0xFFf9bc01)
+
+val Colors.grayAlpha: Color
+    @Composable
+    get() = Color(0xFFc1c2c6)
+
 val Colors.searchBarBg: Color
     @Composable
     get() = if (isLight) Color(0xFFF1F0EE) else Color(0xFF303235)

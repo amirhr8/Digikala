@@ -6,10 +6,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ir.truelearn.digikala.data.model.product_detail.ProductDetail
+import ir.truelearn.digikala.data.model.product_detail.SliderImage
 import ir.truelearn.digikala.data.remote.NetworkResult
+import ir.truelearn.digikala.ui.components.OurLoading
 import ir.truelearn.digikala.viewmodel.ProductDetailViewModel
 import kotlinx.coroutines.flow.collectLatest
 
@@ -24,6 +28,11 @@ fun ProductDetailScreen(
     var productDetailList by remember {
         mutableStateOf<ProductDetail>(ProductDetail())
     }
+
+    var imageSlider by remember {
+        mutableStateOf<List<SliderImage>>(emptyList())
+    }
+
     var loading by remember {
         mutableStateOf(false)
     }
@@ -34,7 +43,7 @@ fun ProductDetailScreen(
             when (productDetail) {
                 is NetworkResult.Success -> {
                     productDetailList = productDetail.data!!
-                    productDetailList.name?.let { Log.e("3636", it) }
+                    imageSlider = productDetail.data.imageSlider!!
                     loading = false
                 }
                 is NetworkResult.Error -> {
@@ -49,18 +58,22 @@ fun ProductDetailScreen(
 
     }
 
+    if (loading) {
+        val config = LocalConfiguration.current
+        OurLoading(config.screenHeightDp.dp, true)
+    } else {
+        Scaffold(
+            bottomBar = {
+                ProductDetailBottomBar(productDetailList, navController)
+            }
+        ) {
+            LazyColumn() {
+                item { ProductTopSliderSection(imageSlider) }
+                item { ProductDetailHeaderSection(productDetailList) }
 
-    Scaffold(
-        bottomBar = {
-            ProductDetailBottomBar(productDetailList , navController)
-        }
-    ) {
-        LazyColumn(){
-
+            }
         }
     }
-
-    Text(text = productId)
 
 
 }
