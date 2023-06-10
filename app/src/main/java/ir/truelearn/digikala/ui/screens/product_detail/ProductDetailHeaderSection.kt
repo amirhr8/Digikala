@@ -1,6 +1,7 @@
 package ir.truelearn.digikala.ui.screens.product_detail
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -11,11 +12,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import ir.truelearn.digikala.R
 import ir.truelearn.digikala.data.model.product_detail.ProductDetail
 import ir.truelearn.digikala.ui.theme.*
-import ir.truelearn.digikala.util.DigitHelper
 import ir.truelearn.digikala.util.DigitHelper.digitByLocate
 
 @Composable
@@ -23,43 +22,17 @@ fun ProductDetailHeaderSection(
     item: ProductDetail
 ) {
 
-    var category = ""
-    item.category?.let {
-        category = it
-    }
-
-    var name = ""
-    item.name?.let {
-        name = it
-    }
-    var star = 0.0
-    item.star?.let {
-        star = it
-    }
-    var starCount = 0
-    item.starCount?.let {
-        starCount = it
-    }
-    var commentCount = 0
-    item.commentCount?.let {
-        commentCount = it
-    }
-
-    var viewCount = 0
-    item.viewCount?.let {
-        viewCount = it
-    }
 
     Column {
         Text(
-            text = "${stringResource(id = R.string.category)} / $category",
+            text = "${stringResource(id = R.string.category)} / ${item.category}",
             color = MaterialTheme.colors.DarkCyan,
             style = MaterialTheme.typography.h6,
             modifier = Modifier.padding(horizontal = MaterialTheme.spacing.medium)
         )
 
         Text(
-            text = name,
+            text = item.name.toString(),
             color = MaterialTheme.colors.darkText,
             style = MaterialTheme.typography.h3,
             fontWeight = FontWeight.Bold,
@@ -83,13 +56,13 @@ fun ProductDetailHeaderSection(
                 tint = MaterialTheme.colors.Gold
             )
             Text(
-                text = digitByLocate(star.toString()),
+                text = digitByLocate(item.star.toString()),
                 color = MaterialTheme.colors.semiDarkText,
                 style = MaterialTheme.typography.h6,
                 modifier = Modifier.padding(horizontal = 2.dp)
             )
             Text(
-                text = digitByLocate("($starCount)"),
+                text = digitByLocate("(${item.starCount})"),
                 color = MaterialTheme.colors.grayAlpha,
                 style = MaterialTheme.typography.h6,
                 modifier = Modifier.padding(end = MaterialTheme.spacing.small)
@@ -105,7 +78,7 @@ fun ProductDetailHeaderSection(
             )
 
             Text(
-                text = digitByLocate("$commentCount ${stringResource(R.string.user_comments)}"),
+                text = digitByLocate("${item.commentCount} ${stringResource(R.string.user_comments)}"),
                 color = MaterialTheme.colors.DarkCyan,
                 style = MaterialTheme.typography.h6,
                 modifier = Modifier.padding(horizontal = MaterialTheme.spacing.small),
@@ -120,7 +93,7 @@ fun ProductDetailHeaderSection(
                     .padding(horizontal = 1.dp)
             )
             Text(
-                text = digitByLocate("$viewCount ${stringResource(R.string.view)}"),
+                text = digitByLocate("${item.viewCount} ${stringResource(R.string.view)}"),
                 color = MaterialTheme.colors.DarkCyan,
                 style = MaterialTheme.typography.h6,
                 modifier = Modifier.padding(horizontal = MaterialTheme.spacing.small),
@@ -151,5 +124,12 @@ fun ProductDetailHeaderSection(
                 modifier = Modifier.padding(horizontal = MaterialTheme.spacing.small)
             )
         }
+
+        Divider(
+            color = MaterialTheme.colors.grayCategory,
+            thickness = 1.dp,
+            modifier = Modifier.padding(horizontal = MaterialTheme.spacing.medium))
+
+
     }
 }
