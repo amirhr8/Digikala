@@ -28,7 +28,8 @@ import ir.truelearn.digikala.ui.theme.*
 @Composable
 fun ProductDescriptionSection(
     navController: NavHostController,
-    description: String
+    description: String,
+    technicalFeatures: String,
 ) {
 
 
@@ -68,7 +69,9 @@ fun ProductDescriptionSection(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { }
+            .clickable {
+                navController.navigate(Screen.ProductTechnicalFeatures.withArgs(technicalFeatures))
+            }
             .padding(horizontal = MaterialTheme.spacing.medium),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically

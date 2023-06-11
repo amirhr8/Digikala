@@ -15,6 +15,7 @@ import ir.truelearn.digikala.ui.screens.home.HomeScreen
 import ir.truelearn.digikala.ui.screens.home.WebPageScreen
 import ir.truelearn.digikala.ui.screens.product_detail.ProductDescriptionScreen
 import ir.truelearn.digikala.ui.screens.product_detail.ProductDetailScreen
+import ir.truelearn.digikala.ui.screens.product_detail.ProductTechnicalFeaturesScreen
 import ir.truelearn.digikala.ui.screens.profile.ProfileScreen
 import ir.truelearn.digikala.ui.screens.splash.SplashScreen
 
@@ -108,6 +109,24 @@ fun SetupNavGraph(navController: NavHostController) {
                 ProductDescriptionScreen(
                     navController = navController,
                     description = description
+                )
+            }
+
+        }
+
+        composable(route = Screen.ProductTechnicalFeatures.route + "/{jsonString}",
+            arguments = listOf(
+                navArgument("jsonString") {
+                    type = NavType.StringType
+                    defaultValue = " "
+                    nullable = true
+                }
+            )
+        ) {
+            it.arguments!!.getString("jsonString")?.let { jsonString ->
+                ProductTechnicalFeaturesScreen(
+                    navController = navController,
+                    jsonString = jsonString
                 )
             }
 

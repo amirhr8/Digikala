@@ -41,6 +41,8 @@ fun ProductDetailScreen(
 
     var description by remember { mutableStateOf("") }
 
+    var technicalFeatures by remember { mutableStateOf("") }
+
     var loading by remember {
         mutableStateOf(false)
     }
@@ -55,6 +57,7 @@ fun ProductDetailScreen(
                     productColors = productDetail.data.colors ?: emptyList()
                     categoryId = productDetail.data.categoryId ?: ""
                     description = productDetail.data.description ?: ""
+                    technicalFeatures = productDetail.data.technicalFeatures.toString()
                     loading = false
                 }
                 is NetworkResult.Error -> {
@@ -84,7 +87,7 @@ fun ProductDetailScreen(
                 item { ProductSelectColorSection(productColors) }
                 item { SellerInfoSection() }
                 item { SimilarProductSection(categoryId) }
-                item { ProductDescriptionSection(navController , description) }
+                item { ProductDescriptionSection(navController, description , technicalFeatures) }
             }
         }
     }

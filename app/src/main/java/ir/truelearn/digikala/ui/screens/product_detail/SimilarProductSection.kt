@@ -44,8 +44,9 @@ fun SimilarProductSection(
         mutableStateOf(false)
     }
 
+    viewModel.getSimilarProducts(categoryId)
     LaunchedEffect(true) {
-        viewModel.getSimilarProducts(categoryId)
+
         viewModel.similarProducts.collectLatest { similarListResult ->
             when (similarListResult) {
                 is NetworkResult.Success -> {
