@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.truelearn.digikala.data.model.address.UserAddress
+import ir.truelearn.digikala.data.model.home.StoreProduct
 import ir.truelearn.digikala.data.model.product_detail.ProductDetail
 import ir.truelearn.digikala.data.remote.NetworkResult
 import ir.truelearn.digikala.repository.AddressRepository
@@ -19,10 +20,19 @@ class ProductDetailViewModel @Inject constructor(private val repository: Product
 
     val productDetail = MutableStateFlow<NetworkResult<ProductDetail>>(NetworkResult.Loading())
 
+    val similarProducts =
+        MutableStateFlow<NetworkResult<List<StoreProduct>>>(NetworkResult.Loading())
+
 
     fun getProductById(productId: String) {
         viewModelScope.launch {
             productDetail.emit(repository.getProductById(productId))
+        }
+    }
+
+    fun getSimilarProducts(categoryId: String) {
+        viewModelScope.launch {
+            similarProducts.emit(repository.getSimilarProducts(categoryId))
         }
     }
 }

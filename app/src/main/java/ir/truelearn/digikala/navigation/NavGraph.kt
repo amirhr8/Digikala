@@ -13,6 +13,7 @@ import ir.truelearn.digikala.ui.screens.checkout.CheckoutScreen
 import ir.truelearn.digikala.ui.screens.checkout.ConfirmPurchaseScreen
 import ir.truelearn.digikala.ui.screens.home.HomeScreen
 import ir.truelearn.digikala.ui.screens.home.WebPageScreen
+import ir.truelearn.digikala.ui.screens.product_detail.ProductDescriptionScreen
 import ir.truelearn.digikala.ui.screens.product_detail.ProductDetailScreen
 import ir.truelearn.digikala.ui.screens.profile.ProfileScreen
 import ir.truelearn.digikala.ui.screens.splash.SplashScreen
@@ -89,6 +90,24 @@ fun SetupNavGraph(navController: NavHostController) {
                 ProductDetailScreen(
                     navController = navController,
                     productId = productId
+                )
+            }
+
+        }
+
+        composable(route = Screen.ProductDescription.route + "/{description}",
+            arguments = listOf(
+                navArgument("description") {
+                    type = NavType.StringType
+                    defaultValue = " "
+                    nullable = true
+                }
+            )
+        ) {
+            it.arguments!!.getString("description")?.let { description ->
+                ProductDescriptionScreen(
+                    navController = navController,
+                    description = description
                 )
             }
 

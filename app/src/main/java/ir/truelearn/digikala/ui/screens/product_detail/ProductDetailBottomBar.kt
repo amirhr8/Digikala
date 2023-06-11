@@ -4,24 +4,21 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import ir.truelearn.digikala.data.model.product_detail.ProductDetail
-import ir.truelearn.digikala.util.DigitHelper
 import ir.truelearn.digikala.R
+import ir.truelearn.digikala.data.model.product_detail.ProductDetail
 import ir.truelearn.digikala.ui.theme.*
+import ir.truelearn.digikala.util.DigitHelper
 import ir.truelearn.digikala.util.DigitHelper.applyDiscount
 
 @Composable

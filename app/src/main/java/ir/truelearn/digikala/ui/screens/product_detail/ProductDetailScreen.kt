@@ -37,6 +37,9 @@ fun ProductDetailScreen(
     var productColors by remember {
         mutableStateOf<List<ProductColor>>(emptyList())
     }
+    var categoryId by remember { mutableStateOf("") }
+
+    var description by remember { mutableStateOf("") }
 
     var loading by remember {
         mutableStateOf(false)
@@ -50,6 +53,8 @@ fun ProductDetailScreen(
                     productDetailList = productDetail.data!!
                     imageSlider = productDetail.data.imageSlider ?: emptyList()
                     productColors = productDetail.data.colors ?: emptyList()
+                    categoryId = productDetail.data.categoryId ?: ""
+                    description = productDetail.data.description ?: ""
                     loading = false
                 }
                 is NetworkResult.Error -> {
@@ -78,7 +83,8 @@ fun ProductDetailScreen(
                 item { ProductDetailHeaderSection(productDetailList) }
                 item { ProductSelectColorSection(productColors) }
                 item { SellerInfoSection() }
-
+                item { SimilarProductSection(categoryId) }
+                item { ProductDescriptionSection(navController , description) }
             }
         }
     }
