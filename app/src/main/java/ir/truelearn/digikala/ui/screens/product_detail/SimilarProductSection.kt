@@ -43,7 +43,6 @@ fun SimilarProductSection(
     var loading by remember {
         mutableStateOf(false)
     }
-
     viewModel.getSimilarProducts(categoryId)
     LaunchedEffect(true) {
 

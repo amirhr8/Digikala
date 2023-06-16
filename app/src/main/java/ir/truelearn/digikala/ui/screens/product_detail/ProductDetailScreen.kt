@@ -6,11 +6,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import ir.truelearn.digikala.data.model.product_detail.Comment
 import ir.truelearn.digikala.data.model.product_detail.ProductColor
 import ir.truelearn.digikala.data.model.product_detail.ProductDetail
 import ir.truelearn.digikala.data.model.product_detail.SliderImage
@@ -37,11 +39,16 @@ fun ProductDetailScreen(
     var productColors by remember {
         mutableStateOf<List<ProductColor>>(emptyList())
     }
+    var productComments by remember {
+        mutableStateOf<List<Comment>>(emptyList())
+    }
     var categoryId by remember { mutableStateOf("") }
 
-    var description by remember { mutableStateOf("") }
+    var description by rememberSaveable { mutableStateOf("") }
 
     var technicalFeatures by remember { mutableStateOf("") }
+
+    var commentCount by remember { mutableStateOf(0) }
 
     var loading by remember {
         mutableStateOf(false)
@@ -55,8 +62,10 @@ fun ProductDetailScreen(
                     productDetailList = productDetail.data!!
                     imageSlider = productDetail.data.imageSlider ?: emptyList()
                     productColors = productDetail.data.colors ?: emptyList()
+                    productComments = productDetail.data.comments ?: emptyList()
                     categoryId = productDetail.data.categoryId ?: ""
                     description = productDetail.data.description ?: ""
+                    commentCount = productDetail.data.commentCount ?: 0
                     technicalFeatures = productDetail.data.technicalFeatures.toString()
                     loading = false
                 }
@@ -87,7 +96,8 @@ fun ProductDetailScreen(
                 item { ProductSelectColorSection(productColors) }
                 item { SellerInfoSection() }
                 item { SimilarProductSection(categoryId) }
-                item { ProductDescriptionSection(navController, description , technicalFeatures) }
+                item { ProductDescriptionSection(navController, description, technicalFeatures) }
+                item { ProductCommentsSection(productComments, commentCount) }
             }
         }
     }

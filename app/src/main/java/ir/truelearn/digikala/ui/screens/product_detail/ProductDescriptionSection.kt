@@ -38,6 +38,13 @@ fun ProductDescriptionSection(
         isDescription = false
     }
 
+    var isTechnicalFeatures by remember { mutableStateOf(true) }
+    if (technicalFeatures == "null") {
+        isTechnicalFeatures = false
+    }
+
+
+
 
     Divider(
         modifier = Modifier
@@ -57,38 +64,48 @@ fun ProductDescriptionSection(
         color = MaterialTheme.colors.darkText,
     )
 
-    Spacer(
-        modifier = Modifier
-            .padding(MaterialTheme.spacing.medium)
-            .fillMaxWidth()
-            .height(1.dp)
-            .background(MaterialTheme.colors.grayCategory)
-    )
 
 
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable {
-                navController.navigate(Screen.ProductTechnicalFeatures.withArgs(technicalFeatures))
-            }
-            .padding(horizontal = MaterialTheme.spacing.medium),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            style = MaterialTheme.typography.h5,
-            fontWeight = FontWeight.Bold,
-            text = stringResource(id = R.string.technical_specifications),
-            color = MaterialTheme.colors.darkText,
+
+
+    if (isTechnicalFeatures) {
+
+        Spacer(
+            modifier = Modifier
+                .padding(MaterialTheme.spacing.medium)
+                .fillMaxWidth()
+                .height(1.dp)
+                .background(MaterialTheme.colors.grayCategory)
         )
-        Icon(
-            Icons.Outlined.KeyboardArrowLeft,
-            contentDescription = "",
-            modifier = Modifier.size(24.dp),
-            tint = MaterialTheme.colors.settingArrow
-        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    navController.navigate(
+                        Screen.ProductTechnicalFeatures.withArgs(
+                            technicalFeatures
+                        )
+                    )
+                }
+                .padding(horizontal = MaterialTheme.spacing.medium),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                style = MaterialTheme.typography.h5,
+                fontWeight = FontWeight.Bold,
+                text = stringResource(id = R.string.technical_specifications),
+                color = MaterialTheme.colors.darkText,
+            )
+            Icon(
+                Icons.Outlined.KeyboardArrowLeft,
+                contentDescription = "",
+                modifier = Modifier.size(24.dp),
+                tint = MaterialTheme.colors.settingArrow
+            )
+        }
     }
+
 
 
     if (isDescription) {
