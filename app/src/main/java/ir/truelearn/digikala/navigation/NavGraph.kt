@@ -13,6 +13,7 @@ import ir.truelearn.digikala.ui.screens.checkout.CheckoutScreen
 import ir.truelearn.digikala.ui.screens.checkout.ConfirmPurchaseScreen
 import ir.truelearn.digikala.ui.screens.home.HomeScreen
 import ir.truelearn.digikala.ui.screens.home.WebPageScreen
+import ir.truelearn.digikala.ui.screens.product_detail.NewCommentScreen
 import ir.truelearn.digikala.ui.screens.product_detail.ProductDescriptionScreen
 import ir.truelearn.digikala.ui.screens.product_detail.ProductDetailScreen
 import ir.truelearn.digikala.ui.screens.product_detail.ProductTechnicalFeaturesScreen
@@ -71,6 +72,44 @@ fun SetupNavGraph(navController: NavHostController) {
                         orderId = orderId,
                         orderPrice = orderPrice
                     )
+                }
+            }
+
+
+        }
+
+
+
+
+        composable(route = Screen.NewComment.route + "?productId={productId}?productName={productName}?imageUrl={imageUrl}",
+            arguments = listOf(
+                navArgument("productId") {
+                    type = NavType.StringType
+                    defaultValue = " "
+                    nullable = true
+                },
+                navArgument("productName") {
+                    type = NavType.StringType
+                    defaultValue = " "
+                    nullable = true
+                },
+                navArgument("imageUrl") {
+                    type = NavType.StringType
+                    defaultValue = " "
+                    nullable = true
+                }
+            )
+        ) {
+            it.arguments!!.getString("productId")?.let { productId ->
+                it.arguments!!.getString("productName")?.let { productName ->
+                    it.arguments!!.getString("imageUrl")?.let { imageUrl ->
+                        NewCommentScreen(
+                            navController = navController,
+                            productId = productId,
+                            productName = productName,
+                            imageUrl = imageUrl
+                        )
+                    }
                 }
             }
 

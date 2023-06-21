@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.truelearn.digikala.data.model.address.UserAddress
 import ir.truelearn.digikala.data.model.home.StoreProduct
+import ir.truelearn.digikala.data.model.product_detail.NewComment
 import ir.truelearn.digikala.data.model.product_detail.ProductDetail
 import ir.truelearn.digikala.data.remote.NetworkResult
 import ir.truelearn.digikala.repository.AddressRepository
@@ -25,6 +26,9 @@ class ProductDetailViewModel @Inject constructor(private val repository: Product
     val similarProducts =
         MutableStateFlow<NetworkResult<List<StoreProduct>>>(NetworkResult.Loading())
 
+    val newCommentResult =
+        MutableStateFlow<NetworkResult<String>>(NetworkResult.Loading())
+
 
     fun getProductById(productId: String) {
         viewModelScope.launch {
@@ -35,6 +39,12 @@ class ProductDetailViewModel @Inject constructor(private val repository: Product
     fun getSimilarProducts(categoryId: String) {
         viewModelScope.launch {
             similarProducts.emit(repository.getSimilarProducts(categoryId))
+        }
+    }
+
+    fun setNewComment(newComment: NewComment) {
+        viewModelScope.launch {
+            newCommentResult.emit(repository.setNewComment(newComment))
         }
     }
 
