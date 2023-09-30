@@ -1,5 +1,6 @@
 package ir.truelearn.digikala.ui.screens.product_detail
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -14,14 +15,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import ir.truelearn.digikala.data.model.product_detail.Comment
 import ir.truelearn.digikala.ui.theme.spacing
 import ir.truelearn.digikala.R
+import ir.truelearn.digikala.navigation.Screen
 import ir.truelearn.digikala.ui.theme.LightCyan
 import ir.truelearn.digikala.ui.theme.darkText
+import ir.truelearn.digikala.util.DigitHelper.digitByLocate
 
 @Composable
 fun ProductCommentsSection(
+    navController: NavHostController,
+    productId: String,
     comments: List<Comment>,
     commentCount: Int
 ) {
@@ -53,9 +59,12 @@ fun ProductCommentsSection(
                 style = MaterialTheme.typography.h3,
             )
             Text(
-                text = "$commentCount " + stringResource(R.string.comment),
+                text = "${digitByLocate(commentCount.toString())} " + stringResource(R.string.comment),
                 color = MaterialTheme.colors.LightCyan,
                 style = MaterialTheme.typography.h4,
+                modifier = Modifier.clickable {
+                    navController.navigate(Screen.AllComment.withArgs(productId))
+                }
             )
         }
     }
@@ -68,6 +77,9 @@ fun ProductCommentsSection(
     ){
         items(comments){ comment ->
             TextCommentCard(comment)
+        }
+        item{
+            CommentShowMoreItem(navController , productId)
         }
     }
 

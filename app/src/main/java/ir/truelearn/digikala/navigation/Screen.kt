@@ -13,6 +13,7 @@ sealed class Screen(val route: String) {
     object ProductDescription : Screen("product_description_screen")
     object ProductTechnicalFeatures : Screen("product_technical_features")
     object NewComment : Screen("new_comment_screen")
+    object AllComment : Screen("all_comment_screen")
     object WebView : Screen("webView_screen")
 
     fun withArgs(vararg args : Any) : String {

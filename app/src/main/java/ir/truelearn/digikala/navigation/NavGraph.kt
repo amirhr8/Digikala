@@ -1,11 +1,13 @@
 package ir.truelearn.digikala.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.truelearn.digikala.ui.screens.*
 import ir.truelearn.digikala.ui.screens.basket.BasketScreen
 import ir.truelearn.digikala.ui.screens.category.CategoryScreen
@@ -13,10 +15,7 @@ import ir.truelearn.digikala.ui.screens.checkout.CheckoutScreen
 import ir.truelearn.digikala.ui.screens.checkout.ConfirmPurchaseScreen
 import ir.truelearn.digikala.ui.screens.home.HomeScreen
 import ir.truelearn.digikala.ui.screens.home.WebPageScreen
-import ir.truelearn.digikala.ui.screens.product_detail.NewCommentScreen
-import ir.truelearn.digikala.ui.screens.product_detail.ProductDescriptionScreen
-import ir.truelearn.digikala.ui.screens.product_detail.ProductDetailScreen
-import ir.truelearn.digikala.ui.screens.product_detail.ProductTechnicalFeaturesScreen
+import ir.truelearn.digikala.ui.screens.product_detail.*
 import ir.truelearn.digikala.ui.screens.profile.ProfileScreen
 import ir.truelearn.digikala.ui.screens.splash.SplashScreen
 
@@ -128,6 +127,24 @@ fun SetupNavGraph(navController: NavHostController) {
         ) {
             it.arguments!!.getString("productId")?.let { productId ->
                 ProductDetailScreen(
+                    navController = navController,
+                    productId = productId
+                )
+            }
+
+        }
+
+        composable(route = Screen.AllComment.route + "/{productId}",
+            arguments = listOf(
+                navArgument("productId") {
+                    type = NavType.StringType
+                    defaultValue = " "
+                    nullable = true
+                }
+            )
+        ) {
+            it.arguments!!.getString("productId")?.let { productId ->
+                AllProductCommentsScreen(
                     navController = navController,
                     productId = productId
                 )

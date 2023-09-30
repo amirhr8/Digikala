@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import ir.truelearn.digikala.data.model.product_detail.Comment
 import ir.truelearn.digikala.R
 import ir.truelearn.digikala.ui.theme.*
+import ir.truelearn.digikala.util.DigitHelper.digitByLocate
 import ir.truelearn.digikala.util.DigitHelper.gregorianToJalali
 
 @Composable
@@ -126,7 +127,7 @@ fun TextCommentCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = gregorianToJalali(year, month, day),
+                    text = digitByLocate(gregorianToJalali(year, month, day)),
                     color = MaterialTheme.colors.semiDarkText,
                     style = MaterialTheme.typography.h6,
                 )
