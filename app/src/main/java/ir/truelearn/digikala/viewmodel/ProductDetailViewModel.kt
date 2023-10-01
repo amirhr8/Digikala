@@ -3,12 +3,16 @@ package ir.truelearn.digikala.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.truelearn.digikala.data.model.address.UserAddress
 import ir.truelearn.digikala.data.model.home.StoreProduct
 import ir.truelearn.digikala.data.model.product_detail.NewComment
 import ir.truelearn.digikala.data.model.product_detail.ProductDetail
 import ir.truelearn.digikala.data.remote.NetworkResult
+import ir.truelearn.digikala.data.source.ProductCommentsDataSource
 import ir.truelearn.digikala.repository.AddressRepository
 import ir.truelearn.digikala.repository.ProductDetailRepository
 import ir.truelearn.digikala.util.Constants
@@ -47,6 +51,13 @@ class ProductDetailViewModel @Inject constructor(private val repository: Product
             newCommentResult.emit(repository.setNewComment(newComment))
         }
     }
+
+
+    val commentsList = Pager(
+        PagingConfig(pageSize = 10)
+    ) {
+        ProductCommentsDataSource(repository, "63b9f7ce06661704dc22228d")
+    }.flow.cachedIn(viewModelScope)
 
 
 }
