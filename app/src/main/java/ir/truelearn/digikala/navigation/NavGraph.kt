@@ -134,9 +134,14 @@ fun SetupNavGraph(navController: NavHostController) {
 
         }
 
-        composable(route = Screen.AllComment.route + "/{productId}",
+        composable(route = Screen.AllComment.route + "/{productId}/{commentsCount}",
             arguments = listOf(
                 navArgument("productId") {
+                    type = NavType.StringType
+                    defaultValue = " "
+                    nullable = true
+                },
+                navArgument("commentsCount") {
                     type = NavType.StringType
                     defaultValue = " "
                     nullable = true
@@ -144,10 +149,13 @@ fun SetupNavGraph(navController: NavHostController) {
             )
         ) {
             it.arguments!!.getString("productId")?.let { productId ->
-                AllProductCommentsScreen(
-                    navController = navController,
-                    productId = productId
-                )
+                it.arguments!!.getString("commentsCount")?.let { commentsCount ->
+                    AllProductCommentsScreen(
+                        navController = navController,
+                        productId = productId,
+                        commentsCount = commentsCount
+                    )
+                }
             }
 
         }

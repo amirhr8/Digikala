@@ -6,29 +6,29 @@ import androidx.paging.PagingState
 import ir.truelearn.digikala.data.model.product_detail.Comment
 import ir.truelearn.digikala.repository.ProductDetailRepository
 
-class ProductCommentsDataSource (
+class ProductCommentsDataSource(
     private val repository: ProductDetailRepository,
     val productId: String
-) : PagingSource<Int, List<Comment>>() {
+) : PagingSource<Int, Comment>() {
 
-    override fun getRefreshKey(state: PagingState<Int, List<Comment>>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, Comment>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)
             anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
         }
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, List<Comment>> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Comment> {
         return try {
             val nextPageNumber = params.key ?: 1
             val response = repository.getAllProductComments(
                 pageNumber = nextPageNumber.toString(),
-                pageSize = "10",
+                pageSize = "5",
                 id = productId
             ).data
 
             LoadResult.Page(
-                data = listOf(response!!),
+                data = response!!,
                 prevKey = null,
                 nextKey = nextPageNumber + 1
             )

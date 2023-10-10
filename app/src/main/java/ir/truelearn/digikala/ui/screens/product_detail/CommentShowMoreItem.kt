@@ -25,6 +25,7 @@ import ir.truelearn.digikala.ui.theme.darkText
 fun CommentShowMoreItem(
     navController: NavHostController,
     productId: String,
+    commentCount: String,
 ) {
 
     Column(
@@ -35,7 +36,7 @@ fun CommentShowMoreItem(
             .height(240.dp)
             .padding(vertical = MaterialTheme.spacing.medium)
             .clickable {
-                navController.navigate(Screen.AllComment.withArgs(productId))
+                navController.navigate(Screen.AllComment.withArgs(productId,commentCount))
             }
 
     ){
