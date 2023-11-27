@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -31,7 +32,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
+import androidx.paging.compose.itemContentType
+import androidx.paging.compose.itemKey
 import ir.truelearn.digikala.R
 import ir.truelearn.digikala.data.model.product_detail.Comment
 import ir.truelearn.digikala.ui.components.Loading3Dots
@@ -97,10 +99,19 @@ fun AllProductCommentsScreen(
         Box(modifier = Modifier.fillMaxSize()) {
 
             LazyColumn(Modifier.fillMaxSize()) {
-                items(commentsList) { comment ->
-                        CommentsItem(comment!!)
 
+                //paging3
+                items(
+                    count = commentsList.itemCount,
+                    key = commentsList.itemKey { comment -> comment._id },
+                    contentType = commentsList.itemContentType { "Comments" }
+                ) { index ->
+                    CommentsItem(commentsList[index]!!)
                 }
+
+                /*items(commentsList.itemSnapshotList) { comment ->
+                    CommentsItem(comment!!)
+                }*/
 
                 commentsList.apply {
 
@@ -111,6 +122,7 @@ fun AllProductCommentsScreen(
                                 OurLoading(config.screenHeightDp.dp, true)
                             }
                         }
+
                         loadState.append is LoadState.Loading -> {
                             item {
                                 Column(
@@ -124,6 +136,7 @@ fun AllProductCommentsScreen(
                                 }
                             }
                         }
+
                         loadState.append is LoadState.Error -> {
                             //todo error handling
                         }
@@ -160,12 +173,14 @@ private fun CommentsItem(item: Comment) {
             textSuggestion = context.getString(R.string.bad_comment)
             iconRotation = 180f
         }
+
         in 2..3 -> {
             iconSuggestion = R.drawable.info
             colorSuggestion = MaterialTheme.colors.semiDarkText
             textSuggestion = context.getString(R.string.so_so_comment)
             iconRotation = 0f
         }
+
         in 3..Int.MAX_VALUE -> {
             iconSuggestion = R.drawable.like
             colorSuggestion = MaterialTheme.colors.Green

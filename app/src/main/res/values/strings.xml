@@ -158,4 +158,7 @@
     <string name="comment_star_null">امتیاز(ستاره) کامنت وارد نشده است!</string>
     <string name="comment_body_null">متن کامنت وارد نشده است!</string>
 
+    <string name="share_product">به اشتراک گذاری</string>
+    <string name="price_chart">نمودار قیمت</string>
+
 </resources>
