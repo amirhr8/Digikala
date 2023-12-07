@@ -220,6 +220,7 @@ fun PriceLineChart(
         Row() {
             Spacer(modifier = Modifier.weight(0.142f))
             val persianMonths = createPersianMonthArray(priceList)
+
             persianMonths.forEach { monthName ->
                 Text(
                     style = MaterialTheme.typography.veryExtraSmall,
