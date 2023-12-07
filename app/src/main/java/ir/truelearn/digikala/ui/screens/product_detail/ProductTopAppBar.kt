@@ -17,12 +17,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.google.gson.Gson
 import ir.truelearn.digikala.R
+import ir.truelearn.digikala.data.model.product_detail.Price
+import ir.truelearn.digikala.navigation.Screen
 import ir.truelearn.digikala.ui.theme.darkText
 import ir.truelearn.digikala.ui.theme.spacing
 
 @Composable
-fun ProductTopAppBar(navController: NavHostController,){
+fun ProductTopAppBar(navController: NavHostController, priceList: List<Price>) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -102,7 +105,11 @@ fun ProductTopAppBar(navController: NavHostController,){
             ) {
                 DropdownMenuItem(
                     onClick = {
+                        val priceListString = Gson().toJson(priceList)
                         expanded = false
+                        navController.navigate(
+                            Screen.ProductPriceChart.route + "?jsonString=${priceListString}"
+                        )
                     }
                 ) {
                     Row(

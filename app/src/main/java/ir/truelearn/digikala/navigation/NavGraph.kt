@@ -197,6 +197,25 @@ fun SetupNavGraph(navController: NavHostController) {
         }
 
 
+        composable(route = Screen.ProductPriceChart.route + "?jsonString={jsonString}",
+            arguments = listOf(
+                navArgument("jsonString") {
+                    type = NavType.StringType
+                    defaultValue = " "
+                    nullable = true
+                }
+            )
+        ) {
+            it.arguments!!.getString("jsonString")?.let { jsonString ->
+                ProductPriceChartScreen(
+                    navController = navController,
+                    jsonString = jsonString
+                )
+            }
+
+        }
+
+
         composable(
             route = Screen.WebView.route + "?url={url}",
             arguments = listOf(navArgument("url") {

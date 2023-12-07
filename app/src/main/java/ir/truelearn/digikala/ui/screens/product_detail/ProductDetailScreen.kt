@@ -77,6 +77,7 @@ import com.patrykandpatrick.vico.core.scroll.AutoScrollCondition
 import com.patrykandpatrick.vico.core.scroll.InitialScroll
 import ir.truelearn.digikala.R
 import ir.truelearn.digikala.data.model.product_detail.Comment
+import ir.truelearn.digikala.data.model.product_detail.Price
 import ir.truelearn.digikala.data.model.product_detail.ProductColor
 import ir.truelearn.digikala.data.model.product_detail.ProductDetail
 import ir.truelearn.digikala.data.model.product_detail.SliderImage
@@ -111,6 +112,10 @@ fun ProductDetailScreen(
     var productComments by remember {
         mutableStateOf<List<Comment>>(emptyList())
     }
+    var productPriceList by remember {
+        mutableStateOf<List<Price>>(emptyList())
+    }
+
     var categoryId by remember { mutableStateOf("") }
 
     var description by rememberSaveable { mutableStateOf("") }
@@ -132,6 +137,7 @@ fun ProductDetailScreen(
                     imageSlider = productDetail.data.imageSlider ?: emptyList()
                     productColors = productDetail.data.colors ?: emptyList()
                     productComments = productDetail.data.comments ?: emptyList()
+                    productPriceList = productDetail.data.priceList ?: emptyList()
                     categoryId = productDetail.data.categoryId ?: ""
                     description = productDetail.data.description ?: ""
                     commentCount = productDetail.data.commentCount ?: 0
@@ -161,21 +167,10 @@ fun ProductDetailScreen(
                 ProductDetailBottomBar(productDetailList, navController)
             },
             topBar = {
-                ProductTopAppBar(navController)
+                ProductTopAppBar(navController , productPriceList)
             }
         ) {
             LazyColumn(modifier = Modifier.padding(bottom = 70.dp)) {
-
-                val chartEntryModel = entryModelOf(4f, 12f, 8f, 16f)
-
-                item {
-                    DefaultLineChart()
-                    DefaultColumnChart()
-                    ColumnChartWithNegativeValues()
-                    LineChartCard()
-                    LineChartDark()
-                    ComposedLineChart()
-                }
 
                 item { ProductTopSliderSection(imageSlider) }
                 item { ProductDetailHeaderSection(productDetailList) }
@@ -197,227 +192,4 @@ fun ProductDetailScreen(
     }
 
 
-}
-
-
-@Composable
-fun ColumnChartWithNegativeValues() {
-    ChartCard(
-        title = "نمودار ستونی منفی",
-        subTitle = "مثالی برای استفاده از نمودار ستونی با مقادیر منفی"
-    ) {
-        Chart(
-            chart = columnChart(
-                dataLabel = textComponent(),
-            ),
-            model = entryModelOf(2f, -1f, 4f, -2f, 1f, 5f, -3f),
-            startAxis = rememberStartAxis(),
-            bottomAxis = rememberBottomAxis(),
-        )
-    }
-}
-
-@Composable
- fun DefaultLineChart(
-    model: ChartEntryModel = entryModelOf(2f, 1f, 4f, 8f, 1f, 5f, 7f),
-    scrollable: Boolean = true,
-    initialScroll: InitialScroll = InitialScroll.Start,
-) {
-    ChartCard(
-        title = "نمودار خطی",
-        subTitle = "مثالی برای استفاده از نمودار خطی"
-    ) {
-        Chart(
-            chart = lineChart(),
-            model = model,
-            startAxis = rememberStartAxis(),
-            bottomAxis = rememberBottomAxis(),
-            chartScrollSpec = rememberChartScrollSpec(
-                isScrollEnabled = scrollable,
-                initialScroll = initialScroll
-            )
-        )
-    }
-}
-
-
-@Composable
-fun DefaultColumnChart(
-    model: ChartEntryModel = entryModelOf(2f, 1f, 4f, 8f, 1f, 5f, 7f),
-    oldModel: ChartEntryModel? = null,
-    scrollable: Boolean = true,
-    initialScroll: InitialScroll = InitialScroll.Start,
-    autoScrollCondition: AutoScrollCondition<ChartEntryModel> = AutoScrollCondition.Never,
-) {
-    ChartCard(
-        title = "نمودار ستونی",
-        subTitle = "مثالی برای استفاده از نمودار ستونی"
-    ) {
-        Chart(
-            chart = columnChart(),
-            model = model,
-            oldModel = oldModel,
-            startAxis = rememberStartAxis(),
-            bottomAxis = rememberBottomAxis(),
-            chartScrollSpec = rememberChartScrollSpec(
-                isScrollEnabled = scrollable,
-                initialScroll = initialScroll,
-                autoScrollCondition = autoScrollCondition,
-            ),
-        )
-    }
-
-
-}
-
-@Composable
-fun LineChartCard() {
-    val colors = MaterialTheme.colors
-
-    ChartCard(
-        title = "نمودار خطی زیبا",
-        subTitle = "مثالی برای استفاده از نمودار خطی خاص"
-    ) {
-        Chart(
-            modifier = Modifier.height(100.dp),
-            chart = lineChart(
-                lines = listOf(
-                    lineSpec(
-                        point = null,
-                        lineColor = colors.primary,
-                        lineBackgroundShader = DynamicShaders.fromComponent(
-                            componentSize = 4.dp,
-                            component = shapeComponent(
-                                shape = pillShape,
-                                color = colors.primary
-                            ).apply {
-                                setMargins(0.5.dp.value)
-                            },
-                        ),
-                    ),
-                ),
-                axisValuesOverrider = AxisValuesOverrider.fixed(
-                    minX = 0f,
-                    maxY = 3f,
-                ),
-            ),
-            model = entryModelOf(-1 to 0, 0 to 0, 1 to 1, 2 to 2, 3 to 0, 4 to 2, 5 to 1),
-            startAxis = createVerticalAxis {
-                label = textComponent(
-                    color = colors.onSurface,
-                    textSize = 10.sp,
-                    background = shapeComponent(shape = rectShape, color = Color.LightGray),
-                    padding = dimensionsOf(horizontal = 4.dp, vertical = 2.dp),
-                )
-                axis = null
-                tick = null
-                guideline = LineComponent(
-                    color = Color.LightGray.toArgb(),
-                    thicknessDp = 1.dp.value,
-                    shape = DashedShape(
-                        shape = pillShape,
-                        dashLengthDp = 2.dp.value,
-                        gapLengthDp = 4.dp.value,
-                    ),
-                )
-                horizontalLabelPosition = VerticalAxis.HorizontalLabelPosition.Inside
-            },
-            bottomAxis = createHorizontalAxis {
-                label = null
-                tick = null
-                guideline = null
-                axis = lineComponent(color = Color.LightGray, thickness = 1.dp)
-            },
-        )
-    }
-}
-
-@Composable
-private fun ChartCard(
-    title: String,
-    subTitle: String,
-    chart: @Composable ColumnScope.() -> Unit
-) {
-    Card(
-        modifier = Modifier.padding(8.dp),
-        shape = RoundedCornerShape(8.dp),
-        elevation = 4.dp,
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            chart()
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = title,
-                style = MaterialTheme.typography.h3,
-            )
-            Text(
-                text = subTitle,
-                style = MaterialTheme.typography.h5,
-            )
-        }
-    }
-}
-
-
-private val model1 = entryModelOf(0, 2, 4, 0, 2)
-private val model2 = entryModelOf(1, 3, 4, 1, 3)
-private val model3 = entryModelOf(entriesOf(3, 2, 2, 3, 1), entriesOf(1, 3, 1, 2, 3))
-
-@Composable
-fun LineChartDark() {
-    ChartCard(
-        title = "نمودار خطی رنگی دوتایی",
-        subTitle = "مثالی برای استفاده از نمودار خطی رنگی دوتایی بدون بک گراند"
-    ) {
-        val yellow = Color(0xFFFFAA4A)
-        val pink = Color(0xFFFF4AAA)
-
-        Chart(
-            modifier = Modifier.padding(8.dp),
-            chart = lineChart(
-                lines = listOf(
-                    lineSpec(
-                        lineColor = yellow,
-                        lineBackgroundShader = verticalGradient(
-                            arrayOf(yellow.copy(0.5f), yellow.copy(alpha = 0f)),
-                        ),
-                    ),
-                    lineSpec(
-                        lineColor = pink,
-                        lineBackgroundShader = verticalGradient(
-                            arrayOf(pink.copy(0.5f), pink.copy(alpha = 0f)),
-                        ),
-                    ),
-                ),
-                axisValuesOverrider = AxisValuesOverrider.fixed(maxY = 4f),
-            ),
-            model = model3,
-        )
-    }
-}
-
-@Composable
-fun ComposedLineChart() {
-    ChartCard(
-        title = "نمودار خطی رنگی دوتایی",
-        subTitle = "مثالی برای استفاده از خطی رنگی دوتایی"
-    ) {
-        Chart(
-            chart = lineChart() + lineChart(
-                lines = listOf(
-                    lineSpec(
-                        lineColor = Color.Blue,
-                        lineBackgroundShader = verticalGradient(
-                            colors = arrayOf(
-                                Color.Blue.copy(alpha = 0.4f),
-                                Color.Blue.copy(alpha = 0f),
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-            model = model1 + model2,
-            startAxis = rememberStartAxis(),
-        )
-    }
 }
