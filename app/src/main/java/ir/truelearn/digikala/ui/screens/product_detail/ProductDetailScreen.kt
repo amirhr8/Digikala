@@ -167,7 +167,7 @@ fun ProductDetailScreen(
                 ProductDetailBottomBar(productDetailList, navController)
             },
             topBar = {
-                ProductTopAppBar(navController , productPriceList)
+                ProductTopAppBar(navController , productDetailList)
             }
         ) {
             LazyColumn(modifier = Modifier.padding(bottom = 70.dp)) {
