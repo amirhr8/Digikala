@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.google.gson.Gson
 import ir.truelearn.digikala.R
+import ir.truelearn.digikala.data.model.prfile.FavItem
 import ir.truelearn.digikala.data.model.product_detail.Price
 import ir.truelearn.digikala.data.model.product_detail.ProductDetail
 import ir.truelearn.digikala.navigation.Screen
@@ -72,26 +73,17 @@ fun ProductTopAppBar(navController: NavHostController, product: ProductDetail) {
                 )
             }
 
-            var checkedState by remember { mutableStateOf(false) }
-            IconToggleButton(
-                checked = checkedState,
-                onCheckedChange = {
-                    checkedState = !checkedState
-                }
-            ) {
-                val transition =
-                    updateTransition(checkedState, label = "icon transition")
-                val tint by transition.animateColor(label = "iconColor") { isCheck ->
-                    if (isCheck) Color.Red else MaterialTheme.colors.darkText
-                }
-                Icon(
-                    imageVector = if (checkedState) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
-                    contentDescription = null,
-                    tint = tint,
-                    modifier = Modifier
-                        .size(27.dp)
+            DisplayFavoriteToggleButton(
+                FavItem(
+                    product._id ?: "",
+                    product.discountPercent ?: 0,
+                    product.imageSlider?.get(0)?.image ?: "",
+                    product.name ?: "",
+                    product.price ?: 0,
+                    product.seller ?: "",
+                    product.star ?: 0.0
                 )
-            }
+            )
 
 
             var expanded by remember { mutableStateOf(false) }
