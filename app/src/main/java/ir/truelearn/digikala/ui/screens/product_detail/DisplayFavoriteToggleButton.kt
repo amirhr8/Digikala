@@ -32,6 +32,7 @@ fun DisplayFavoriteToggleButton(
 
     var checkedState by remember { mutableStateOf(false) }
 
+
     LaunchedEffect(true) {
         viewModel.isFavoriteItemExist(item.id).collectLatest {
             checkedState = it
