@@ -23,9 +23,10 @@ import androidx.compose.ui.unit.dp
 import ir.truelearn.digikala.ui.screens.basket.DetailRow
 import ir.truelearn.digikala.ui.theme.*
 import ir.truelearn.digikala.util.DigitHelper
+import ir.truelearn.digikala.util.DigitHelper.digitByLocateAndSeparator
 
 @Composable
-fun SellerInfoSection() {
+fun SellerInfoSection(productPrice:Long) {
     Divider(
         modifier = Modifier
             .fillMaxWidth()
@@ -83,7 +84,7 @@ fun SellerInfoSection() {
                 Spacer(modifier = Modifier.height(MaterialTheme.spacing.small))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = "${DigitHelper.digitByLocate("101")}%" +
+                        text = "${DigitHelper.digitByLocate("99")}%" +
                                 " رضایت خریداران | عملکرد ",
                         style = MaterialTheme.typography.h6,
                         color = MaterialTheme.colors.semiDarkText,
@@ -298,7 +299,7 @@ fun SellerInfoSection() {
                 Text(
                     modifier = Modifier
                         .padding(vertical = MaterialTheme.spacing.small),
-                    text = "${stringResource(id = R.string.manufacturer_price)} 111 ${
+                    text = "${stringResource(id = R.string.manufacturer_price)} ${digitByLocateAndSeparator(productPrice.toString())} ${
                         stringResource(
                             id = R.string.toman
                         )

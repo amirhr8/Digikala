@@ -15,6 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import ir.truelearn.digikala.data.model.home.StoreProduct
 import ir.truelearn.digikala.data.remote.NetworkResult
 import ir.truelearn.digikala.ui.theme.spacing
@@ -25,6 +26,7 @@ import ir.truelearn.digikala.ui.theme.darkText
 
 @Composable
 fun MostFavoriteProductSection(
+    navController: NavHostController,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     var mostFavoriteList by remember {
@@ -40,10 +42,12 @@ fun MostFavoriteProductSection(
             mostFavoriteList = mostFavoriteResult.data ?: emptyList()
             loading = false
         }
+
         is NetworkResult.Error -> {
             loading = false
             Log.e("3636", "MostFavoriteProductSection error : ${mostFavoriteResult.message}")
         }
+
         is NetworkResult.Loading -> {
             loading = true
         }
@@ -85,9 +89,9 @@ fun MostFavoriteProductSection(
 
         LazyRow {
             items(mostFavoriteList) { item ->
-                MostFavoriteProductsOffer(item)
+                MostFavoriteProductsOffer(navController, item)
             }
-            item{
+            item {
                 MostFavoriteProductsShowMore()
             }
         }

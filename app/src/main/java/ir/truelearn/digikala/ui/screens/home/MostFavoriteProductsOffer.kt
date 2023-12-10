@@ -2,6 +2,7 @@ package ir.truelearn.digikala.ui.screens.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
@@ -18,15 +19,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import ir.truelearn.digikala.R
 import ir.truelearn.digikala.data.model.home.StoreProduct
+import ir.truelearn.digikala.navigation.Screen
 import ir.truelearn.digikala.ui.theme.*
 import ir.truelearn.digikala.util.Constants
 import ir.truelearn.digikala.util.DigitHelper
 
 @Composable
-fun MostFavoriteProductsOffer(item : StoreProduct) {
+fun MostFavoriteProductsOffer(
+    navController: NavHostController,
+    item : StoreProduct
+) {
 
     Column(
         modifier = Modifier
@@ -34,7 +40,10 @@ fun MostFavoriteProductsOffer(item : StoreProduct) {
             .padding(
                 vertical = MaterialTheme.spacing.semiLarge,
                 horizontal = MaterialTheme.spacing.semiSmall
-            ),
+            )
+            .clickable{
+                navController.navigate(Screen.ProductDetail.withArgs(item._id))
+            },
     ) {
 
        Row {
