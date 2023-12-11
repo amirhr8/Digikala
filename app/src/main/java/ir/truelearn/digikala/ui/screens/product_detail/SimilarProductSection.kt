@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import ir.truelearn.digikala.data.model.home.StoreProduct
 import ir.truelearn.digikala.data.remote.NetworkResult
 import ir.truelearn.digikala.ui.theme.spacing
@@ -33,6 +34,7 @@ import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun SimilarProductSection(
+    navController: NavHostController,
     categoryId: String,
     viewModel: ProductDetailViewModel = hiltViewModel()
 ) {
@@ -99,7 +101,7 @@ fun SimilarProductSection(
 
         LazyRow {
             items(similarList) { item ->
-                MostFavoriteProductsOffer(item)
+                MostFavoriteProductsOffer(navController , item)
             }
             item {
                 MostFavoriteProductsShowMore()

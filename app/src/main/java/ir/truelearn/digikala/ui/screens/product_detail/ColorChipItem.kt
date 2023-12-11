@@ -3,6 +3,7 @@ package ir.truelearn.digikala.ui.screens.product_detail
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
@@ -15,22 +16,38 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.truelearn.digikala.data.model.product_detail.ProductColor
+import ir.truelearn.digikala.ui.theme.CursorColor
 import ir.truelearn.digikala.ui.theme.roundedShape
 import ir.truelearn.digikala.ui.theme.spacing
 
 @Composable
 fun ColorChipItem(
-    item: ProductColor
+    item: ProductColor,
+    isSelected: Boolean,
+    onSelectionChanged: (String) -> Unit = {},
 ) {
 
     Surface(
-        modifier = Modifier.padding(MaterialTheme.spacing.extraSmall),
+        modifier =
+        if (isSelected)
+            Modifier
+                .padding(MaterialTheme.spacing.extraSmall)
+                .border(width = 1.dp, MaterialTheme.colors.CursorColor, CircleShape)
+        else
+            Modifier.padding(MaterialTheme.spacing.extraSmall),
         elevation = 1.dp,
         shape = MaterialTheme.roundedShape.biggerMedium,
     ) {
 
         Row(
-            modifier = Modifier.padding(MaterialTheme.spacing.small),
+            modifier = Modifier
+                .toggleable(
+                    value = isSelected,
+                    onValueChange = {
+                        onSelectionChanged(item.color)
+                    }
+                )
+                .padding(MaterialTheme.spacing.small),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Canvas(

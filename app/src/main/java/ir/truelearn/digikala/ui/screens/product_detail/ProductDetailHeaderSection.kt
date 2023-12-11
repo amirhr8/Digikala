@@ -109,7 +109,7 @@ fun ProductDetailHeaderSection(
                     vertical = MaterialTheme.spacing.small,
                 )
                 .fillMaxWidth()
-        ){
+        ) {
             Icon(
                 painter = painterResource(id = R.drawable.like),
                 contentDescription = "",
@@ -117,8 +117,18 @@ fun ProductDetailHeaderSection(
                 tint = MaterialTheme.colors.DigikalaLightGreen
             )
 
+
+            val percent = ((item.star?.div(5.0) ?: 0.0) * 100).toInt()
+            val users = (percent * (item.starCount?.toDouble() ?: 0.0) / 100).toInt()
+
+            val text = String.format(
+                "%d%% (%d نفر) از خریداران این کالا را پیشنهاد کرده اند.",
+                percent,
+                users
+            )
+
             Text(
-                text = digitByLocate("90% (80نفر) از خریداران این کالا را پیشنهاد کرده اند."),
+                text = digitByLocate(text),
                 color = MaterialTheme.colors.semiDarkText,
                 style = MaterialTheme.typography.h6,
                 modifier = Modifier.padding(horizontal = MaterialTheme.spacing.small)
@@ -128,7 +138,8 @@ fun ProductDetailHeaderSection(
         Divider(
             color = MaterialTheme.colors.grayCategory,
             thickness = 1.dp,
-            modifier = Modifier.padding(horizontal = MaterialTheme.spacing.medium))
+            modifier = Modifier.padding(horizontal = MaterialTheme.spacing.medium)
+        )
 
 
     }

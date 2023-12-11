@@ -2,6 +2,7 @@ package ir.truelearn.digikala.ui.screens.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
@@ -18,15 +19,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import ir.truelearn.digikala.R
 import ir.truelearn.digikala.data.model.home.StoreProduct
+import ir.truelearn.digikala.navigation.Screen
 import ir.truelearn.digikala.ui.theme.*
 import ir.truelearn.digikala.util.Constants
 import ir.truelearn.digikala.util.DigitHelper
 
 @Composable
-fun MostFavoriteProductsOffer(item : StoreProduct) {
+fun MostFavoriteProductsOffer(
+    navController: NavHostController,
+    item: StoreProduct
+) {
 
     Column(
         modifier = Modifier
@@ -34,162 +40,164 @@ fun MostFavoriteProductsOffer(item : StoreProduct) {
             .padding(
                 vertical = MaterialTheme.spacing.semiLarge,
                 horizontal = MaterialTheme.spacing.semiSmall
-            ),
+            )
+            .clickable {
+                navController.navigate(Screen.ProductDetail.withArgs(item._id))
+            },
     ) {
 
-       Row {
+        Row {
 
-           Column(
-               modifier = Modifier
-                   .weight(1f)
-                   .padding(vertical = MaterialTheme.spacing.small)
-           ) {
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(vertical = MaterialTheme.spacing.small)
+            ) {
 
-               Column(
-                   modifier = Modifier
-                       .fillMaxWidth()
-                       .padding(vertical = MaterialTheme.spacing.extraSmall)
-               ) {
-
-
-                   Image(
-                       painter = rememberAsyncImagePainter(item.image),
-                       contentDescription = "",
-                       modifier = Modifier
-                           .fillMaxWidth()
-                           .height(130.dp),
-                       contentScale = ContentScale.FillBounds
-                   )
-
-               }
-
-               Spacer(modifier = Modifier.height(10.dp))
-
-               Column(
-                   modifier = Modifier
-                       .fillMaxWidth()
-                       .padding(vertical = MaterialTheme.spacing.small)
-               ) {
-
-                   Text(
-                       text = item.name,
-                       modifier = Modifier
-                           .fillMaxSize()
-                           .height(48.dp)
-                           .padding(horizontal = MaterialTheme.spacing.small),
-                       style = MaterialTheme.typography.h6,
-                       fontWeight = FontWeight.SemiBold,
-                       color = MaterialTheme.colors.darkText,
-                       maxLines = 2,
-                       overflow = TextOverflow.Ellipsis
-                   )
-
-                   Spacer(modifier = Modifier.height(10.dp))
-
-                   Row(
-                       modifier = Modifier
-                           .fillMaxWidth(),
-                       horizontalArrangement = Arrangement.Center,
-                       verticalAlignment = Alignment.CenterVertically
-                   ) {
-
-                       Icon(
-                           painter = painterResource(id = R.drawable.in_stock),
-                           contentDescription = "",
-                           modifier = Modifier
-                               .size(22.dp)
-                               .padding(2.dp),
-                           tint = MaterialTheme.colors.DarkCyan
-                       )
-                       Text(
-                           text = item.seller,
-                           style = MaterialTheme.typography.extraSmall,
-                           fontWeight = FontWeight.SemiBold,
-                           color = MaterialTheme.colors.semiDarkText,
-                       )
-
-                   }
-
-                   Spacer(modifier = Modifier.height(10.dp))
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = MaterialTheme.spacing.extraSmall)
+                ) {
 
 
-                   Row(
-                       modifier = Modifier
-                           .fillMaxWidth()
-                           .padding(horizontal = MaterialTheme.spacing.small),
-                       horizontalArrangement = Arrangement.SpaceBetween,
-                       verticalAlignment = Alignment.Top
-                   ) {
+                    Image(
+                        painter = rememberAsyncImagePainter(item.image),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(130.dp),
+                        contentScale = ContentScale.FillBounds
+                    )
 
-                       Box(
-                           modifier = Modifier
-                               .width(40.dp)
-                               .height(24.dp)
-                               .background(
-                                   color = MaterialTheme.colors.DigikalaDarkRed,
-                                   shape = CircleShape
-                               )
-                               .wrapContentWidth(Alignment.CenterHorizontally)
-                               .wrapContentHeight(Alignment.CenterVertically)
-                       ) {
-                           Text(
-                               text = "${DigitHelper.digitByLocateAndSeparator(item.discountPercent.toString())}%",
-                               color = Color.White,
-                               style = MaterialTheme.typography.h6,
-                               fontWeight = FontWeight.Bold,
-                           )
-                       }
+                }
 
+                Spacer(modifier = Modifier.height(10.dp))
 
-                       Column {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = MaterialTheme.spacing.small)
+                ) {
 
-                           Row {
-                               Text(
-                                   text = DigitHelper.digitByLocateAndSeparator(
-                                       DigitHelper.applyDiscount(item.price , item.discountPercent)
-                                           .toString()),
-                                   style = MaterialTheme.typography.body2,
-                                   fontWeight = FontWeight.SemiBold,
-                               )
+                    Text(
+                        text = item.name,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .height(48.dp)
+                            .padding(horizontal = MaterialTheme.spacing.small),
+                        style = MaterialTheme.typography.h6,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colors.darkText,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
+                    )
 
-                               Icon(
-                                   painter = currencyLogoChangeByLanguage(),
-                                   contentDescription = "",
-                                   modifier = Modifier
-                                       .size(MaterialTheme.spacing.semiLarge)
-                                       .padding(horizontal = MaterialTheme.spacing.extraSmall)
-                               )
+                    Spacer(modifier = Modifier.height(10.dp))
 
-                           }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
 
-                           Text(
-                               text = DigitHelper.digitByLocateAndSeparator(item.price.toString()),
-                               color = Color.LightGray,
-                               style = MaterialTheme.typography.body2,
-                               textDecoration = TextDecoration.LineThrough
-                           )
-                       }
+                        Icon(
+                            painter = painterResource(id = R.drawable.in_stock),
+                            contentDescription = "",
+                            modifier = Modifier
+                                .size(22.dp)
+                                .padding(2.dp),
+                            tint = MaterialTheme.colors.DarkCyan
+                        )
+                        Text(
+                            text = item.seller,
+                            style = MaterialTheme.typography.extraSmall,
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colors.semiDarkText,
+                        )
 
-                   }
+                    }
 
-
-               }
+                    Spacer(modifier = Modifier.height(10.dp))
 
 
-           }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = MaterialTheme.spacing.small),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.Top
+                    ) {
+
+                        Box(
+                            modifier = Modifier
+                                .width(40.dp)
+                                .height(24.dp)
+                                .background(
+                                    color = MaterialTheme.colors.DigikalaDarkRed,
+                                    shape = CircleShape
+                                )
+                                .wrapContentWidth(Alignment.CenterHorizontally)
+                                .wrapContentHeight(Alignment.CenterVertically)
+                        ) {
+                            Text(
+                                text = "${DigitHelper.digitByLocateAndSeparator(item.discountPercent.toString())}%",
+                                color = Color.White,
+                                style = MaterialTheme.typography.h6,
+                                fontWeight = FontWeight.Bold,
+                            )
+                        }
 
 
-           Divider(
-               Modifier
-                   .padding(start = MaterialTheme.spacing.semiMedium)
-                   .width(1.dp)
-                   .height(320.dp)
-                   .alpha(0.4f),
-               color = Color.LightGray
-           )
-       }
+                        Column {
+
+                            Row {
+                                Text(
+                                    text = DigitHelper.digitByLocateAndSeparator(
+                                        DigitHelper.applyDiscount(item.price, item.discountPercent)
+                                            .toString()
+                                    ),
+                                    style = MaterialTheme.typography.body2,
+                                    fontWeight = FontWeight.SemiBold,
+                                )
+
+                                Icon(
+                                    painter = currencyLogoChangeByLanguage(),
+                                    contentDescription = "",
+                                    modifier = Modifier
+                                        .size(MaterialTheme.spacing.semiLarge)
+                                        .padding(horizontal = MaterialTheme.spacing.extraSmall)
+                                )
+
+                            }
+
+                            Text(
+                                text = DigitHelper.digitByLocateAndSeparator(item.price.toString()),
+                                color = Color.LightGray,
+                                style = MaterialTheme.typography.body2,
+                                textDecoration = TextDecoration.LineThrough
+                            )
+                        }
+
+                    }
 
 
+                }
+
+
+            }
+
+
+            Divider(
+                Modifier
+                    .padding(start = MaterialTheme.spacing.semiMedium)
+                    .width(1.dp)
+                    .height(320.dp)
+                    .alpha(0.4f),
+                color = Color.LightGray
+            )
+        }
 
 
     }
