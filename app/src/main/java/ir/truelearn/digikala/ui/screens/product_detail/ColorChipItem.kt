@@ -28,12 +28,16 @@ fun ColorChipItem(
 ) {
 
     Surface(
-        modifier = if (isSelected) Modifier.padding(MaterialTheme.spacing.extraSmall).border(width = 1.dp,MaterialTheme.colors.CursorColor,
-            CircleShape) else Modifier.padding(MaterialTheme.spacing.extraSmall),
+        modifier =
+        if (isSelected)
+            Modifier
+                .padding(MaterialTheme.spacing.extraSmall)
+                .border(width = 1.dp, MaterialTheme.colors.CursorColor, CircleShape)
+        else
+            Modifier.padding(MaterialTheme.spacing.extraSmall),
         elevation = 1.dp,
         shape = MaterialTheme.roundedShape.biggerMedium,
-
-        ) {
+    ) {
 
         Row(
             modifier = Modifier

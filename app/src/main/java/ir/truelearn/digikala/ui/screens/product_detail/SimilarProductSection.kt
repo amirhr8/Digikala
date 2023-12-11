@@ -101,7 +101,7 @@ fun SimilarProductSection(
 
         LazyRow {
             items(similarList) { item ->
-                MostFavoriteProductsOffer(navController ,item)
+                MostFavoriteProductsOffer(navController , item)
             }
             item {
                 MostFavoriteProductsShowMore()

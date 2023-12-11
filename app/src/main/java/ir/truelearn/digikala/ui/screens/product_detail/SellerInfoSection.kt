@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import ir.truelearn.digikala.ui.screens.basket.DetailRow
 import ir.truelearn.digikala.ui.theme.*
 import ir.truelearn.digikala.util.DigitHelper
-import ir.truelearn.digikala.util.DigitHelper.digitByLocateAndSeparator
 
 @Composable
 fun SellerInfoSection(productPrice:Long) {
@@ -299,7 +298,7 @@ fun SellerInfoSection(productPrice:Long) {
                 Text(
                     modifier = Modifier
                         .padding(vertical = MaterialTheme.spacing.small),
-                    text = "${stringResource(id = R.string.manufacturer_price)} ${digitByLocateAndSeparator(productPrice.toString())} ${
+                    text = "${stringResource(id = R.string.manufacturer_price)} ${DigitHelper.digitByLocateAndSeparator(productPrice.toString())} ${
                         stringResource(
                             id = R.string.toman
                         )

@@ -42,12 +42,10 @@ fun MostFavoriteProductSection(
             mostFavoriteList = mostFavoriteResult.data ?: emptyList()
             loading = false
         }
-
         is NetworkResult.Error -> {
             loading = false
             Log.e("3636", "MostFavoriteProductSection error : ${mostFavoriteResult.message}")
         }
-
         is NetworkResult.Loading -> {
             loading = true
         }
@@ -89,9 +87,9 @@ fun MostFavoriteProductSection(
 
         LazyRow {
             items(mostFavoriteList) { item ->
-                MostFavoriteProductsOffer(navController, item)
+                MostFavoriteProductsOffer(navController , item)
             }
-            item {
+            item{
                 MostFavoriteProductsShowMore()
             }
         }

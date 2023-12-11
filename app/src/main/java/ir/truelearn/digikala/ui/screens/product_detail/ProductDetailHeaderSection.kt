@@ -116,14 +116,17 @@ fun ProductDetailHeaderSection(
                 modifier = Modifier.size(20.dp),
                 tint = MaterialTheme.colors.DigikalaLightGreen
             )
-            val percent = (item.star?.div(5.0) ?: 0.0) * 100.0
+
+
+            val percent = ((item.star?.div(5.0) ?: 0.0) * 100).toInt()
             val users = (percent * (item.starCount?.toDouble() ?: 0.0) / 100).toInt()
 
             val text = String.format(
                 "%d%% (%d نفر) از خریداران این کالا را پیشنهاد کرده اند.",
-                percent.toInt(),
+                percent,
                 users
             )
+
             Text(
                 text = digitByLocate(text),
                 color = MaterialTheme.colors.semiDarkText,

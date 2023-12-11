@@ -7,6 +7,7 @@ import ir.truelearn.digikala.data.model.home.StoreProduct
 import ir.truelearn.digikala.data.remote.BaseApiResponse
 import ir.truelearn.digikala.data.remote.BasketApiInterface
 import ir.truelearn.digikala.data.remote.NetworkResult
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 
@@ -48,6 +49,10 @@ class BasketRepository @Inject constructor(
     suspend fun changeCartItemCount(id: String, newCount: Int) {
         dao.changeCountCartItem(id, newCount)
     }
+    fun getItemsCountInBasket(itemId: String): Flow<Int> =
+        dao.getItemsCountInBasket(itemId)
 
+    fun isItemExistInBasket(itemId: String): Flow<Boolean> =
+        dao.isItemExistInBasket(itemId)
 
 }

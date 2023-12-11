@@ -20,17 +20,16 @@ import ir.truelearn.digikala.ui.theme.darkText
 import ir.truelearn.digikala.ui.theme.spacing
 
 val selectedColorItem: MutableState<ProductColor?> = mutableStateOf(null)
-
 @Composable
 fun ProductSelectColorSection(
     colors: List<ProductColor>,
-    onSelectedChanged: (String) -> Unit = { name ->
-        colors.forEach {
-            if (it.color == name) {
+    onSelectionChanged: (String) -> Unit = {colorName->
+        colors.forEach{
+            if (it.color == colorName){
                 selectedColorItem.value = it
             }
         }
-    }
+    },
 ) {
 
     Column(modifier = Modifier.padding(MaterialTheme.spacing.small)) {
@@ -48,14 +47,13 @@ fun ProductSelectColorSection(
         }
         colorState = colors
 
-
         LazyRow() {
             items(colorState) { productColor ->
                 ColorChipItem(
-                    productColor,
+                    productColor ,
                     isSelected = selectedColorItem.value?.color == productColor.color
                 ){
-                    onSelectedChanged(it)
+                    onSelectionChanged(it)
                 }
             }
         }
