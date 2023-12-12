@@ -17,6 +17,7 @@ import ir.truelearn.digikala.ui.screens.home.HomeScreen
 import ir.truelearn.digikala.ui.screens.home.WebPageScreen
 import ir.truelearn.digikala.ui.screens.product_detail.*
 import ir.truelearn.digikala.ui.screens.profile.ProfileScreen
+import ir.truelearn.digikala.ui.screens.profile.SettingScreen
 import ir.truelearn.digikala.ui.screens.splash.SplashScreen
 
 @Composable
@@ -228,6 +229,11 @@ fun SetupNavGraph(navController: NavHostController) {
             url?.let {
                 WebPageScreen(navController = navController, url = url)
             }
+        }
+
+
+        composable(route = Screen.Setting.route) {
+            SettingScreen(navController = navController)
         }
 
     }

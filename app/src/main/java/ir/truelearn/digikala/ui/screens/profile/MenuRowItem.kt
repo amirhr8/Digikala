@@ -1,6 +1,7 @@
 package ir.truelearn.digikala.ui.screens.profile
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
@@ -24,9 +25,10 @@ import ir.truelearn.digikala.ui.theme.spacing
 
 @Composable
 fun MenuRowItem(
-    painter: Painter,
+    icon: @Composable () -> Unit,
     text : String,
     isHaveDivider: Boolean,
+    action: () -> Unit = {}
 ) {
 
     Row(
@@ -34,6 +36,10 @@ fun MenuRowItem(
             .fillMaxWidth()
             .height(60.dp)
             .padding(horizontal = MaterialTheme.spacing.medium)
+            .clickable {
+                action()
+            }
+
     ) {
 
         Column(
@@ -43,13 +49,7 @@ fun MenuRowItem(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(
-                painter = painter,
-                contentDescription = "",
-                modifier = Modifier
-                    .size(36.dp)
-                    .padding(MaterialTheme.spacing.small)
-            )
+            icon()
         }
 
         Column(

@@ -31,4 +31,12 @@ object Constants {
     const val GIFT_CARD_URL = "https://www.digikala.com/landing/gift-card-landing/?promo_name=gift_landing&promo_position=circle_badge"
     const val DIGIPLUS_URL = "https://www.digikala.com/plus/landing/?promo_name=plus&promo_position=circle_badge"
     const val MORE_URL = "https://www.digikala.com/mehr/?promo_name=mehr&promo_position=circle_badge"
+
+
+    const val DIGI_FAQ = "https://www.digikala.com/faq/"
+    const val DIGI_PRIVACY = "https://www.digikala.com/page/privacy/"
+    const val DIGI_TERMS = "https://www.digikala.com/page/terms/"
+    const val DIGI_TURLEARN = "https://truelearn.ir/"
+    const val DIGI_BUG = "https://www.digikala.com/page/bug-report/"
+    const val DIGI_SCORE = "https://cafebazaar.ir/app/com.digikala"
 }

@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ir.truelearn.digikala.MainActivity
+import ir.truelearn.digikala.navigation.Screen
 import ir.truelearn.digikala.ui.components.CenterBannerItem
 import ir.truelearn.digikala.ui.theme.*
 import ir.truelearn.digikala.util.Constants
@@ -46,15 +47,17 @@ fun ProfileScreen(
 
 
     if (!dataStore.getUserToken().isNullOrBlank()) {
-        Profile()
+        Profile(navController)
     } else {
         when (profileViewModel.screenState) {
             ProfileScreenState.LOGIN_STATE -> {
                 LoginScreen()
             }
+
             ProfileScreenState.PROFILE_STATE -> {
-                Profile()
+                Profile(navController)
             }
+
             ProfileScreenState.REGISTER_STATE -> {
                 RegisterScreen()
             }
@@ -65,51 +68,96 @@ fun ProfileScreen(
 }
 
 @Composable
-fun Profile() {
+fun Profile(navController: NavHostController) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
             .padding(bottom = 60.dp),
     ) {
-        item { ProfileTopBarSection() }
+        item { ProfileTopBarSection(navController) }
         item { ProfileHeaderSection() }
         item { ProfileMiddleSection() }
         item { MyOrdersSection() }
         item { CenterBannerItem(painter = painterResource(id = R.drawable.digiclub1)) }
-        item {ProfileMenuSection() }
+        item { ProfileMenuSection() }
         item { CenterBannerItem(painter = painterResource(id = R.drawable.digiclub2)) }
     }
 }
 
 
 @Composable
-private fun ProfileMenuSection(){
+private fun ProfileMenuSection() {
+
     MenuRowItem(
-        painter = painterResource(id = R.drawable.digi_plus_icon),
+        icon = {
+            Image(
+                painter = painterResource(id = R.drawable.digi_plus_icon),
+                contentDescription = "",
+                modifier = Modifier
+                    .size(36.dp)
+                    .padding(MaterialTheme.spacing.small)
+            )
+        },
         text = stringResource(id = R.string.digi_plus),
         isHaveDivider = true
     )
     MenuRowItem(
-        painter = painterResource(id = R.drawable.digi_fav_icon),
+        icon = {
+            Image(
+                painter = painterResource(id = R.drawable.digi_fav_icon),
+                contentDescription = "",
+                modifier = Modifier
+                    .size(36.dp)
+                    .padding(MaterialTheme.spacing.small)
+            )
+        },
         text = stringResource(id = R.string.fav_list),
         isHaveDivider = true
     )
+
     MenuRowItem(
-        painter = painterResource(id = R.drawable.digi_comments_icon),
+        icon = {
+            Image(
+                painter = painterResource(id = R.drawable.digi_comments_icon),
+                contentDescription = "",
+                modifier = Modifier
+                    .size(36.dp)
+                    .padding(MaterialTheme.spacing.small)
+            )
+        },
         text = stringResource(id = R.string.my_comments),
         isHaveDivider = true
     )
     MenuRowItem(
-        painter = painterResource(id = R.drawable.digi_adresses_icon),
+        icon = {
+            Image(
+                painter = painterResource(id = R.drawable.digi_adresses_icon),
+                contentDescription = "",
+                modifier = Modifier
+                    .size(36.dp)
+                    .padding(MaterialTheme.spacing.small)
+            )
+        },
         text = stringResource(id = R.string.addresses),
         isHaveDivider = true
     )
+
     MenuRowItem(
-        painter = painterResource(id = R.drawable.digi_profile_icon),
+        icon = {
+            Image(
+                painter = painterResource(id = R.drawable.digi_profile_icon),
+                contentDescription = "",
+                modifier = Modifier
+                    .size(36.dp)
+                    .padding(MaterialTheme.spacing.small)
+            )
+        },
         text = stringResource(id = R.string.profile_data),
-        isHaveDivider = false
+        isHaveDivider = true
     )
+
+
 }
 
 
@@ -168,7 +216,7 @@ private fun MyOrdersItem(
         Column(
             modifier = Modifier.padding(horizontal = MaterialTheme.spacing.medium),
             horizontalAlignment = Alignment.CenterHorizontally
-        ){
+        ) {
             Image(
                 painter = painter,
                 contentDescription = "",
@@ -193,13 +241,15 @@ private fun MyOrdersItem(
 }
 
 @Composable
-private fun ProfileTopBarSection() {
+private fun ProfileTopBarSection(navController: NavHostController) {
     Row(
         modifier = Modifier
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        IconButton(onClick = { }) {
+        IconButton(onClick = {
+            navController.navigate(Screen.Setting.route)
+        }) {
             Icon(
                 painter = painterResource(
                     id = R.drawable.digi_settings
