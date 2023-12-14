@@ -178,4 +178,12 @@ After confirming the comment, go to the club missions page and get your points</
 
     <string name="farsi">فارسی</string>
     <string name="english">English</string>
+
+    <string name="completion_of_user_information"> Completion of user information </string>
+    <string name="user_information">User Account Information</string>
+    <string name="enter_name_lastname">Enter Your Name and LastName</string>
+    <string name="firstname">FirstName</string>
+    <string name="lastname">LastName</string>
+    <string name="confirm_information"> Confirm Information </string>
+
 </resources>

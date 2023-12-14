@@ -7,6 +7,7 @@ import ir.truelearn.digikala.data.model.home.Slider
 import ir.truelearn.digikala.data.model.home.StoreProduct
 import ir.truelearn.digikala.data.model.prfile.LoginRequest
 import ir.truelearn.digikala.data.model.prfile.LoginResponse
+import ir.truelearn.digikala.data.model.prfile.SetUserNameRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -18,6 +19,12 @@ interface ProfileApiInterface {
     suspend fun login(
         @Body login : LoginRequest
     ) : Response<ResponseResult<LoginResponse>>
+
+
+    @POST("v1/setUserName")
+    suspend fun setUserName(
+        @Body setUserName : SetUserNameRequest
+    ) : Response<ResponseResult<String>>
 
 
 }

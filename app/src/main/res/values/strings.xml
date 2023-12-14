@@ -185,4 +185,13 @@
     <string name="farsi">فارسی</string>
     <string name="english">English</string>
 
+
+    <string name="completion_of_user_information"> تکمیل اطلاعات کاربری </string>
+    <string name="user_information">اطلاعات حساب کاربری </string>
+    <string name="enter_name_lastname">نام و نام خانوادگی خود را وارد نمایید</string>
+    <string name="firstname">نام</string>
+    <string name="lastname"> نام خانوادگی </string>
+    <string name="confirm_information"> تایید اطلاعات </string>
+
+
 </resources>

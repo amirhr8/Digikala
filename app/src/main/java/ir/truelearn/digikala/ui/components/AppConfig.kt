@@ -10,6 +10,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import ir.truelearn.digikala.data.remote.NetworkResult
 import ir.truelearn.digikala.util.Constants.USER_ID
 import ir.truelearn.digikala.util.Constants.USER_LANGUAGE
+import ir.truelearn.digikala.util.Constants.USER_NAME
 import ir.truelearn.digikala.util.Constants.USER_PASSWORD
 import ir.truelearn.digikala.util.Constants.USER_PHONE
 import ir.truelearn.digikala.util.Constants.USER_TOKEN
@@ -40,6 +41,8 @@ fun AppConfig(
                             dataStore.saveUserPhoneNumber(user.phone)
                             dataStore.saveUserPassword(USER_PASSWORD)
 
+                            dataStore.saveUserName(user.name ?: "null")
+
                             getDataStoreVariables(dataStore)
 
                             Log.e("3636" , "refresh token")
@@ -63,4 +66,5 @@ private fun getDataStoreVariables(dataStore: DataStoreViewModel) {
     USER_PASSWORD = dataStore.getUserPassword().toString()
     USER_TOKEN = dataStore.getUserToken().toString()
     USER_ID = dataStore.getUserId().toString()
+    USER_NAME = dataStore.getUserName().toString()
 }

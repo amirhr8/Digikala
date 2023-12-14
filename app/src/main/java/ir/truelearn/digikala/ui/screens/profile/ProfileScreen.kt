@@ -4,6 +4,7 @@ import android.app.Activity
 import androidx.compose.foundation.Image
 import ir.truelearn.digikala.R
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -26,6 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import ir.truelearn.digikala.MainActivity
 import ir.truelearn.digikala.navigation.Screen
@@ -76,18 +78,18 @@ fun Profile(navController: NavHostController) {
             .padding(bottom = 60.dp),
     ) {
         item { ProfileTopBarSection(navController) }
-        item { ProfileHeaderSection() }
-        item { ProfileMiddleSection() }
+        item { ProfileHeaderSection(navController) }
+        item { ProfileMiddleSection(navController) }
         item { MyOrdersSection() }
         item { CenterBannerItem(painter = painterResource(id = R.drawable.digiclub1)) }
-        item { ProfileMenuSection() }
+        item { ProfileMenuSection(navController) }
         item { CenterBannerItem(painter = painterResource(id = R.drawable.digiclub2)) }
     }
 }
 
 
 @Composable
-private fun ProfileMenuSection() {
+private fun ProfileMenuSection(navController: NavHostController) {
 
     MenuRowItem(
         icon = {
@@ -155,7 +157,9 @@ private fun ProfileMenuSection() {
         },
         text = stringResource(id = R.string.profile_data),
         isHaveDivider = true
-    )
+    ) {
+        navController.navigate(Screen.UserAccount.route)
+    }
 
 
 }
@@ -278,15 +282,32 @@ private fun ProfileTopBarSection(navController: NavHostController) {
 }
 
 @Composable
-private fun ProfileHeaderSection() {
+private fun ProfileHeaderSection(navController: NavController) {
+
     Spacer(modifier = Modifier.height(MaterialTheme.spacing.biggerMedium))
 
+    if (Constants.USER_NAME != "null") {
+        Text(
+            modifier = Modifier
+                .fillMaxWidth(),
+            text = Constants.USER_NAME.replace("-",""),
+            textAlign = TextAlign.Center,
+            color = MaterialTheme.colors.darkText,
+            style = MaterialTheme.typography.h5
+        )
+    } else {
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { navController.navigate(Screen.UserAccount.route) },
+            text = stringResource(id = R.string.completion_of_user_information),
+            textAlign = TextAlign.Center,
+            color = MaterialTheme.colors.DarkCyan,
+            style = MaterialTheme.typography.h5
+        )
+    }
 
-    Text(
-        modifier = Modifier.fillMaxWidth(),
-        text = "نام یوزر",
-        textAlign = TextAlign.Center
-    )
+
 
     Text(
         modifier = Modifier.fillMaxWidth(),
@@ -386,7 +407,7 @@ private fun ProfileHeaderSection() {
 
 
 @Composable
-private fun ProfileMiddleSection() {
+private fun ProfileMiddleSection(navController: NavHostController) {
 
     Divider(
         modifier = Modifier
@@ -404,7 +425,12 @@ private fun ProfileMiddleSection() {
             .fillMaxWidth()
             .padding(vertical = MaterialTheme.spacing.biggerMedium)
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally)
+        Column(
+            Modifier.clickable {
+                navController.navigate(Screen.UserAccount.route)
+            },
+            horizontalAlignment = Alignment.CenterHorizontally
+        )
         {
             Image(
                 painter = painterResource(id = R.drawable.digi_user),

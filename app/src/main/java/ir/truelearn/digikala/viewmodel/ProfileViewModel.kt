@@ -12,6 +12,7 @@ import ir.truelearn.digikala.data.model.home.Slider
 import ir.truelearn.digikala.data.model.home.StoreProduct
 import ir.truelearn.digikala.data.model.prfile.LoginRequest
 import ir.truelearn.digikala.data.model.prfile.LoginResponse
+import ir.truelearn.digikala.data.model.prfile.SetUserNameRequest
 import ir.truelearn.digikala.data.remote.NetworkResult
 import ir.truelearn.digikala.repository.HomeRepository
 import ir.truelearn.digikala.repository.ProfileRepository
@@ -33,6 +34,8 @@ class ProfileViewModel @Inject constructor(private val repository: ProfileReposi
 
     val loginResponse = MutableStateFlow<NetworkResult<LoginResponse>>(NetworkResult.Loading())
 
+    val setUserNameResponse = MutableStateFlow<NetworkResult<String>>(NetworkResult.Loading())
+
     fun login() {
         viewModelScope.launch {
             loadingState = true
@@ -49,5 +52,10 @@ class ProfileViewModel @Inject constructor(private val repository: ProfileReposi
         }
     }
 
+    fun setUserName (newUserName: SetUserNameRequest){
+        viewModelScope.launch {
+            setUserNameResponse.emit(repository.setUserName(newUserName))
+        }
+    }
 
 }

@@ -198,10 +198,12 @@ fun CommentForm(
                     }
                     loading = false
                 }
+
                 is NetworkResult.Error -> {
                     loading = false
                     Log.e("3636", "ProductDetailScreen error : ${newCommentResult.message}")
                 }
+
                 is NetworkResult.Loading -> {
 
                 }
@@ -320,13 +322,16 @@ fun CommentForm(
                     ),
                 onClick = {
                     loading = true
+
+                    val userName = if (Constants.USER_NAME == "null") "کاربر بدون نام" else Constants.USER_NAME.replace("-","")
+
                     val newComment = NewComment(
                         token = Constants.USER_TOKEN,
                         productId = productId,
                         star = (sliderValue - 1).toInt(),
                         title = commentTitle,
                         description = commentBody,
-                        userName = "کاربر مهمان" //todo change user name
+                        userName = userName
                     )
                     if (newComment.title.isBlank()) {
                         loading = false
