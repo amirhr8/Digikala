@@ -20,7 +20,7 @@ abstract class DigikalaDatabase : RoomDatabase() {
         val MIGRATION_1_2: Migration = object : Migration(1, 2) {
             override fun migrate(db: SupportSQLiteDatabase) {
                 db.execSQL(
-                    "CREATE TABLE IF NOT EXIST `${FAVORITE_LIST_TABLE}` " +
+                    "CREATE TABLE IF NOT EXISTS `${FAVORITE_LIST_TABLE}` " +
                             "(`id` TEXT NOT NULL, " +
                             "`discountPercent` INTEGER NOT NULL, " +
                             "`image` TEXT NOT NULL, " +

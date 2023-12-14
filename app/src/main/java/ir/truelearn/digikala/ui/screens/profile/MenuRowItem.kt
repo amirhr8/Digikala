@@ -20,14 +20,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 
 import androidx.compose.ui.unit.dp
+import ir.truelearn.digikala.ui.theme.darkText
 import ir.truelearn.digikala.ui.theme.settingArrow
 import ir.truelearn.digikala.ui.theme.spacing
 
 @Composable
 fun MenuRowItem(
     icon: @Composable () -> Unit,
-    text : String,
+    text: String,
     isHaveDivider: Boolean,
+    color: Color = MaterialTheme.colors.darkText,
+    addCompose: @Composable (() -> Unit)? = null,
     action: () -> Unit = {}
 ) {
 
@@ -72,15 +75,20 @@ fun MenuRowItem(
                 Text(
                     style = MaterialTheme.typography.h5,
                     fontWeight = FontWeight.Bold,
-                    text = text
+                    text = text ,
+                    color = color
                 )
 
-                Icon(
-                    Icons.Outlined.KeyboardArrowLeft,
-                    contentDescription = "",
-                    modifier = Modifier.size(24.dp),
-                    tint = MaterialTheme.colors.settingArrow
-                )
+                if (addCompose == null) {
+                    Icon(
+                        Icons.Outlined.KeyboardArrowLeft,
+                        contentDescription = "",
+                        modifier = Modifier.size(24.dp),
+                        tint = MaterialTheme.colors.settingArrow
+                    )
+                } else {
+                    addCompose()
+                }
 
 
             }
