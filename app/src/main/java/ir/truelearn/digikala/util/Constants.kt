@@ -26,12 +26,12 @@ object Constants {
 
     const val DIGIJET_URL = "https://www.digikalajet.com/user/address"
     const val AUCTION_URL = "https://www.digistyle.com/sale-landing/?utm_source=digikala&utm_medium=circle_badge&utm_campaign=style&promo_name=style&promo_position=circle_badge"
-    const val DIGIPAY_URL = "https://www.digikala.com/my-digipay/?promo_name=my-digipay&promo_position=circle_badge"
+    const val DIGIPAY_URL = "https://www.mydigipay.com/"
     const val PINDO_URL = "https://www.pindo.ir/?utm_source=digikala&utm_medium=circle_badge&utm_campaign=pindo&promo_name=pindo&promo_position=circle_badge"
     const val SHOPPING_URL = "https://www.digikala.com/landings/village-businesses/?promo_name=boomi-landing&promo_position=circle_badge"
     const val GIFT_CARD_URL = "https://www.digikala.com/landing/gift-card-landing/?promo_name=gift_landing&promo_position=circle_badge"
-    const val DIGIPLUS_URL = "https://www.digikala.com/plus/landing/?promo_name=plus&promo_position=circle_badge"
-    const val MORE_URL = "https://www.digikala.com/mehr/?promo_name=mehr&promo_position=circle_badge"
+    const val DIGIPLUS_URL = "https://www.digikala.com/plus/landing/"
+    const val MORE_URL = "https://www.digikala.com/mehr/"
 
 
     const val DIGI_FAQ = "https://www.digikala.com/faq/"
@@ -40,4 +40,8 @@ object Constants {
     const val DIGI_TURLEARN = "https://truelearn.ir/"
     const val DIGI_BUG = "https://www.digikala.com/page/bug-report/"
     const val DIGI_SCORE = "https://cafebazaar.ir/app/com.digikala"
+
+    const val DIGI_WALLET = "https://www.mydigipay.com/"
+    const val DIGI_CLUB = "https://www.digikala.com/digiclub/"
+    const val TURLEARN_CONTACT_US = "https://truelearn.ir/contact/"
 }

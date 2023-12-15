@@ -81,9 +81,19 @@ fun Profile(navController: NavHostController) {
         item { ProfileHeaderSection(navController) }
         item { ProfileMiddleSection(navController) }
         item { MyOrdersSection() }
-        item { CenterBannerItem(painter = painterResource(id = R.drawable.digiclub1)) }
+        item {
+            CenterBannerItem(
+                painter = painterResource(id = R.drawable.digiclub1),
+                navController
+            )
+        }
         item { ProfileMenuSection(navController) }
-        item { CenterBannerItem(painter = painterResource(id = R.drawable.digiclub2)) }
+        item {
+            CenterBannerItem(
+                painter = painterResource(id = R.drawable.digiclub2),
+                navController
+            )
+        }
     }
 }
 
@@ -103,7 +113,12 @@ private fun ProfileMenuSection(navController: NavHostController) {
         },
         text = stringResource(id = R.string.digi_plus),
         isHaveDivider = true
-    )
+    ) {
+        navController.navigate(
+            route = Screen.WebView.route + "?url=${Constants.DIGIPLUS_URL}"
+        )
+
+    }
     MenuRowItem(
         icon = {
             Image(
@@ -156,7 +171,7 @@ private fun ProfileMenuSection(navController: NavHostController) {
             )
         },
         text = stringResource(id = R.string.profile_data),
-        isHaveDivider = true
+        isHaveDivider = false
     ) {
         navController.navigate(Screen.UserAccount.route)
     }
@@ -290,7 +305,7 @@ private fun ProfileHeaderSection(navController: NavController) {
         Text(
             modifier = Modifier
                 .fillMaxWidth(),
-            text = Constants.USER_NAME.replace("-",""),
+            text = Constants.USER_NAME.replace("-", ""),
             textAlign = TextAlign.Center,
             color = MaterialTheme.colors.darkText,
             style = MaterialTheme.typography.h5
@@ -380,6 +395,11 @@ private fun ProfileHeaderSection(navController: NavController) {
 
         Column(
             modifier = Modifier
+                .clickable {
+                    navController.navigate(
+                        route = Screen.WebView.route + "?url=${Constants.DIGI_WALLET}"
+                    )
+                }
                 .weight(0.49f),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -446,7 +466,14 @@ private fun ProfileMiddleSection(navController: NavHostController) {
             )
         }
 
-        Column(horizontalAlignment = Alignment.CenterHorizontally)
+        Column(
+            Modifier.clickable {
+                navController.navigate(
+                    route = Screen.WebView.route + "?url=${Constants.DIGI_CLUB}"
+                )
+            },
+            horizontalAlignment = Alignment.CenterHorizontally
+        )
         {
             Image(
                 painter = painterResource(id = R.drawable.digi_club),
@@ -463,7 +490,14 @@ private fun ProfileMiddleSection(navController: NavHostController) {
         }
 
 
-        Column(horizontalAlignment = Alignment.CenterHorizontally)
+        Column(
+            Modifier.clickable {
+                navController.navigate(
+                    route = Screen.WebView.route + "?url=${Constants.TURLEARN_CONTACT_US}"
+                )
+            },
+            horizontalAlignment = Alignment.CenterHorizontally
+        )
         {
             Image(
                 painter = painterResource(id = R.drawable.digi_contact_us),

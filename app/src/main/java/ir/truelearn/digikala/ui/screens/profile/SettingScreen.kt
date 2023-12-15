@@ -3,11 +3,15 @@ package ir.truelearn.digikala.ui.screens.profile
 import android.app.Activity
 import android.content.Intent
 import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
@@ -37,14 +41,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.widget.ConstraintSet.Constraint
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import ir.truelearn.digikala.BuildConfig
 import ir.truelearn.digikala.MainActivity
 import ir.truelearn.digikala.R
 import ir.truelearn.digikala.navigation.Screen
 import ir.truelearn.digikala.ui.theme.digikalaRed
 import ir.truelearn.digikala.ui.theme.selectedBottomBar
+import ir.truelearn.digikala.ui.theme.semiDarkText
 import ir.truelearn.digikala.ui.theme.spacing
 import ir.truelearn.digikala.util.Constants
 import ir.truelearn.digikala.util.Constants.DIGI_BUG
@@ -64,11 +71,15 @@ fun SettingScreen(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .verticalScroll(rememberScrollState())
+            //.verticalScroll(rememberScrollState())
     ) {
         SettingHeader(navController)
 
         SettingMenuSection(navController)
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        SettingBranding()
     }
 }
 
@@ -96,6 +107,46 @@ fun SettingHeader(navController: NavHostController) {
                         horizontal = MaterialTheme.spacing.small
                     ),
                 tint = MaterialTheme.colors.selectedBottomBar
+            )
+        }
+    }
+}
+
+
+@Composable
+fun SettingBranding(){
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = MaterialTheme.spacing.medium),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        Image(
+            modifier = Modifier.width(100.dp),
+            painter = painterResource(id = R.drawable.digi_red_english),
+            contentDescription = ""
+        )
+        Text(
+            text = stringResource(id = R.string.version_app, BuildConfig.VERSION_NAME),
+            style = MaterialTheme.typography.h6,
+            color = MaterialTheme.colors.semiDarkText
+        )
+
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ){
+            Text(
+                text = stringResource(id = R.string.truelearn_technical_team),
+                style = MaterialTheme.typography.h6,
+                color = MaterialTheme.colors.semiDarkText
+            )
+            Spacer(modifier = Modifier.width(MaterialTheme.spacing.extraSmall))
+            Image(
+                modifier = Modifier.height(24.dp),
+                painter = painterResource(id = R.drawable.truelearn_icon),
+                contentDescription = ""
             )
         }
     }

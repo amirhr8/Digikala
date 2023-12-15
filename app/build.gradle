@@ -17,8 +17,8 @@ android {
         applicationId "ir.truelearn.digikala"
         minSdk 21
         targetSdk 34
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.2"
 
         buildConfigField("String" , "X_API_KEY" , apikeyProperties['X_API_KEY'])
         buildConfigField("String" , "KEY" , apikeyProperties['KEY'])
