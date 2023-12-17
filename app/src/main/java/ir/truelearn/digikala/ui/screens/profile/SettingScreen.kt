@@ -71,7 +71,7 @@ fun SettingScreen(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            //.verticalScroll(rememberScrollState())
+        //.verticalScroll(rememberScrollState())
     ) {
         SettingHeader(navController)
 
@@ -114,14 +114,14 @@ fun SettingHeader(navController: NavHostController) {
 
 
 @Composable
-fun SettingBranding(){
+fun SettingBranding() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = MaterialTheme.spacing.medium),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
+    ) {
         Image(
             modifier = Modifier.width(100.dp),
             painter = painterResource(id = R.drawable.digi_red_english),
@@ -136,7 +136,7 @@ fun SettingBranding(){
         Row(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
-        ){
+        ) {
             Text(
                 text = stringResource(id = R.string.truelearn_technical_team),
                 style = MaterialTheme.typography.h6,
@@ -278,7 +278,7 @@ fun SettingMenuSection(
         addCompose = {},
         isHaveDivider = false
     ) {
-        logOut(navController, dataStore, profileViewModel , basketViewModel)
+        logOut(navController, dataStore, profileViewModel, basketViewModel)
     }
 
 }
@@ -297,6 +297,7 @@ fun logOut(
         saveUserPassword("null")
         saveUserName("null")
     }
+    Constants.USER_TOKEN = "null"
     profileViewModel.screenState = ProfileScreenState.LOGIN_STATE
     navController.navigate(Screen.Profile.route)
 }

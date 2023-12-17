@@ -194,4 +194,14 @@
     <string name="confirm_information"> تایید اطلاعات </string>
 
 
+    <string name="my_fav_list">لیست علاقه مندی ها</string>
+    <string name="remove_from_list">حذف از لیست</string>
+    <string name="watch_and_buy_product">مشاهده و خرید کالا</string>
+    <string name="fav_products">کالاهای مورد علاقه</string>
+    <string name="product">کالا</string>
+    <string name="sure_to_remove_fav_item">آیا از حذف کالا از لیست علاقه مندی ها اطمینان دارید؟</string>
+    <string name="remove_fav_item">حذف کالا</string>
+    <string name="cancel">انصراف</string>
+
+
 </resources>

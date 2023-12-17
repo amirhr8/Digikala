@@ -16,6 +16,7 @@ import ir.truelearn.digikala.ui.screens.checkout.ConfirmPurchaseScreen
 import ir.truelearn.digikala.ui.screens.home.HomeScreen
 import ir.truelearn.digikala.ui.screens.home.WebPageScreen
 import ir.truelearn.digikala.ui.screens.product_detail.*
+import ir.truelearn.digikala.ui.screens.profile.FavoriteListScreen
 import ir.truelearn.digikala.ui.screens.profile.ProfileScreen
 import ir.truelearn.digikala.ui.screens.profile.SettingScreen
 import ir.truelearn.digikala.ui.screens.profile.UserAccountScreen
@@ -239,6 +240,10 @@ fun SetupNavGraph(navController: NavHostController) {
 
         composable(route = Screen.UserAccount.route){
             UserAccountScreen(navController = navController)
+        }
+
+        composable(route = Screen.FavoriteList.route){
+            FavoriteListScreen(navController = navController)
         }
 
 
