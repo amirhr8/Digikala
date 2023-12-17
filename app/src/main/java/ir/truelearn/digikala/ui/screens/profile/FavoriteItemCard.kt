@@ -211,8 +211,7 @@ fun FavoriteItemCard(
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .padding(MaterialTheme.spacing.small)
+                    modifier = Modifier.padding(MaterialTheme.spacing.small)
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
