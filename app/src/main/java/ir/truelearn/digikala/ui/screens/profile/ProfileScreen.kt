@@ -36,6 +36,7 @@ import ir.truelearn.digikala.ui.theme.*
 import ir.truelearn.digikala.util.Constants
 import ir.truelearn.digikala.util.Constants.ENGLISH_LANG
 import ir.truelearn.digikala.util.Constants.PERSIAN_LANG
+import ir.truelearn.digikala.util.Constants.USER_COMMENTS
 import ir.truelearn.digikala.util.DigitHelper.digitByLocate
 import ir.truelearn.digikala.viewmodel.DataStoreViewModel
 import ir.truelearn.digikala.viewmodel.ProfileViewModel
@@ -147,7 +148,15 @@ private fun ProfileMenuSection(navController: NavHostController) {
         },
         text = stringResource(id = R.string.my_comments),
         isHaveDivider = true
-    )
+    ){
+        navController.navigate(
+            Screen.AllComment.withArgs(
+                "1",
+                "1",
+                USER_COMMENTS
+            )
+        )
+    }
     MenuRowItem(
         icon = {
             Image(

@@ -137,7 +137,7 @@ fun SetupNavGraph(navController: NavHostController) {
 
         }
 
-        composable(route = Screen.AllComment.route + "/{productId}/{commentsCount}",
+        composable(route = Screen.AllComment.route + "/{productId}/{commentsCount}/{pageName}",
             arguments = listOf(
                 navArgument("productId") {
                     type = NavType.StringType
@@ -148,16 +148,24 @@ fun SetupNavGraph(navController: NavHostController) {
                     type = NavType.StringType
                     defaultValue = " "
                     nullable = true
+                },
+                navArgument("pageName") {
+                    type = NavType.StringType
+                    defaultValue = " "
+                    nullable = true
                 }
             )
         ) {
             it.arguments!!.getString("productId")?.let { productId ->
                 it.arguments!!.getString("commentsCount")?.let { commentsCount ->
-                    AllProductCommentsScreen(
-                        navController = navController,
-                        productId = productId,
-                        commentsCount = commentsCount
-                    )
+                    it.arguments!!.getString("pageName")?.let { pageName ->
+                        AllProductCommentsScreen(
+                            navController = navController,
+                            productId = productId,
+                            commentsCount = commentsCount,
+                            pageName = pageName
+                        )
+                    }
                 }
             }
 
@@ -238,11 +246,11 @@ fun SetupNavGraph(navController: NavHostController) {
             SettingScreen(navController = navController)
         }
 
-        composable(route = Screen.UserAccount.route){
+        composable(route = Screen.UserAccount.route) {
             UserAccountScreen(navController = navController)
         }
 
-        composable(route = Screen.FavoriteList.route){
+        composable(route = Screen.FavoriteList.route) {
             FavoriteListScreen(navController = navController)
         }
 

@@ -50,22 +50,5 @@ class ProductDetailViewModel @Inject constructor(private val repository: Product
         }
     }
 
-    fun setNewComment(newComment: NewComment) {
-        viewModelScope.launch {
-            newCommentResult.emit(repository.setNewComment(newComment))
-        }
-    }
-
-
-    var commentsList: Flow<PagingData<Comment>> = flow { emit(PagingData.empty()) }
-
-    fun getCommentList(productId: String) {
-        commentsList = Pager(
-            PagingConfig(pageSize = 5)
-        ) {
-            ProductCommentsDataSource(repository, productId)
-        }.flow.cachedIn(viewModelScope)
-    }
-
 
 }

@@ -22,6 +22,8 @@ import ir.truelearn.digikala.R
 import ir.truelearn.digikala.navigation.Screen
 import ir.truelearn.digikala.ui.theme.LightCyan
 import ir.truelearn.digikala.ui.theme.darkText
+import ir.truelearn.digikala.util.Constants
+import ir.truelearn.digikala.util.Constants.PRODUCT_COMMENTS
 import ir.truelearn.digikala.util.DigitHelper.digitByLocate
 
 @Composable
@@ -63,7 +65,13 @@ fun ProductCommentsSection(
                 color = MaterialTheme.colors.LightCyan,
                 style = MaterialTheme.typography.h4,
                 modifier = Modifier.clickable {
-                    navController.navigate(Screen.AllComment.withArgs(productId, commentCount))
+                    navController.navigate(
+                        Screen.AllComment.withArgs(
+                            productId,
+                            commentCount,
+                            PRODUCT_COMMENTS
+                        )
+                    )
                 }
             )
         }
@@ -79,7 +87,7 @@ fun ProductCommentsSection(
             TextCommentCard(comment)
         }
         item {
-            CommentShowMoreItem(navController, productId , commentCount)
+            CommentShowMoreItem(navController, productId, commentCount)
         }
     }
 

@@ -20,6 +20,7 @@ import ir.truelearn.digikala.ui.theme.spacing
 import ir.truelearn.digikala.R
 import ir.truelearn.digikala.navigation.Screen
 import ir.truelearn.digikala.ui.theme.darkText
+import ir.truelearn.digikala.util.Constants.PRODUCT_COMMENTS
 
 @Composable
 fun CommentShowMoreItem(
@@ -36,10 +37,16 @@ fun CommentShowMoreItem(
             .height(240.dp)
             .padding(vertical = MaterialTheme.spacing.medium)
             .clickable {
-                navController.navigate(Screen.AllComment.withArgs(productId,commentCount))
+                navController.navigate(
+                    Screen.AllComment.withArgs(
+                        productId,
+                        commentCount,
+                        PRODUCT_COMMENTS
+                    )
+                )
             }
 
-    ){
+    ) {
         Icon(
             painter = painterResource(id = R.drawable.show_more),
             contentDescription = "",

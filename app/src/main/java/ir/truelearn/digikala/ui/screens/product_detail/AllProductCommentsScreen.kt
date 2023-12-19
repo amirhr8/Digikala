@@ -39,21 +39,43 @@ import ir.truelearn.digikala.data.model.product_detail.Comment
 import ir.truelearn.digikala.ui.components.Loading3Dots
 import ir.truelearn.digikala.ui.components.OurLoading
 import ir.truelearn.digikala.ui.theme.*
+import ir.truelearn.digikala.util.Constants.PRODUCT_COMMENTS
 import ir.truelearn.digikala.util.DigitHelper
+import ir.truelearn.digikala.viewmodel.CommentViewModel
 import ir.truelearn.digikala.viewmodel.ProductDetailViewModel
 
 @Composable
 fun AllProductCommentsScreen(
-    viewModel: ProductDetailViewModel = hiltViewModel(),
+    viewModel: CommentViewModel = hiltViewModel(),
     navController: NavHostController,
     productId: String,
-    commentsCount: String
+    commentsCount: String,
+    pageName: String
 ) {
+    val context = LocalContext.current
+
+    val commentsCountText = if (commentsCount != "1")
+        "${DigitHelper.digitByLocate(commentsCount)} ${stringResource(id = R.string.comment)}"
+    else
+        context.getString(R.string.all_comments)
+
     LaunchedEffect(true) {
-        viewModel.getCommentList(productId)
+        if (pageName == PRODUCT_COMMENTS)
+            viewModel.getCommentList(productId)
+        else {
+            viewModel.getUserComments()
+
+        }
+
+
     }
 
-    val commentsList = viewModel.commentsList.collectAsLazyPagingItems()
+    val commentsList =
+        if (pageName == PRODUCT_COMMENTS)
+            viewModel.productCommentsList.collectAsLazyPagingItems()
+        else
+            viewModel.UserCommentsList.collectAsLazyPagingItems()
+
 
 
 
@@ -80,7 +102,7 @@ fun AllProductCommentsScreen(
             Text(
                 modifier = Modifier
                     .fillMaxWidth(),
-                text = "${DigitHelper.digitByLocate(commentsCount)} ${stringResource(id = R.string.comment)}",
+                text = commentsCountText,
                 textAlign = TextAlign.Start,
                 style = MaterialTheme.typography.h3,
                 fontWeight = FontWeight.Bold,

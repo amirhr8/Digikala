@@ -22,7 +22,8 @@ object Constants {
     var USER_PASSWORD = "USER_PASSWORD"
     const val ZARINPAL_MERCHANT_ID = "ce7101df-cb08-41f8-a20b-b21995173d8f"
 
-
+    const val PRODUCT_COMMENTS = "PRODUCT_COMMENTS"
+    const val USER_COMMENTS = "USER_COMMENTS"
 
     const val DIGIJET_URL = "https://www.digikalajet.com/user/address"
     const val AUCTION_URL = "https://www.digistyle.com/sale-landing/?utm_source=digikala&utm_medium=circle_badge&utm_campaign=style&promo_name=style&promo_position=circle_badge"

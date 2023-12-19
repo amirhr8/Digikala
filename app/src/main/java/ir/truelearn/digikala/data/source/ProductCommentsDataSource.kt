@@ -4,10 +4,11 @@ import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import ir.truelearn.digikala.data.model.product_detail.Comment
+import ir.truelearn.digikala.repository.CommentRepository
 import ir.truelearn.digikala.repository.ProductDetailRepository
 
 class ProductCommentsDataSource(
-    private val repository: ProductDetailRepository,
+    private val repository: CommentRepository,
     val productId: String
 ) : PagingSource<Int, Comment>() {
 

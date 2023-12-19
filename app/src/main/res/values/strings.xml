@@ -203,5 +203,7 @@
     <string name="remove_fav_item">حذف کالا</string>
     <string name="cancel">انصراف</string>
 
+    <string name="all_comments">تمام نظرات ثبت شده توسط شما</string>
+
 
 </resources>

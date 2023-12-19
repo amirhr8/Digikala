@@ -25,16 +25,4 @@ interface ProductDetailApiInterface {
     ): Response<ResponseResult<List<StoreProduct>>>
 
 
-    @POST("v1/setNewComment")
-    suspend fun setNewComment(
-        @Body newComment: NewComment
-    ): Response<ResponseResult<String>>
-
-    @GET("v1/getAllProductComments")
-    suspend fun getAllProductComments(
-        @Query("id") id: String,
-        @Query("pageSize") pageSize: String,
-        @Query("pageNumber") pageNumber: String,
-    ): Response<ResponseResult<List<Comment>>>
-
 }

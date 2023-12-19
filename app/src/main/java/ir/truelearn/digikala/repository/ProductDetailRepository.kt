@@ -23,20 +23,5 @@ class ProductDetailRepository @Inject constructor(private val api: ProductDetail
             api.getSimilarProducts(categoryId)
         }
 
-    suspend fun setNewComment(newComment: NewComment): NetworkResult<String> =
-        safeApiCall {
-            api.setNewComment(newComment)
-        }
-
-
-    suspend fun getAllProductComments(
-        id: String,
-        pageSize: String,
-        pageNumber: String,
-    ): NetworkResult<List<Comment>> =
-        safeApiCall {
-            api.getAllProductComments(id , pageSize , pageNumber )
-        }
-
 
 }

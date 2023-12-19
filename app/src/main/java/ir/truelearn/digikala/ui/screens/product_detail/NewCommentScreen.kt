@@ -30,6 +30,7 @@ import ir.truelearn.digikala.data.remote.NetworkResult
 import ir.truelearn.digikala.ui.components.OurLoading
 import ir.truelearn.digikala.ui.theme.*
 import ir.truelearn.digikala.util.Constants
+import ir.truelearn.digikala.viewmodel.CommentViewModel
 import ir.truelearn.digikala.viewmodel.ProductDetailViewModel
 import kotlinx.coroutines.flow.collectLatest
 
@@ -116,7 +117,7 @@ private fun Header(
 fun CommentForm(
     navController: NavController,
     productId: String,
-    viewModel: ProductDetailViewModel = hiltViewModel()
+    viewModel: CommentViewModel = hiltViewModel()
 ) {
 
 

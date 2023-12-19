@@ -196,4 +196,6 @@ After confirming the comment, go to the club missions page and get your points</
     <string name="remove_fav_item">Remove Product</string>
     <string name="cancel">Cancel</string>
 
+    <string name="all_comments">All comments posted by you</string>
+
 </resources>
