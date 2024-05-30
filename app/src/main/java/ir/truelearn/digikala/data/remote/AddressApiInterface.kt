@@ -1,6 +1,7 @@
 package ir.truelearn.digikala.data.remote
 
 import ir.truelearn.digikala.data.model.ResponseResult
+import ir.truelearn.digikala.data.model.address.AddAddressRequest
 import ir.truelearn.digikala.data.model.address.UserAddress
 import ir.truelearn.digikala.data.model.home.AmazingItem
 import ir.truelearn.digikala.data.model.home.MainCategory
@@ -19,7 +20,12 @@ interface AddressApiInterface {
     @GET("v1/getUserAddress")
     suspend fun getUserAddressList(
         @Query("token") token: String
-    ) : Response<ResponseResult<List<UserAddress>>>
+    ): Response<ResponseResult<List<UserAddress>>>
 
+
+    @POST("v1/saveUserAddress")
+    suspend fun saveUserAddress(
+        @Body address: AddAddressRequest
+    ): Response<ResponseResult<String>>
 
 }

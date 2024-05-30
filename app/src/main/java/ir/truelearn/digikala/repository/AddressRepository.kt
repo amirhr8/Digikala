@@ -1,5 +1,6 @@
 package ir.truelearn.digikala.repository
 
+import ir.truelearn.digikala.data.model.address.AddAddressRequest
 import ir.truelearn.digikala.data.model.address.UserAddress
 import ir.truelearn.digikala.data.model.home.AmazingItem
 import ir.truelearn.digikala.data.model.home.MainCategory
@@ -17,5 +18,10 @@ class AddressRepository @Inject constructor(private val api: AddressApiInterface
           api.getUserAddressList(token)
         }
 
+
+    suspend fun setNewAddress(address: AddAddressRequest): NetworkResult<String> =
+        safeApiCall {
+            api.saveUserAddress(address)
+        }
 
 }

@@ -16,9 +16,11 @@ import ir.truelearn.digikala.ui.screens.checkout.ConfirmPurchaseScreen
 import ir.truelearn.digikala.ui.screens.home.HomeScreen
 import ir.truelearn.digikala.ui.screens.home.WebPageScreen
 import ir.truelearn.digikala.ui.screens.product_detail.*
+import ir.truelearn.digikala.ui.screens.profile.AddAddressScreen
 import ir.truelearn.digikala.ui.screens.profile.FavoriteListScreen
 import ir.truelearn.digikala.ui.screens.profile.ProfileScreen
 import ir.truelearn.digikala.ui.screens.profile.SettingScreen
+import ir.truelearn.digikala.ui.screens.profile.ShowAddressScreen
 import ir.truelearn.digikala.ui.screens.profile.UserAccountScreen
 import ir.truelearn.digikala.ui.screens.splash.SplashScreen
 
@@ -252,6 +254,28 @@ fun SetupNavGraph(navController: NavHostController) {
 
         composable(route = Screen.FavoriteList.route) {
             FavoriteListScreen(navController = navController)
+        }
+
+        composable(route = Screen.ShowAddressScreen.route + "/{isFromBasket}",
+            arguments = listOf(
+                navArgument("isFromBasket") {
+                    type = NavType.StringType
+                    defaultValue = " "
+                    nullable = true
+                }
+            )
+        ) {
+            it.arguments!!.getString("isFromBasket")?.let { isFromBasket ->
+                ShowAddressScreen(
+                    navController = navController,
+                    isFromBasket = isFromBasket.toInt()
+                )
+            }
+
+        }
+
+        composable(route = Screen.AddAddressScreen.route) {
+            AddAddressScreen(navController = navController)
         }
 
 

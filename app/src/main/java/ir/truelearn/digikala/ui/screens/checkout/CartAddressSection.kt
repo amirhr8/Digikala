@@ -28,17 +28,29 @@ import ir.truelearn.digikala.R
 import ir.truelearn.digikala.data.model.address.UserAddress
 import ir.truelearn.digikala.data.model.home.AmazingItem
 import ir.truelearn.digikala.data.remote.NetworkResult
+import ir.truelearn.digikala.navigation.Screen
 import ir.truelearn.digikala.ui.components.OurLoading
 import ir.truelearn.digikala.ui.theme.LightCyan
 import ir.truelearn.digikala.ui.theme.extraSmall
 import ir.truelearn.digikala.ui.theme.spacing
+import ir.truelearn.digikala.util.Constants
+import ir.truelearn.digikala.viewmodel.DataStoreViewModel
 
 @Composable
 fun CartAddressSection(
     navController: NavHostController,
     viewModel: AddressViewModel = hiltViewModel(),
+    dataStore: DataStoreViewModel = hiltViewModel(),
     onAddressReady: (List<UserAddress>) -> Unit
 ) {
+
+    var addressIndex = 0
+    addressIndex = if (dataStore.getUserAddressIndex().toString() == "null"){
+        0
+    }else{
+        dataStore.getUserAddressIndex().toString().toInt()
+    }
+
 
 
     var addressList by remember {
@@ -53,15 +65,21 @@ fun CartAddressSection(
     var addressName = ""
     var addressBtnText = stringResource(id = R.string.add_address)
 
+    LaunchedEffect(true ){
+        viewModel.getUserAddressList(Constants.USER_TOKEN)
+    }
+
+
+
     val addressListResult by viewModel.userAddressList.collectAsState()
     when (addressListResult) {
         is NetworkResult.Success -> {
             addressList = addressListResult.data ?: emptyList()
             if (addressList.isNotEmpty()) {
                 onAddressReady(addressList)
-                address = addressList[0].address
+                address = addressList[addressIndex].address
                 addressBtnText = stringResource(id = R.string.change_address)
-                addressName = addressList[0].name
+                addressName = addressList[addressIndex].name
             }
             loading = false
         }
@@ -141,7 +159,7 @@ fun CartAddressSection(
                 modifier = Modifier
                     .padding(horizontal = MaterialTheme.spacing.extraSmall)
                     .clickable {
-
+                        navController.navigate(Screen.ShowAddressScreen.withArgs(addressIndex))
                     },
                 text = addressBtnText,
                 textAlign = TextAlign.End,

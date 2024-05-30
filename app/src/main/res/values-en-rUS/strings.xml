@@ -198,4 +198,11 @@ After confirming the comment, go to the club missions page and get your points</
 
     <string name="all_comments">All comments posted by you</string>
 
+
+    <string name="address_details">Enter the complete information of the new address</string>
+    <string name="phone_number">Phone number</string>
+    <string name="postal_code">Postal code</string>
+    <string name="address">Address</string>
+    <string name="check_net">Check your mobile internet connection</string>
+
 </resources>

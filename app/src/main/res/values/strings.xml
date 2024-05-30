@@ -206,4 +206,11 @@
     <string name="all_comments">تمام نظرات ثبت شده توسط شما</string>
 
 
+    <string name="address_details">اطلاعات کامل آدرس جدید را وارد نمایید</string>
+    <string name="phone_number">شماره تماس</string>
+    <string name="postal_code">کد پستی</string>
+    <string name="address">آدرس</string>
+    <string name="check_net">اتصال اینترنت تلفن همراه خود را بررسی کنید</string>
+
+
 </resources>

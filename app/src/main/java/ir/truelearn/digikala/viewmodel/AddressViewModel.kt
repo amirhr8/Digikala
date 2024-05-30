@@ -3,6 +3,7 @@ package ir.truelearn.digikala.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import ir.truelearn.digikala.data.model.address.AddAddressRequest
 import ir.truelearn.digikala.data.model.address.UserAddress
 import ir.truelearn.digikala.data.remote.NetworkResult
 import ir.truelearn.digikala.repository.AddressRepository
@@ -18,14 +19,19 @@ class AddressViewModel @Inject constructor(private val repository: AddressReposi
     val userAddressList =
         MutableStateFlow<NetworkResult<List<UserAddress>>>(NetworkResult.Loading())
 
+    val addNewAddressResponse = MutableStateFlow<NetworkResult<String>>(NetworkResult.Loading())
 
-    init {
-        getUserAddressList(Constants.USER_TOKEN)
-    }
 
-    private fun getUserAddressList(token: String) {
+
+    fun getUserAddressList(token: String) {
         viewModelScope.launch {
             userAddressList.emit(repository.getUserAddressList(token))
+        }
+    }
+
+    fun setNewAddress(address: AddAddressRequest) {
+        viewModelScope.launch {
+            addNewAddressResponse.emit(repository.setNewAddress(address))
         }
     }
 
