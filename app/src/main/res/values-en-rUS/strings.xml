@@ -205,4 +205,10 @@ After confirming the comment, go to the club missions page and get your points</
     <string name="address">Address</string>
     <string name="check_net">Check your mobile internet connection</string>
 
+
+    <string name="processing_orders">Processing Orders</string>
+    <string name="delivered_orders">Delivered Orders</string>
+    <string name="canceled_orders">Canceled orders</string>
+    <string name="returned_orders">Returned orders</string>
+
 </resources>

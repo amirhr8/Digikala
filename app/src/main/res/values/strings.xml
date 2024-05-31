@@ -213,4 +213,10 @@
     <string name="check_net">اتصال اینترنت تلفن همراه خود را بررسی کنید</string>
 
 
+    <string name="processing_orders">در حال پردازش</string>
+    <string name="delivered_orders">تحویل شده</string>
+    <string name="canceled_orders">لغو شده</string>
+    <string name="returned_orders">مرجوع شده</string>
+
+
 </resources>

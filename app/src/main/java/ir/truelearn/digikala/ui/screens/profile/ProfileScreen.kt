@@ -1,6 +1,8 @@
 package ir.truelearn.digikala.ui.screens.profile
 
 import android.app.Activity
+import android.util.Log
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import ir.truelearn.digikala.R
 import androidx.compose.foundation.background
@@ -12,6 +14,12 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -29,7 +37,10 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import com.google.gson.Gson
 import ir.truelearn.digikala.MainActivity
+import ir.truelearn.digikala.data.model.checkout.OrderFullDetail
+import ir.truelearn.digikala.data.remote.NetworkResult
 import ir.truelearn.digikala.navigation.Screen
 import ir.truelearn.digikala.ui.components.CenterBannerItem
 import ir.truelearn.digikala.ui.theme.*
@@ -37,6 +48,7 @@ import ir.truelearn.digikala.util.Constants
 import ir.truelearn.digikala.util.Constants.ENGLISH_LANG
 import ir.truelearn.digikala.util.Constants.PERSIAN_LANG
 import ir.truelearn.digikala.util.Constants.USER_COMMENTS
+import ir.truelearn.digikala.util.DigitHelper
 import ir.truelearn.digikala.util.DigitHelper.digitByLocate
 import ir.truelearn.digikala.viewmodel.DataStoreViewModel
 import ir.truelearn.digikala.viewmodel.ProfileViewModel
@@ -48,9 +60,38 @@ fun ProfileScreen(
     profileViewModel: ProfileViewModel = hiltViewModel()
 ) {
 
+    LaunchedEffect(true) {
+        profileViewModel.getUserOrders()
+    }
+
+    var orderItemsList by remember {
+        mutableStateOf<List<OrderFullDetail>>(emptyList())
+    }
+    var loading by remember {
+        mutableStateOf(false)
+    }
+
+    val orderItemsResult by profileViewModel.orderItems.collectAsState()
+    when (orderItemsResult) {
+        is NetworkResult.Success -> {
+            orderItemsList = orderItemsResult.data ?: emptyList()
+            loading = false
+        }
+
+        is NetworkResult.Error -> {
+            loading = false
+            Log.e("3636", "OrderItemsResultSection error : ${orderItemsResult.message}")
+        }
+
+        is NetworkResult.Loading -> {
+            loading = true
+        }
+    }
+
+
     val userToken = dataStore.getUserToken()
     if (!userToken.isNullOrBlank() && userToken != "null") {
-        Profile(navController)
+        Profile(navController, orderItemsList)
     } else {
         when (profileViewModel.screenState) {
             ProfileScreenState.LOGIN_STATE -> {
@@ -58,7 +99,7 @@ fun ProfileScreen(
             }
 
             ProfileScreenState.PROFILE_STATE -> {
-                Profile(navController)
+                Profile(navController, orderItemsList)
             }
 
             ProfileScreenState.REGISTER_STATE -> {
@@ -71,7 +112,7 @@ fun ProfileScreen(
 }
 
 @Composable
-fun Profile(navController: NavHostController) {
+fun Profile(navController: NavHostController, orders: List<OrderFullDetail>) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -81,7 +122,7 @@ fun Profile(navController: NavHostController) {
         item { ProfileTopBarSection(navController) }
         item { ProfileHeaderSection(navController) }
         item { ProfileMiddleSection(navController) }
-        item { MyOrdersSection() }
+        item { MyOrdersSection(navController, orders) }
         item {
             CenterBannerItem(
                 painter = painterResource(id = R.drawable.digiclub1),
@@ -132,7 +173,7 @@ private fun ProfileMenuSection(navController: NavHostController) {
         },
         text = stringResource(id = R.string.fav_list),
         isHaveDivider = true
-    ){
+    ) {
         navController.navigate(Screen.FavoriteList.route)
     }
 
@@ -148,7 +189,7 @@ private fun ProfileMenuSection(navController: NavHostController) {
         },
         text = stringResource(id = R.string.my_comments),
         isHaveDivider = true
-    ){
+    ) {
         navController.navigate(
             Screen.AllComment.withArgs(
                 "1",
@@ -169,7 +210,7 @@ private fun ProfileMenuSection(navController: NavHostController) {
         },
         text = stringResource(id = R.string.addresses),
         isHaveDivider = true
-    ){
+    ) {
         navController.navigate(Screen.ShowAddressScreen.withArgs(-1))
     }
 
@@ -194,7 +235,15 @@ private fun ProfileMenuSection(navController: NavHostController) {
 
 
 @Composable
-private fun MyOrdersSection() {
+private fun MyOrdersSection(navController: NavHostController, orders: List<OrderFullDetail>) {
+
+    val waitForPurchaseOrders = orders.filter { it.orderStatus == "0" }
+    val purchasedOrders = orders.filter { it.orderStatus == "1" }
+    val deliveredOrders = orders.filter { it.orderStatus == "2" }
+    val canceledOrders = orders.filter { it.orderStatus == "3" }
+    val returnedOrders = orders.filter { it.orderStatus == "4" }
+
+
     Text(
         modifier = Modifier.padding(MaterialTheme.spacing.medium),
         style = MaterialTheme.typography.h3,
@@ -202,34 +251,47 @@ private fun MyOrdersSection() {
         text = stringResource(id = R.string.my_orders),
     )
 
-    LazyRow() {
+    LazyRow(
+        modifier = Modifier
+            .clickable {
+                val ordersString = Gson().toJson(orders)
+                navController.navigate(
+                    Screen.TabLayoutScreen.route + "?orders=${ordersString}"
+                )
+            }
+    ) {
         item {
             MyOrdersItem(
                 text = stringResource(id = R.string.unpaid),
+                count = waitForPurchaseOrders.size,
                 painter = painterResource(id = R.drawable.digi_unpaid)
             )
         }
         item {
             MyOrdersItem(
                 text = stringResource(id = R.string.processing),
+                count = purchasedOrders.size,
                 painter = painterResource(id = R.drawable.digi_processing)
             )
         }
         item {
             MyOrdersItem(
                 text = stringResource(id = R.string.my_orders),
+                count = deliveredOrders.size,
                 painter = painterResource(id = R.drawable.digi_delivered)
             )
         }
         item {
             MyOrdersItem(
                 text = stringResource(id = R.string.canceled),
+                count = canceledOrders.size,
                 painter = painterResource(id = R.drawable.digi_cancel)
             )
         }
         item {
             MyOrdersItem(
                 text = stringResource(id = R.string.returned),
+                count = returnedOrders.size,
                 painter = painterResource(id = R.drawable.digi_returned)
             )
         }
@@ -240,6 +302,7 @@ private fun MyOrdersSection() {
 @Composable
 private fun MyOrdersItem(
     text: String,
+    count: Int,
     painter: Painter
 ) {
     Row(
@@ -249,18 +312,45 @@ private fun MyOrdersItem(
             modifier = Modifier.padding(horizontal = MaterialTheme.spacing.medium),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(
-                painter = painter,
-                contentDescription = "",
+
+            Box(
                 modifier = Modifier
                     .size(70.dp)
                     .padding(bottom = MaterialTheme.spacing.small)
-            )
+            ){
+
+                Image(
+                    painter = painter,
+                    contentDescription = "",
+                    modifier = Modifier.fillMaxSize()
+                )
+
+                Card(
+                    Modifier.align(Alignment.BottomEnd),
+                    shape = MaterialTheme.roundedShape.extraSmall,
+                    border = BorderStroke(1.dp, Color.White)
+                ){
+                    Text(
+                        text = DigitHelper.digitByLocateAndSeparator(count.toString()),
+                        modifier = Modifier
+                            .background(color = MaterialTheme.colors.digikalaRed)
+                            .height(20.dp)
+                            .padding(horizontal = MaterialTheme.spacing.semiSmall),
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.extraSmall,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White,
+                    )
+                }
+
+            }
+
             Text(
                 style = MaterialTheme.typography.h6,
                 color = MaterialTheme.colors.semiDarkText,
                 text = text
             )
+
         }
         Divider(
             modifier = Modifier

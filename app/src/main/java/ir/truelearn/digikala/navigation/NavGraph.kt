@@ -22,6 +22,7 @@ import ir.truelearn.digikala.ui.screens.profile.ProfileScreen
 import ir.truelearn.digikala.ui.screens.profile.SettingScreen
 import ir.truelearn.digikala.ui.screens.profile.ShowAddressScreen
 import ir.truelearn.digikala.ui.screens.profile.UserAccountScreen
+import ir.truelearn.digikala.ui.screens.profile.orders.TabLayoutScreen
 import ir.truelearn.digikala.ui.screens.splash.SplashScreen
 
 @Composable
@@ -276,6 +277,25 @@ fun SetupNavGraph(navController: NavHostController) {
 
         composable(route = Screen.AddAddressScreen.route) {
             AddAddressScreen(navController = navController)
+        }
+
+
+        composable(route = Screen.TabLayoutScreen.route + "?orders={orders}",
+            arguments = listOf(
+                navArgument("orders") {
+                    type = NavType.StringType
+                    defaultValue = " "
+                    nullable = true
+                }
+            )
+        ) {
+            it.arguments!!.getString("orders")?.let { orders ->
+                TabLayoutScreen(
+                    navController = navController,
+                    orders = orders
+                )
+            }
+
         }
 
 

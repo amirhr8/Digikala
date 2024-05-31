@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import ir.truelearn.digikala.data.model.checkout.OrderFullDetail
 import ir.truelearn.digikala.data.model.home.AmazingItem
 import ir.truelearn.digikala.data.model.home.MainCategory
 import ir.truelearn.digikala.data.model.home.Slider
@@ -17,6 +18,7 @@ import ir.truelearn.digikala.data.remote.NetworkResult
 import ir.truelearn.digikala.repository.HomeRepository
 import ir.truelearn.digikala.repository.ProfileRepository
 import ir.truelearn.digikala.ui.screens.profile.ProfileScreenState
+import ir.truelearn.digikala.util.Constants
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -35,6 +37,12 @@ class ProfileViewModel @Inject constructor(private val repository: ProfileReposi
     val loginResponse = MutableStateFlow<NetworkResult<LoginResponse>>(NetworkResult.Loading())
 
     val setUserNameResponse = MutableStateFlow<NetworkResult<String>>(NetworkResult.Loading())
+
+
+
+    val orderItems =
+        MutableStateFlow<NetworkResult<List<OrderFullDetail>>>(NetworkResult.Loading())
+
 
     fun login() {
         viewModelScope.launch {
@@ -55,6 +63,12 @@ class ProfileViewModel @Inject constructor(private val repository: ProfileReposi
     fun setUserName (newUserName: SetUserNameRequest){
         viewModelScope.launch {
             setUserNameResponse.emit(repository.setUserName(newUserName))
+        }
+    }
+
+    fun getUserOrders() {
+        viewModelScope.launch {
+            orderItems.emit(repository.getUserOrders(Constants.USER_TOKEN))
         }
     }
 

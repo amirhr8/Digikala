@@ -1,5 +1,6 @@
 package ir.truelearn.digikala.repository
 
+import ir.truelearn.digikala.data.model.checkout.OrderFullDetail
 import ir.truelearn.digikala.data.model.home.AmazingItem
 import ir.truelearn.digikala.data.model.home.MainCategory
 import ir.truelearn.digikala.data.model.home.Slider
@@ -26,5 +27,10 @@ class ProfileRepository @Inject constructor(private val api: ProfileApiInterface
             api.setUserName(newUserName)
         }
 
+
+    suspend fun getUserOrders(token: String): NetworkResult<List<OrderFullDetail>>  =
+        safeApiCall {
+            api.getUserOrders(token)
+        }
 
 }
