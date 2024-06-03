@@ -12,6 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import ir.truelearn.digikala.data.model.home.StoreProduct
 import ir.truelearn.digikala.data.remote.NetworkResult
 import ir.truelearn.digikala.ui.screens.home.MostDiscountedCard
@@ -26,6 +27,7 @@ import ir.truelearn.digikala.data.model.basket.CartStatus
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SuggestListSection(
+    navController: NavController,
     viewModel: BasketViewModel = hiltViewModel()
 ) {
 
@@ -82,7 +84,7 @@ fun SuggestListSection(
     ) {
 
         for (item in suggestedList) {
-            SuggestionItemCard(item){
+            SuggestionItemCard(item , navController){
                 viewModel.insertCartItem(
                     CartItem(
                         it._id,

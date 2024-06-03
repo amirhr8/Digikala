@@ -21,9 +21,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import ir.truelearn.digikala.R
 import ir.truelearn.digikala.data.model.home.StoreProduct
+import ir.truelearn.digikala.navigation.Screen
 import ir.truelearn.digikala.ui.theme.*
 import ir.truelearn.digikala.util.Constants
 import ir.truelearn.digikala.util.DigitHelper
@@ -31,12 +33,16 @@ import ir.truelearn.digikala.util.DigitHelper
 @Composable
 fun SuggestionItemCard(
     item: StoreProduct,
+    navController: NavController,
     onAddClick: (StoreProduct) -> Unit
 ) {
 
     Card(
         modifier = Modifier
-            .fillMaxWidth(0.5f),
+            .fillMaxWidth(0.5f)
+            .clickable {
+                navController.navigate(Screen.ProductDetail.withArgs(item._id))
+            },
         elevation = 1.dp
     ) {
 
@@ -79,7 +85,7 @@ fun SuggestionItemCard(
                                 .size(26.dp)
                                 .clip(CircleShape)
                                 .border(1.dp, MaterialTheme.colors.digikalaRed, CircleShape)
-                                .clickable{
+                                .clickable {
                                     onAddClick(item)
                                 }
                         ) {

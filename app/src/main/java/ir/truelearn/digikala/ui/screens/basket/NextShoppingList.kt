@@ -56,7 +56,7 @@ fun NextShoppingList(
                     item { EmptyNextShoppingList() }
                 } else {
                     items((nextCartItemsState as BasketScreenState.Success<List<CartItem>>).data) { item ->
-                        CartItemCard(item, CartStatus.NEXT_CART)
+                        CartItemCard(item, CartStatus.NEXT_CART , navController)
                     }
                 }
             }

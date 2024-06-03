@@ -26,9 +26,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import ir.truelearn.digikala.data.model.basket.CartItem
 import ir.truelearn.digikala.data.model.basket.CartStatus
+import ir.truelearn.digikala.navigation.Screen
 import ir.truelearn.digikala.ui.theme.*
 import ir.truelearn.digikala.util.DigitHelper.digitByLocateAndSeparator
 import ir.truelearn.digikala.util.DigitHelper.digitBySeparator
@@ -38,6 +40,7 @@ import ir.truelearn.digikala.viewmodel.BasketViewModel
 fun CartItemCard(
     item: CartItem,
     mode: CartStatus,
+    navController: NavController,
     viewModel: BasketViewModel = hiltViewModel()
 ) {
 
@@ -50,6 +53,9 @@ fun CartItemCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = MaterialTheme.spacing.extraSmall)
+            .clickable {
+                navController.navigate(Screen.ProductDetail.withArgs(item.itemId))
+            }
     ) {
         Column(
             modifier = Modifier
