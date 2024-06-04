@@ -1,5 +1,6 @@
 package ir.truelearn.digikala.ui.screens.category
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,13 +14,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.navigation.NavHostController
 import ir.truelearn.digikala.data.model.category.Sub
 import ir.truelearn.digikala.ui.theme.spacing
 import ir.truelearn.digikala.R
+import ir.truelearn.digikala.navigation.Screen
 import ir.truelearn.digikala.ui.theme.LightCyan
 
 @Composable
 fun CategoryItem(
+    navController: NavHostController,
+    categoryId: String,
     title: String,
     subList: List<Sub>
 ) {
@@ -41,7 +46,11 @@ fun CategoryItem(
             fontWeight = FontWeight.Bold
         )
         Text(
-            modifier = Modifier.padding(horizontal = MaterialTheme.spacing.small),
+            modifier = Modifier
+                .padding(horizontal = MaterialTheme.spacing.small)
+                .clickable {
+                    navController.navigate(Screen.SubCategoryScreen.withArgs(categoryId))
+                },
             text = stringResource(id = R.string.see_all),
             style = MaterialTheme.typography.h5,
             color = MaterialTheme.colors.LightCyan
@@ -50,9 +59,9 @@ fun CategoryItem(
 
     LazyRow(
 
-    ){
-        items(subList){ list->
-            SubCategoryItem(list)
+    ) {
+        items(subList) { list ->
+            SubCategoryItem(navController, list)
         }
     }
 }

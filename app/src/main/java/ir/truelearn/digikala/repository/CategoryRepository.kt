@@ -18,4 +18,24 @@ class CategoryRepository @Inject constructor(private val api: CategoryApiInterfa
             api.getSubCategories()
         }
 
+
+    suspend fun getProductByCategory(
+        categoryName: String,
+        pageSize: String,
+        pageNumber: String,
+    ): NetworkResult<List<StoreProduct>> =
+        safeApiCall {
+            api.getProductByCategory(categoryName, pageSize, pageNumber)
+        }
+
+
+    suspend fun getProductBySubCategory(
+        subCategoryId: String,
+        pageSize: String,
+        pageNumber: String,
+    ): NetworkResult<List<StoreProduct>> =
+        safeApiCall {
+            api.getProductBySubCategory(subCategoryId, pageSize, pageNumber)
+        }
+
 }

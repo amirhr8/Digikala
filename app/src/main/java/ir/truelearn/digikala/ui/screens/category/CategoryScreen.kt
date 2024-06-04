@@ -64,7 +64,7 @@ private fun SwipeRefreshSection(
         ) {
 
             item { SearchBarSection() }
-            item { SubCategorySection() }
+            item { SubCategorySection(navController) }
 
         }
 

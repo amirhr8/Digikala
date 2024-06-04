@@ -2,6 +2,7 @@ package ir.truelearn.digikala.ui.screens.category
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -15,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import ir.truelearn.digikala.data.model.category.Sub
 import ir.truelearn.digikala.ui.theme.darkText
@@ -22,17 +24,25 @@ import ir.truelearn.digikala.ui.theme.grayCategory
 import ir.truelearn.digikala.ui.theme.roundedShape
 import ir.truelearn.digikala.ui.theme.spacing
 import ir.truelearn.digikala.R
+import ir.truelearn.digikala.navigation.Screen
 import ir.truelearn.digikala.util.DigitHelper.digitByLocate
 
 @Composable
-fun SubCategoryItem(item: Sub) {
+fun SubCategoryItem(
+    navController: NavHostController,
+    item: Sub
+) {
     Card(
         modifier = Modifier
             .width(120.dp)
             .padding(
                 vertical = MaterialTheme.spacing.medium,
                 horizontal = MaterialTheme.spacing.extraSmall
-            ),
+            )
+            .clickable {
+                navController.navigate(Screen.SubCategoryScreen.withArgs(item._id))
+            }
+        ,
         shape = MaterialTheme.roundedShape.small
     ) {
         Column(

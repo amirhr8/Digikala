@@ -9,6 +9,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import ir.truelearn.digikala.data.model.category.Sub
 import ir.truelearn.digikala.R
 import ir.truelearn.digikala.data.remote.NetworkResult
@@ -17,6 +18,7 @@ import ir.truelearn.digikala.viewmodel.CategoryViewModel
 
 @Composable
 fun SubCategorySection(
+    navController: NavHostController,
     viewModel: CategoryViewModel = hiltViewModel()
 ) {
 
@@ -79,10 +81,12 @@ fun SubCategorySection(
 
             loading = false
         }
+
         is NetworkResult.Error -> {
             loading = false
             Log.e("3636", "AmazingOfferSection error : ${subCategoryResult.message}")
         }
+
         is NetworkResult.Loading -> {
             loading = true
         }
@@ -98,46 +102,68 @@ fun SubCategorySection(
                 .fillMaxSize()
         ) {
             CategoryItem(
+                navController = navController,
+                categoryId = "tool",
                 stringResource(id = R.string.industrial_tools_and_equipment),
                 toolList
             )
             CategoryItem(
+                navController = navController,
+                categoryId = "digital",
                 title = stringResource(id = R.string.digital_goods),
                 subList = digitalList
             )
             CategoryItem(
+                navController = navController,
+                categoryId = "mobile",
                 title = stringResource(id = R.string.mobile),
                 subList = mobileList
             )
             CategoryItem(
+                navController = navController,
+                categoryId = "fashion",
                 title = stringResource(id = R.string.fashion_and_clothing),
                 subList = fashionList
             )
             CategoryItem(
+                navController = navController,
+                categoryId = "supermarket",
                 title = stringResource(id = R.string.supermarket_product),
                 subList = supermarketList
             )
             CategoryItem(
+                navController = navController,
+                categoryId = "native",
                 title = stringResource(id = R.string.native_and_local_products),
                 subList = nativeList
             )
             CategoryItem(
+                navController = navController,
+                categoryId = "toy",
                 title = stringResource(id = R.string.toys_children_and_babies),
                 subList = toyList
             )
             CategoryItem(
+                navController = navController,
+                categoryId = "beauty",
                 title = stringResource(id = R.string.beauty_and_health),
                 subList = beautyList
             )
             CategoryItem(
+                navController = navController,
+                categoryId = "home",
                 title = stringResource(id = R.string.home_and_kitchen),
                 subList = homeList
             )
             CategoryItem(
+                navController = navController,
+                categoryId = "book",
                 title = stringResource(id = R.string.books_and_stationery),
                 subList = bookList
             )
             CategoryItem(
+                navController = navController,
+                categoryId = "sport",
                 title = stringResource(id = R.string.sports_and_travel),
                 subList = sportList
             )

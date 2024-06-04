@@ -11,6 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.truelearn.digikala.ui.screens.*
 import ir.truelearn.digikala.ui.screens.basket.BasketScreen
 import ir.truelearn.digikala.ui.screens.category.CategoryScreen
+import ir.truelearn.digikala.ui.screens.category.SubCategoryScreen
 import ir.truelearn.digikala.ui.screens.checkout.CheckoutScreen
 import ir.truelearn.digikala.ui.screens.checkout.ConfirmPurchaseScreen
 import ir.truelearn.digikala.ui.screens.home.HomeScreen
@@ -293,6 +294,25 @@ fun SetupNavGraph(navController: NavHostController) {
                 TabLayoutScreen(
                     navController = navController,
                     orders = orders
+                )
+            }
+
+        }
+
+
+        composable(route = Screen.SubCategoryScreen.route + "/{categoryId}",
+            arguments = listOf(
+                navArgument("categoryId") {
+                    type = NavType.StringType
+                    defaultValue = " "
+                    nullable = true
+                }
+            )
+        ) {
+            it.arguments!!.getString("categoryId")?.let { categoryId ->
+                SubCategoryScreen(
+                    navController = navController,
+                    categoryId = categoryId
                 )
             }
 
