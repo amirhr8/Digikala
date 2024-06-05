@@ -7,6 +7,8 @@ object Constants {
     const val PERSIAN_LANG = "fa"
     const val DATASTORE_NAME = "DIGIKALA_DATA_STORE"
     const val BASE_URL = "https://truelearn-digikala.iran.liara.run/api/"
+    const val PURCHASE_URL = "https://api.zarinpal.com/pg/v4/payment/"
+    const val ZARINPAL_PAYMENT_URL = "https://www.zarinpal.com/pg/StartPay/"
     const val TIMEOUT_IN_SECOND: Long = 60
     const val API_KEY = BuildConfig.X_API_KEY
     const val KEY = BuildConfig.KEY
@@ -45,4 +47,10 @@ object Constants {
     const val DIGI_WALLET = "https://www.mydigipay.com/"
     const val DIGI_CLUB = "https://www.digikala.com/digiclub/"
     const val TURLEARN_CONTACT_US = "https://truelearn.ir/contact/"
+
+    var isFromPurchase = false
+    var afterPurchaseUrl = ""
+    var purchaseOrderId = ""
+    var purchasePrice = ""
+
 }

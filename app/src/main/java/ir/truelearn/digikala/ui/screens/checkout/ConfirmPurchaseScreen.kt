@@ -1,6 +1,7 @@
 package ir.truelearn.digikala.ui.screens.checkout
 
 import android.app.Activity
+import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
@@ -20,15 +21,22 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import ir.truelearn.digikala.R
 import ir.truelearn.digikala.data.model.checkout.ConfirmPurchase
+import ir.truelearn.digikala.data.model.purchase.PaymentRequest
+import ir.truelearn.digikala.data.model.purchase.PaymentVerificationRequest
 import ir.truelearn.digikala.navigation.Screen
 import ir.truelearn.digikala.ui.theme.digikalaRed
 import ir.truelearn.digikala.ui.theme.roundedShape
 import ir.truelearn.digikala.ui.theme.spacing
 import ir.truelearn.digikala.util.Constants
+import ir.truelearn.digikala.util.Constants.ZARINPAL_MERCHANT_ID
+import ir.truelearn.digikala.util.Constants.ZARINPAL_PAYMENT_URL
+import ir.truelearn.digikala.util.Constants.isFromPurchase
+import ir.truelearn.digikala.util.Constants.purchaseOrderId
+import ir.truelearn.digikala.util.Constants.purchasePrice
 import ir.truelearn.digikala.util.DigitHelper
-import ir.truelearn.digikala.util.ZarinpalPurchase
 import ir.truelearn.digikala.viewmodel.BasketViewModel
 import ir.truelearn.digikala.viewmodel.CheckoutViewModel
+import ir.truelearn.digikala.viewmodel.PurchaseViewModel
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -36,35 +44,69 @@ fun ConfirmPurchaseScreen(
     navController: NavController,
     orderId: String,
     orderPrice: String,
+    purchaseViewModel: PurchaseViewModel = hiltViewModel(),
     basketViewModel: BasketViewModel = hiltViewModel(),
     checkoutViewModel: CheckoutViewModel = hiltViewModel()
 ) {
 
+    purchaseOrderId = orderId
+    purchasePrice = orderPrice
 
     val context = LocalContext.current
-    val activity = context as Activity
 
     var orderState by remember { mutableStateOf(context.getString(R.string.waiting_for_purchase)) }
 
-    LaunchedEffect(true ){
-        ZarinpalPurchase.purchase(
-            activity,
-            1000,//orderPrice.toLong(),
-            "خرید تستی از دیجی کالا"
-        ) { transactionID ->
+    val purchaseResult by purchaseViewModel.purchaseResult.collectAsState(null)
+    val verifyPurchaseResult by purchaseViewModel.verifyPurchaseResult.collectAsState(null)
+
+
+    LaunchedEffect(true) {
+        if (isFromPurchase) {
+            purchaseViewModel.verifyPurchase(
+                PaymentVerificationRequest(
+                    merchant_id = ZARINPAL_MERCHANT_ID,
+                    authority = Uri.parse(Constants.afterPurchaseUrl).getQueryParameter("Authority")
+                        .toString(),
+                    amount = orderPrice + "0",
+                )
+            )
+        } else {
+            purchaseViewModel.startPurchase(
+                PaymentRequest(
+                    merchant_id = ZARINPAL_MERCHANT_ID,
+                    amount = orderPrice + "0",
+                    callback_url = "truelearn://digikala",
+                    description = "خرید تستی از دیجی کالا",
+                )
+            )
+        }
+
+    }
+
+
+    if (purchaseResult != null) {
+        purchaseViewModel.openBrowser(
+            context = context,
+            url = ZARINPAL_PAYMENT_URL + purchaseResult!!.data.authority
+        )
+    }
+
+    if (verifyPurchaseResult != null) {
+        if (verifyPurchaseResult!!.data.message == "Paid") {
             orderState = context.getString(R.string.purchase_is_ok)
             basketViewModel.deleteAllItems()
             checkoutViewModel.confirmPurchase(
                 ConfirmPurchase(
                     token = Constants.USER_TOKEN,
-                    transactionId = transactionID,
+                    transactionId = verifyPurchaseResult!!.data.ref_id.toString(),
                     orderId = orderId
                 )
             )
-            Log.e("3636", "Transaction ID : $transactionID")
+            Log.e("3636", "Transaction ID : ${verifyPurchaseResult!!.data.ref_id}")
         }
-    }
 
+
+    }
 
 
 
@@ -135,11 +177,12 @@ fun ConfirmPurchaseScreen(
 
         Button(
             onClick = {
-                navController.navigate(Screen.Home.route){
+                isFromPurchase = false
+                navController.navigate(Screen.Home.route) {
                     popUpTo(Screen.Home.route) {
                         inclusive = true
                     }
-                }      
+                }
             },
             border = BorderStroke(width = 1.dp, color = MaterialTheme.colors.digikalaRed),
             shape = MaterialTheme.roundedShape.small,

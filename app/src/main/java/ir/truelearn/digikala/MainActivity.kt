@@ -17,8 +17,11 @@ import ir.truelearn.digikala.navigation.SetupNavGraph
 import ir.truelearn.digikala.ui.components.AppConfig
 import ir.truelearn.digikala.ui.components.ChangeStatusBarColor
 import ir.truelearn.digikala.ui.theme.DigikalaTheme
+import ir.truelearn.digikala.util.Constants
 import ir.truelearn.digikala.util.Constants.ENGLISH_LANG
 import ir.truelearn.digikala.util.Constants.USER_LANGUAGE
+import ir.truelearn.digikala.util.Constants.afterPurchaseUrl
+import ir.truelearn.digikala.util.Constants.isFromPurchase
 import ir.truelearn.digikala.util.LocaleUtils
 
 @AndroidEntryPoint
@@ -66,4 +69,22 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+
+    override fun onResume() {
+        super.onResume()
+        if (
+            intent != null &&
+            intent.data != null &&
+            intent.data?.scheme == "truelearn" &&
+            intent.data?.host == "digikala"
+        ) {
+            val url = intent.data.toString()
+            Log.e("3636", "URL: $url")
+            isFromPurchase = true
+            afterPurchaseUrl = url
+        }
+    }
+
+
 }

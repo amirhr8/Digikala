@@ -7,6 +7,7 @@ import dagger.hilt.components.SingletonComponent
 import ir.truelearn.digikala.data.remote.HomeApiInterface
 import ir.truelearn.digikala.util.Constants.API_KEY
 import ir.truelearn.digikala.util.Constants.BASE_URL
+import ir.truelearn.digikala.util.Constants.PURCHASE_URL
 import ir.truelearn.digikala.util.Constants.TIMEOUT_IN_SECOND
 import ir.truelearn.digikala.util.Constants.USER_LANGUAGE
 import okhttp3.OkHttpClient
@@ -14,6 +15,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Named
 import javax.inject.Singleton
 
 
@@ -37,8 +39,12 @@ object NetworkModule {
         .writeTimeout(TIMEOUT_IN_SECOND, TimeUnit.SECONDS)
         .addInterceptor { chain ->
             val request = chain.request().newBuilder()
-                .addHeader("x-api-key", API_KEY)
-                .addHeader("lang", USER_LANGUAGE)
+
+            if (chain.request().url.toString().startsWith(BASE_URL)) {
+                request
+                    .addHeader("x-api-key", API_KEY)
+                    .addHeader("lang", USER_LANGUAGE)
+            }
             chain.proceed(request.build())
         }
         .addInterceptor(interceptor())
@@ -49,6 +55,17 @@ object NetworkModule {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+
+
+    @Provides
+    @Singleton
+    @Named("purchaseUrl")
+    fun providePurchaseRetrofit(okHttpClient: OkHttpClient): Retrofit =
+        Retrofit.Builder()
+            .baseUrl(PURCHASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()

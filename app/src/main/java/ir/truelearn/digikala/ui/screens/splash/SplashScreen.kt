@@ -27,6 +27,8 @@ import ir.truelearn.digikala.data.remote.CheckConnection.isNetworkAvailable
 import ir.truelearn.digikala.navigation.Screen
 import ir.truelearn.digikala.ui.components.Loading3Dots
 import ir.truelearn.digikala.ui.theme.splashBg
+import ir.truelearn.digikala.util.Constants
+import ir.truelearn.digikala.util.Constants.isFromPurchase
 import kotlinx.coroutines.delay
 
 @Composable
@@ -43,7 +45,7 @@ fun SplashScreen(navController: NavHostController) {
                     inclusive = true
                 }
             }
-        }else{
+        } else {
             Toast.makeText(
                 context,
                 context.getString(R.string.check_net),
@@ -56,11 +58,25 @@ fun SplashScreen(navController: NavHostController) {
     LaunchedEffect(true) {
         delay(2500)
         if (isNetworkAvailable) {
-            navController.navigate(Screen.Home.route) {
-                popUpTo(Screen.Splash.route) {
-                    inclusive = true
+
+            if (isFromPurchase) {
+                navController.navigate(
+                    Screen.ConfirmPurchase.withArgs(
+                        Constants.purchaseOrderId, Constants.purchasePrice
+                    )
+                ) {
+                    popUpTo(Screen.Splash.route) { inclusive = true }
+                }
+
+            } else {
+                navController.navigate(Screen.Home.route) {
+                    popUpTo(Screen.Splash.route) {
+                        inclusive = true
+                    }
                 }
             }
+
+
         }
     }
 }

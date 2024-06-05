@@ -42,7 +42,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.widget.ConstraintSet.Constraint
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ir.truelearn.digikala.BuildConfig
@@ -296,6 +295,7 @@ fun logOut(
         saveUserPhoneNumber("null")
         saveUserPassword("null")
         saveUserName("null")
+        saveUserAddressIndex("0")
     }
     Constants.USER_TOKEN = "null"
     profileViewModel.screenState = ProfileScreenState.LOGIN_STATE
